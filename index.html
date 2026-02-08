@@ -1,18 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>Science Games for Kids</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مختبر العلوم الصغير - تعليم الأطفال 9-10 سنوات</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-flask"></i>
+                <h1>مختبر العلوم الصغير</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="active">الرئيسية</a>
+                <a href="#games">الألعاب</a>
+                <a href="#about">عن المشروع</a>
+                <a href="#contact">اتصل بنا</a>
+            </div>
+        </div>
+    </nav>
 
-<h1>Learn Science by Playing 🎮</h1>
+    <!-- قسم الهيرو -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>مرحباً يا صغيري العالم!</h2>
+                <p>انطلق في رحلة علمية ممتعة مع ألعاب تفاعلية تشرح لك أسرار الفيزياء والعلوم بطريقة سهلة وممتعة</p>
+                <a href="#games" class="btn">اكتشف الألعاب <i class="fas fa-arrow-left"></i></a>
+            </div>
+            <div class="hero-image">
+                <img src="https://cdn.pixabay.com/photo/2017/08/02/14/26/people-2572976_1280.jpg" alt="أطفال يتعلمون العلوم">
+            </div>
+        </div>
+    </section>
 
-<div class="menu">
-  <a href="games/cars/cars.html">🚗 Smart Cars Race</a>
-  <a href="games/friction/friction.html">📦 Push & Pull</a>
-</div>
+    <!-- قسم الألعاب -->
+    <section class="games-section" id="games">
+        <div class="container">
+            <h2 class="section-title">ألعابنا التعليمية</h2>
+            <p class="section-subtitle">اختر لعبة لتبدأ رحلتك العلمية</p>
+            
+            <div class="games-grid">
+                <!-- لعبة الميزان الذكي -->
+                <div class="game-card">
+                    <div class="game-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>الميزان الذكي ⚖️</h3>
+                    <p>تعلم مفهوم الوزن والكتلة من خلال تحقيق التوازن في الميزان</p>
+                    <a href="games/balance-game.html" class="game-btn">العب الآن</a>
+                    <div class="game-tags">
+                        <span>الوزن والكتلة</span>
+                        <span>تفاعلي</span>
+                    </div>
+                </div>
 
+                <!-- لعبة اسحب وحرك (قريباً) -->
+                <div class="game-card coming-soon">
+                    <div class="game-icon">
+                        <i class="fas fa-drag"></i>
+                    </div>
+                    <h3>اسحب وحرّك 🎮</h3>
+                    <p>افهم قوة الاحتكاك على مختلف الأسطح</p>
+                    <button class="game-btn" disabled>قريباً</button>
+                    <div class="game-tags">
+                        <span>الحركة</span>
+                        <span>الاحتكاك</span>
+                    </div>
+                </div>
+
+                <!-- لعبة سباق السيارات (قريباً) -->
+                <div class="game-card coming-soon">
+                    <div class="game-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>سباق السيارات 🏎️</h3>
+                    <p>اكتشف تأثير القوة والاحتكاك على الحركة</p>
+                    <button class="game-btn" disabled>قريباً</button>
+                    <div class="game-tags">
+                        <span>السرعة</span>
+                        <span>القوة</span>
+                    </div>
+                </div>
+
+                <!-- لعبة الضوء والظل (قريباً) -->
+                <div class="game-card coming-soon">
+                    <div class="game-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>الضوء والظل 🌞</h3>
+                    <p>تعلم كيف تتكون الظلال وتنعكس الأضواء</p>
+                    <button class="game-btn" disabled>قريباً</button>
+                    <div class="game-tags">
+                        <span>الضوء</span>
+                        <span>الظل</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم حول المشروع -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2 class="section-title">عن المشروع</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>لماذا مختبر العلوم الصغير؟</h3>
+                    <p>نحن نقدم وسيلة تعليمية تفاعلية للأطفال بين 9-10 سنوات لتعلم مفاهيم العلوم الأساسية بطريقة ممتعة وجذابة.</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-gamepad"></i>
+                            <h4>ألعاب تفاعلية</h4>
+                            <p>تعلم من خلال اللعب والتجربة</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h4>أهداف تعليمية</h4>
+                            <p>مصمم وفق المناهج التعليمية</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-child"></i>
+                            <h4>مناسب للأطفال</h4>
+                            <p>واجهة بسيطة وآمنة للاستخدام</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://cdn.pixabay.com/photo/2018/09/27/09/22/artificial-intelligence-3706562_1280.jpg" alt="التعلم التفاعلي">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>مختبر العلوم الصغير</h3>
+                    <p>مشروع تعليمي تفاعلي للأطفال</p>
+                </div>
+                <div class="footer-section">
+                    <h4>تابعنا</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>اتصل بنا</h4>
+                    <p>البريد: info@science-lab.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 مختبر العلوم الصغير. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
