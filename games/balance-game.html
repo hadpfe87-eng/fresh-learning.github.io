@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الميزان الذكي - مختبر العلوم الصغير</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="balance-game.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شريط التنقل للعبة -->
+    <nav class="game-navbar">
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </a>
+            <div class="game-title">
+                <i class="fas fa-balance-scale"></i>
+                <h1>الميزان الذكي ⚖️</h1>
+            </div>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">النقاط:</span>
+                    <span id="score" class="stat-value">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">المستوى:</span>
+                    <span id="level" class="stat-value">1</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="game-container">
+        <div class="container">
+            <!-- لوحة التعليمات -->
+            <div class="instructions-panel">
+                <h2><i class="fas fa-info-circle"></i> كيف تلعب</h2>
+                <p>اسحب الأجسام إلى كفتي الميزان لتحقيق التوازن. كل جسم له وزن مختلف!</p>
+                <div class="hint-box">
+                    <p><strong>تلميح:</strong> حاول جعل مجموع الأوزان متساوياً في الكفتين</p>
+                </div>
+            </div>
+
+            <!-- منطقة اللعبة -->
+            <div class="game-area">
+                <!-- الميزان -->
+                <div class="balance-container">
+                    <div class="balance-base"></div>
+                    <div class="balance-beam">
+                        <div class="balance-center"></div>
+                        
+                        <!-- الكفة اليسرى -->
+                        <div class="balance-pan left-pan" id="left-pan">
+                            <div class="pan"></div>
+                            <div class="weight-display">المجموع: <span id="left-weight">0</span> كجم</div>
+                            <div class="objects-container" id="left-objects"></div>
+                        </div>
+                        
+                        <!-- الكفة اليمنى -->
+                        <div class="balance-pan right-pan" id="right-pan">
+                            <div class="pan"></div>
+                            <div class="weight-display">المجموع: <span id="right-weight">0</span> كجم</div>
+                            <div class="objects-container" id="right-objects"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- مؤشر التوازن -->
+                <div class="balance-indicator">
+                    <div class="indicator-line"></div>
+                    <div class="indicator-arrow" id="balance-arrow"></div>
+                    <div class="indicator-labels">
+                        <span>يميل لليسار</span>
+                        <span>متوازن</span>
+                        <span>يمين لليمين</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- منطقة الأجسام -->
+            <div class="objects-panel">
+                <h3><i class="fas fa-shapes"></i> اختر الأجسام</h3>
+                <p>اسحب الجسم إلى إحدى الكفتين</p>
+                
+                <div class="objects-grid" id="objects-grid">
+                    <!-- الأجسام ستُنشأ ديناميكياً بالجافاسكريبت -->
+                </div>
+                
+                <div class="game-controls">
+                    <button id="check-btn" class="control-btn success">
+                        <i class="fas fa-check"></i> تحقق من التوازن
+                    </button>
+                    <button id="reset-btn" class="control-btn warning">
+                        <i class="fas fa-redo"></i> إعادة المحاولة
+                    </button>
+                    <button id="hint-btn" class="control-btn info">
+                        <i class="fas fa-lightbulb"></i> تلميح
+                    </button>
+                    <button id="next-btn" class="control-btn primary">
+                        <i class="fas fa-forward"></i> المستوى التالي
+                    </button>
+                </div>
+            </div>
+
+            <!-- لوحة النتائج -->
+            <div class="results-panel" id="results-panel">
+                <div class="results-content">
+                    <h2 id="result-title"></h2>
+                    <p id="result-message"></p>
+                    <div class="stars" id="result-stars">
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <button id="close-results" class="btn">متابعة اللعب</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- قسم المعلومات التعليمية -->
+    <section class="educational-section">
+        <div class="container">
+            <h2><i class="fas fa-graduation-cap"></i> ماذا تتعلم من هذه اللعبة؟</h2>
+            <div class="educational-content">
+                <div class="concept">
+                    <h3>⚖️ مفهوم الوزن</h3>
+                    <p>الوزن هو قوة جذب الأرض للأجسام. كلما زادت كتلة الجسم، زاد وزنه.</p>
+                </div>
+                <div class="concept">
+                    <h3>⚖️ الميزان المتعادل</h3>
+                    <p>يتوازن الميزان عندما يتساوى الوزن في الكفتين. وهذا يعني أن قوة الجذب متساوية.</p>
+                </div>
+                <div class="concept">
+                    <h3>⚖️ الفرق بين الكتلة والوزن</h3>
+                    <p>الكتلة: كمية المادة في الجسم (ثابتة). الوزن: قوة الجاذبية على الجسم (تتغير حسب المكان).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="balance-game.js"></script>
+</body>
+</html>
