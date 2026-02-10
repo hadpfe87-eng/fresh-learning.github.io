@@ -1,39 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <!-- الترميز ودعم العربية -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>الميزان الذكي - مختبر العلوم الصغير</title>
+    <meta name="description" content="لعبة تعليمية لتعلم مفهوم الوزن والكتلة للأطفال">
+    
+    <!-- الخطوط والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- الملفات الخارجية -->
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="balance-game.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- إضافات لدعم الجوال -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="theme-color" content="#4a6fa5">
-
-<!-- روابط لأيقونات الجوال -->
-<link rel="manifest" href="../manifest.json">
-<link rel="apple-touch-icon" href="../assets/icons/icon-192.png">
-
-<!-- منع التكبير على حقول الإدخال -->
-<style>
-    input, select, textarea {
-        font-size: 16px !important;
-    }
-    
-    /* تحسين التمرير للجوال */
-    * {
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    /* إزالة التأثير الأزرق على الجوال */
-    *:focus {
-        outline: none;
-    }
-</style>
 </head>
 <body>
     <!-- شريط التنقل للعبة -->
@@ -61,35 +44,67 @@
 
     <main class="game-container">
         <div class="container">
-            <!-- لوحة التعليمات -->
+            <!-- تعليمات اللعبة -->
             <div class="instructions-panel">
                 <h2><i class="fas fa-info-circle"></i> كيف تلعب</h2>
-                <p>اسحب الأجسام إلى كفتي الميزان لتحقيق التوازن. كل جسم له وزن مختلف!</p>
-                <div class="hint-box">
-                    <p><strong>تلميح:</strong> حاول جعل مجموع الأوزان متساوياً في الكفتين</p>
+                <p>اسحب الأجسام إلى كفتي الميزان لتحقيق التوازن. حاول جعل الوزن متساوياً في الكفتين!</p>
+                
+                <div class="objectives">
+                    <h3><i class="fas fa-bullseye"></i> أهداف هذا المستوى:</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> فهم الفرق بين الوزن والكتلة</li>
+                        <li><i class="fas fa-check"></i> تعلم كيف يعمل الميزان</li>
+                        <li><i class="fas fa-check"></i> تحقيق التوازن بين الكفتين</li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- منطقة اللعبة -->
-            <div class="game-area">
-                <!-- الميزان -->
+            <!-- منطقة الميزان -->
+            <div class="balance-area">
                 <div class="balance-container">
+                    <!-- قاعدة الميزان -->
                     <div class="balance-base"></div>
-                    <div class="balance-beam">
-                        <div class="balance-center"></div>
+                    
+                    <!-- ذراع الميزان -->
+                    <div class="balance-beam" id="balance-beam">
+                        <div class="balance-center">
+                            <i class="fas fa-dot-circle"></i>
+                        </div>
                         
                         <!-- الكفة اليسرى -->
                         <div class="balance-pan left-pan" id="left-pan">
-                            <div class="pan"></div>
-                            <div class="weight-display">المجموع: <span id="left-weight">0</span> كجم</div>
-                            <div class="objects-container" id="left-objects"></div>
+                            <div class="pan-container">
+                                <div class="pan"></div>
+                                <div class="pan-stand"></div>
+                            </div>
+                            <div class="weight-display">
+                                <i class="fas fa-weight-hanging"></i>
+                                <span>الكفة اليسرى: <strong id="left-weight">0</strong> كجم</span>
+                            </div>
+                            <div class="objects-container" id="left-objects">
+                                <div class="empty-message">
+                                    <i class="fas fa-hand-point-up"></i>
+                                    <p>اسحب الأجسام هنا</p>
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- الكفة اليمنى -->
                         <div class="balance-pan right-pan" id="right-pan">
-                            <div class="pan"></div>
-                            <div class="weight-display">المجموع: <span id="right-weight">0</span> كجم</div>
-                            <div class="objects-container" id="right-objects"></div>
+                            <div class="pan-container">
+                                <div class="pan"></div>
+                                <div class="pan-stand"></div>
+                            </div>
+                            <div class="weight-display">
+                                <i class="fas fa-weight-hanging"></i>
+                                <span>الكفة اليمنى: <strong id="right-weight">0</strong> كجم</span>
+                            </div>
+                            <div class="objects-container" id="right-objects">
+                                <div class="empty-message">
+                                    <i class="fas fa-hand-point-up"></i>
+                                    <p>اسحب الأجسام هنا</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,49 +114,148 @@
                     <div class="indicator-line"></div>
                     <div class="indicator-arrow" id="balance-arrow"></div>
                     <div class="indicator-labels">
-                        <span>يميل لليسار</span>
-                        <span>متوازن</span>
-                        <span>يمين لليمين</span>
+                        <span class="label-left">يميل لليسار</span>
+                        <span class="label-center">متوازن</span>
+                        <span class="label-right">يميل لليمين</span>
                     </div>
+                </div>
+                
+                <!-- معلومات التوازن -->
+                <div class="balance-info" id="balance-info">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>الفرق: <strong id="weight-difference">0</strong> كجم</span>
                 </div>
             </div>
 
-            <!-- منطقة الأجسام -->
-            <div class="objects-panel">
-                <h3><i class="fas fa-shapes"></i> اختر الأجسام</h3>
-                <p>اسحب الجسم إلى إحدى الكفتين</p>
-                
-                <div class="objects-grid" id="objects-grid">
-                    <!-- الأجسام ستُنشأ ديناميكياً بالجافاسكريبت -->
+            <!-- منطقة الأدوات والأجسام -->
+            <div class="tools-section">
+                <!-- الأجسام المتاحة -->
+                <div class="objects-panel">
+                    <h3><i class="fas fa-shapes"></i> الأجسام المتاحة</h3>
+                    <p class="panel-subtitle">اسحب الجسم وأفلته في إحدى الكفتين</p>
+                    
+                    <div class="objects-grid" id="objects-grid">
+                        <!-- سيتم إضافة الأجسام ديناميكياً -->
+                    </div>
+                    
+                    <!-- معلومات إضافية -->
+                    <div class="objects-info">
+                        <div class="info-item">
+                            <i class="fas fa-ruler"></i>
+                            <span>الوحدة: كيلوجرام (كجم)</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>اسحب لنقل الجسم بين الكفتين</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="game-controls">
-                    <button id="check-btn" class="control-btn success">
-                        <i class="fas fa-check"></i> تحقق من التوازن
-                    </button>
-                    <button id="reset-btn" class="control-btn warning">
-                        <i class="fas fa-redo"></i> إعادة المحاولة
-                    </button>
-                    <button id="hint-btn" class="control-btn info">
-                        <i class="fas fa-lightbulb"></i> تلميح
-                    </button>
-                    <button id="next-btn" class="control-btn primary">
-                        <i class="fas fa-forward"></i> المستوى التالي
-                    </button>
+                <!-- أدوات التحكم -->
+                <div class="controls-panel">
+                    <h3><i class="fas fa-gamepad"></i> أدوات التحكم</h3>
+                    
+                    <div class="controls-grid">
+                        <button id="check-btn" class="control-btn success">
+                            <i class="fas fa-check-circle"></i>
+                            <span>تحقق من التوازن</span>
+                        </button>
+                        
+                        <button id="reset-btn" class="control-btn warning">
+                            <i class="fas fa-redo"></i>
+                            <span>إعادة المحاولة</span>
+                        </button>
+                        
+                        <button id="hint-btn" class="control-btn info">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>تلميح</span>
+                        </button>
+                        
+                        <button id="next-btn" class="control-btn primary" disabled>
+                            <i class="fas fa-forward"></i>
+                            <span>المستوى التالي</span>
+                        </button>
+                        
+                        <button id="auto-btn" class="control-btn secondary">
+                            <i class="fas fa-robot"></i>
+                            <span>توازن تلقائي</span>
+                        </button>
+                        
+                        <button id="sound-btn" class="control-btn toggle active">
+                            <i class="fas fa-volume-up"></i>
+                            <span>الصوت: تشغيل</span>
+                        </button>
+                    </div>
+                    
+                    <!-- شريط التقدم -->
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>تقدم المستوى:</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- لوحة النتائج -->
             <div class="results-panel" id="results-panel">
+                <div class="results-overlay"></div>
                 <div class="results-content">
-                    <h2 id="result-title"></h2>
-                    <p id="result-message"></p>
-                    <div class="stars" id="result-stars">
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
-                        <i class="far fa-star"></i>
+                    <div class="results-header" id="results-header">
+                        <i class="fas fa-trophy"></i>
+                        <h2 id="result-title">أحسنت!</h2>
                     </div>
-                    <button id="close-results" class="btn">متابعة اللعب</button>
+                    
+                    <div class="results-body">
+                        <p id="result-message">لقد نجحت في تحقيق التوازن!</p>
+                        
+                        <div class="results-stats">
+                            <div class="stat-box">
+                                <i class="fas fa-star"></i>
+                                <span class="stat-label">النجوم</span>
+                                <span class="stat-value" id="result-stars">3/3</span>
+                            </div>
+                            <div class="stat-box">
+                                <i class="fas fa-clock"></i>
+                                <span class="stat-label">الوقت</span>
+                                <span class="stat-value" id="result-time">00:30</span>
+                            </div>
+                            <div class="stat-box">
+                                <i class="fas fa-balance-scale"></i>
+                                <span class="stat-label">الدقة</span>
+                                <span class="stat-value" id="result-accuracy">100%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stars-container" id="stars-container">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        
+                        <div class="results-actions">
+                            <button id="retry-btn" class="action-btn">
+                                <i class="fas fa-redo"></i> إعادة المحاولة
+                            </button>
+                            <button id="continue-btn" class="action-btn primary">
+                                <i class="fas fa-forward"></i> المتابعة
+                            </button>
+                            <button id="close-results" class="action-btn secondary">
+                                <i class="fas fa-times"></i> إغلاق
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- رسائل التلميح -->
+            <div class="hint-toast" id="hint-toast">
+                <div class="hint-content">
+                    <i class="fas fa-lightbulb"></i>
+                    <p id="hint-text">جرب وضع جسمين في كل كفة!</p>
                 </div>
             </div>
         </div>
@@ -150,24 +264,91 @@
     <!-- قسم المعلومات التعليمية -->
     <section class="educational-section">
         <div class="container">
-            <h2><i class="fas fa-graduation-cap"></i> ماذا تتعلم من هذه اللعبة؟</h2>
-            <div class="educational-content">
-                <div class="concept">
-                    <h3>⚖️ مفهوم الوزن</h3>
-                    <p>الوزن هو قوة جذب الأرض للأجسام. كلما زادت كتلة الجسم، زاد وزنه.</p>
+            <h2 class="section-title"><i class="fas fa-graduation-cap"></i> ماذا تتعلم من هذه اللعبة؟</h2>
+            
+            <div class="educational-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <h3>الوزن</h3>
+                    <p>الوزن هو قوة جذب الأرض للأجسام. يتغير الوزن حسب قوة الجاذبية.</p>
+                    <div class="concept-example">
+                        <small>مثال: وزنك على القمر أقل من وزنك على الأرض</small>
+                    </div>
                 </div>
-                <div class="concept">
-                    <h3>⚖️ الميزان المتعادل</h3>
-                    <p>يتوازن الميزان عندما يتساوى الوزن في الكفتين. وهذا يعني أن قوة الجذب متساوية.</p>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>الكتلة</h3>
+                    <p>الكتلة هي كمية المادة في الجسم. تبقى الكتلة ثابتة في أي مكان.</p>
+                    <div class="concept-example">
+                        <small>مثال: كتلة الكتاب تبقى نفسها على الأرض والقمر</small>
+                    </div>
                 </div>
-                <div class="concept">
-                    <h3>⚖️ الفرق بين الكتلة والوزن</h3>
-                    <p>الكتلة: كمية المادة في الجسم (ثابتة). الوزن: قوة الجاذبية على الجسم (تتغير حسب المكان).</p>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>التوازن</h3>
+                    <p>يتوازن الميزان عندما يتساوى الوزن في الكفتين. هذا يعني أن قوة الجذب متساوية.</p>
+                    <div class="concept-example">
+                        <small>مثال: 2 كجم في اليسار = 2 كجم في اليمين</small>
+                    </div>
                 </div>
+                
+                <div class="concept-card">
+                    <div class="concept-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <h3>الوحدة</h3>
+                    <p>نستخدم الكيلوجرام (كجم) لقياس الوزن. 1 كجم = 1000 جرام.</p>
+                    <div class="concept-example">
+                        <small>مثال: تفاحة ≈ 0.2 كجم، كتاب ≈ 1 كجم</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- نصيحة عملية -->
+            <div class="practical-tip">
+                <h3><i class="fas fa-flask"></i> نصيحة عملية</h3>
+                <p>جرب في المنزل: خذ ميزان مطبخ وضع عليه أشياء مختلفة. لاحظ كيف يتغير الوزن!</p>
             </div>
         </div>
     </section>
 
+    <!-- التذييل الخاص باللعبة -->
+    <footer class="game-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h4>نصائح للتعلم:</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> ابدأ بالأجسام الخفيفة ثم الثقيلة</li>
+                        <li><i class="fas fa-check"></i> حاول تحقيق التوازن بأقل عدد من المحاولات</li>
+                        <li><i class="fas fa-check"></i> لاحظ كيف يتغير الميزان مع كل جسم تضيفه</li>
+                    </ul>
+                </div>
+                <div class="footer-actions">
+                    <a href="../index.html" class="footer-btn">
+                        <i class="fas fa-home"></i> الصفحة الرئيسية
+                    </a>
+                    <button id="share-btn" class="footer-btn">
+                        <i class="fas fa-share-alt"></i> شارك اللعبة
+                    </button>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>© 2024 مختبر العلوم الصغير | لعبة الميزان الذكي - تصميم تعليمي تفاعلي</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ملفات JavaScript -->
+    <script src="../device-detector.js"></script>
     <script src="balance-game.js"></script>
 </body>
 </html>
