@@ -1,289 +1,361 @@
-/* تصميم لعبة الميزان الذكي */
+/* تحسينات الاستجابة للعبة الميزان */
 
-/* شريط التنقل الخاص باللعبة */
-.game-navbar {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    padding: 15px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+/* شريط التنقل للعبة على الجوال */
+@media (max-width: 992px) {
+    .game-navbar .container {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .back-btn {
+        order: 1;
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+    
+    .game-title {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+        margin: 5px 0;
+    }
+    
+    .game-stats {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 30px;
+    }
+    
+    .game-title h1 {
+        font-size: 20px;
+    }
 }
 
-.game-navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* تحسين منطقة اللعبة للشاشات المتوسطة */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 20px 0;
+    }
+    
+    .instructions-panel {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .instructions-panel h2 {
+        font-size: 20px;
+    }
+    
+    .instructions-panel p {
+        font-size: 16px;
+    }
+    
+    /* تحسين تصميم الميزان للجوال */
+    .game-area {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .balance-container {
+        height: 250px;
+        margin-bottom: 30px;
+    }
+    
+    .balance-beam {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .left-pan {
+        right: 50%;
+        margin-right: 60px;
+        transform: scale(0.9);
+    }
+    
+    .right-pan {
+        left: 50%;
+        margin-left: 60px;
+        transform: scale(0.9);
+    }
+    
+    .pan {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .balance-indicator {
+        width: 300px;
+    }
+    
+    /* تحسين منطقة الأجسام */
+    .objects-panel {
+        padding: 20px;
+    }
+    
+    .objects-panel h3 {
+        font-size: 18px;
+    }
+    
+    .objects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 15px;
+    }
+    
+    .object-item {
+        padding: 15px 10px;
+    }
+    
+    .object-icon {
+        font-size: 28px;
+        height: 40px;
+    }
+    
+    .object-name {
+        font-size: 14px;
+    }
+    
+    .object-weight {
+        font-size: 12px;
+        padding: 3px 8px;
+    }
+    
+    /* تحسين أزرار التحكم */
+    .game-controls {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .control-btn {
+        padding: 12px;
+        font-size: 14px;
+    }
+    
+    /* تحسين لوحة النتائج */
+    .results-content {
+        padding: 25px;
+        width: 95%;
+    }
+    
+    #result-title {
+        font-size: 24px;
+    }
+    
+    #result-message {
+        font-size: 16px;
+    }
+    
+    .stars {
+        font-size: 32px;
+        gap: 10px;
+    }
+    
+    /* تحسين القسم التعليمي */
+    .educational-section {
+        padding: 40px 0;
+    }
+    
+    .educational-section h2 {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+    
+    .educational-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .concept {
+        padding: 20px;
+    }
+    
+    .concept h3 {
+        font-size: 18px;
+    }
 }
 
-.back-btn {
-    color: white;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    padding: 8px 15px;
-    border-radius: 50px;
-    background-color: rgba(255, 255, 255, 0.1);
-    transition: all 0.3s;
+/* تحسينات للشاشات الصغيرة جداً */
+@media (max-width: 480px) {
+    .balance-beam {
+        max-width: 300px;
+    }
+    
+    .left-pan {
+        margin-right: 40px;
+        transform: scale(0.8);
+    }
+    
+    .right-pan {
+        margin-left: 40px;
+        transform: scale(0.8);
+    }
+    
+    .pan {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .weight-display {
+        min-width: 120px;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+    
+    .balance-indicator {
+        width: 250px;
+    }
+    
+    .indicator-labels {
+        font-size: 12px;
+    }
+    
+    .objects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .object-item {
+        padding: 12px 8px;
+    }
+    
+    .object-icon {
+        font-size: 24px;
+    }
+    
+    /* تحسين الأصوات والاهتزاز للجوال */
+    .control-btn:active {
+        transform: scale(0.95);
+    }
 }
 
-.back-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateX(-5px);
+/* تحسينات للتابلت (شاشات متوسطة) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .balance-beam {
+        width: 500px;
+    }
+    
+    .left-pan {
+        margin-right: 80px;
+    }
+    
+    .right-pan {
+        margin-left: 80px;
+    }
+    
+    .objects-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .game-controls {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.game-title {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+/* دعم اللمس على الأجهزة المحمولة */
+@media (hover: none) and (pointer: coarse) {
+    .object-item {
+        cursor: default;
+    }
+    
+    .object-item:active {
+        opacity: 0.7;
+        transform: scale(0.95);
+    }
+    
+    .control-btn:active {
+        opacity: 0.8;
+    }
+    
+    /* تحسين السحب على الشاشات التي تعمل باللمس */
+    .object-item {
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
 }
 
-.game-title i {
-    font-size: 28px;
+/* منع التكبير على حقول الإدخال على الجوال */
+@media (max-width: 768px) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
 }
 
-.game-title h1 {
-    font-size: 24px;
-    margin: 0;
+/* تحسين الرؤية في الوضع الأفقي على الجوال */
+@media (max-height: 500px) and (orientation: landscape) {
+    .game-container {
+        padding: 10px 0;
+    }
+    
+    .balance-container {
+        height: 180px;
+        margin-bottom: 20px;
+    }
+    
+    .balance-beam {
+        width: 350px;
+    }
+    
+    .pan {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .left-pan, .right-pan {
+        top: 15px;
+    }
+    
+    .objects-panel {
+        padding: 15px;
+    }
+    
+    .objects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .game-controls {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .control-btn {
+        padding: 10px;
+        font-size: 13px;
+    }
 }
 
-.game-stats {
-    display: flex;
-    gap: 25px;
+/* دعم الوضع الداكن */
+@media (prefers-color-scheme: dark) {
+    .game-area,
+    .objects-panel,
+    .instructions-panel,
+    .concept {
+        background-color: #2d3748;
+        color: #e2e8f0;
+    }
+    
+    .weight-display {
+        background-color: #4a5568;
+    }
+    
+    .objects-container {
+        border-color: #4a5568;
+    }
+    
+    .object-item {
+        background-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .object-weight {
+        background-color: #2d3748;
+        color: #e2e8f0;
+    }
+    
+    .hint-box {
+        background-color: #4a5568;
+        border-color: var(--accent-color);
+    }
 }
-
-.stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stat-label {
-    font-size: 14px;
-    opacity: 0.9;
-}
-
-.stat-value {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-/* منطقة اللعبة الرئيسية */
-.game-container {
-    padding: 40px 0;
-    min-height: calc(100vh - 200px);
-}
-
-.instructions-panel {
-    background-color: white;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-    border-right: 5px solid var(--accent-color);
-}
-
-.instructions-panel h2 {
-    color: var(--secondary-color);
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.instructions-panel p {
-    color: #555;
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-.hint-box {
-    background-color: #e8f4fd;
-    border-radius: 10px;
-    padding: 15px;
-    border-right: 4px solid var(--accent-color);
-}
-
-.hint-box p {
-    margin: 0;
-    color: var(--secondary-color);
-}
-
-/* تصميم الميزان */
-.game-area {
-    background-color: white;
-    border-radius: 15px;
-    padding: 40px;
-    margin-bottom: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    position: relative;
-}
-
-.balance-container {
-    position: relative;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 50px;
-}
-
-.balance-base {
-    position: absolute;
-    bottom: 0;
-    width: 200px;
-    height: 20px;
-    background-color: #8b4513;
-    border-radius: 10px 10px 0 0;
-}
-
-.balance-beam {
-    position: absolute;
-    bottom: 20px;
-    width: 600px;
-    height: 10px;
-    background-color: #654321;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    transform-origin: center bottom;
-    transition: transform 0.5s ease;
-}
-
-.balance-center {
-    position: absolute;
-    bottom: -20px;
-    width: 40px;
-    height: 40px;
-    background-color: #c19a6b;
-    border-radius: 50%;
-    border: 5px solid #8b4513;
-}
-
-.balance-pan {
-    position: absolute;
-    top: 30px;
-    width: 180px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.left-pan {
-    right: 50%;
-    margin-right: 100px;
-}
-
-.right-pan {
-    left: 50%;
-    margin-left: 100px;
-}
-
-.pan {
-    width: 150px;
-    height: 150px;
-    background-color: #d4af37;
-    border-radius: 50%;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
-    border: 5px solid #b8860b;
-    position: relative;
-}
-
-.pan::after {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 40px;
-    background-color: #654321;
-}
-
-.weight-display {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-weight: 600;
-    min-width: 150px;
-    text-align: center;
-}
-
-.objects-container {
-    min-height: 100px;
-    width: 100%;
-    border: 2px dashed #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    transition: all 0.3s;
-}
-
-.objects-container.drag-over {
-    border-color: var(--accent-color);
-    background-color: rgba(23, 190, 187, 0.05);
-}
-
-/* مؤشر التوازن */
-.balance-indicator {
-    width: 400px;
-    margin: 0 auto;
-    position: relative;
-    height: 80px;
-}
-
-.indicator-line {
-    width: 100%;
-    height: 4px;
-    background-color: #ddd;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.indicator-arrow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 30px solid var(--accent-color);
-    transition: all 0.5s ease;
-}
-
-.indicator-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    color: #666;
-    font-weight: 600;
-}
-
-/* منطقة الأجسام */
-.objects-panel {
-    background-color: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-}
-
-.objects-panel h3 {
-    color: var(--secondary-color);
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.objects-panel p
