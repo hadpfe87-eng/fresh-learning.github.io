@@ -1,3 +1,55 @@
+// إصلاح توسيط الميزان ديناميكياً
+function centerBalance() {
+    const balanceArea = document.querySelector('.balance-area');
+    const balanceContainer = document.querySelector('.balance-container');
+    const balanceBeam = document.querySelector('.balance-beam');
+    
+    if (!balanceArea || !balanceContainer || !balanceBeam) return;
+    
+    // حساب المركز
+    const areaWidth = balanceArea.clientWidth;
+    const containerWidth = balanceContainer.clientWidth;
+    
+    if (areaWidth > 0 && containerWidth > 0) {
+        // توسيط أفقي
+        balanceContainer.style.marginLeft = 'auto';
+        balanceContainer.style.marginRight = 'auto';
+        
+        // ضبط عرض الذراع بناءً على حجم الشاشة
+        const screenWidth = window.innerWidth;
+        let beamWidth = 500;
+        
+        if (screenWidth < 768) {
+            beamWidth = 350;
+        } else if (screenWidth < 992) {
+            beamWidth = 450;
+        }
+        
+        balanceBeam.style.width = beamWidth + 'px';
+        balanceBeam.style.left = '50%';
+        balanceBeam.style.transform = 'translateX(-50%)';
+        
+        // ضبط موقع الكفات
+        const leftPan = document.querySelector('.left-pan');
+        const rightPan = document.querySelector('.right-pan');
+        
+        if (leftPan && rightPan) {
+            const panOffset = beamWidth / 2 - 70;
+            leftPan.style.right = `calc(50% + ${panOffset}px)`;
+            rightPan.style.left = `calc(50% + ${panOffset}px)`;
+        }
+        
+        console.log('تم توسيط الميزان:', { areaWidth, containerWidth, beamWidth });
+    }
+}
+
+// تشغيل عند تحميل الصفحة وتغيير الحجم
+window.addEventListener('load', centerBalance);
+window.addEventListener('resize', centerBalance);
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(centerBalance, 100);
+});
+
 // لعبة الميزان الذكي - إصلاح مشكلة السحب والإفلات
 document.addEventListener('DOMContentLoaded', function() {
     console.log('⚖️ لعبة الميزان - الإصدار المصحح');
