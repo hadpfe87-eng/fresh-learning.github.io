@@ -1,52 +1,102 @@
 {
   "name": "مختبر العلوم الصغير",
   "short_name": "علم الصغار",
-  "description": "تطبيق تعليمي تفاعلي لتعليم العلوم للأطفال",
-  "start_url": "../index.html",
+  "description": "تطبيق تعليمي تفاعلي لتعليم العلوم للأطفال بين 9-10 سنوات",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/fresh-learning.github.io/",
+  "scope": "/fresh-learning.github.io/",
   "display": "standalone",
-  "background_color": "#4a6fa5",
-  "theme_color": "#4a6fa5",
   "orientation": "portrait",
+  "background_color": "#f5f7fa",
+  "theme_color": "#4a6fa5",
+  "categories": ["education", "kids", "science"],
   "icons": [
     {
-      "src": "../assets/icons/icon-72.png",
+      "src": "assets/icons/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "../assets/icons/icon-96.png",
+      "src": "assets/icons/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "../assets/icons/icon-128.png",
+      "src": "assets/icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "../assets/icons/icon-144.png",
+      "src": "assets/icons/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "../assets/icons/icon-152.png",
+      "src": "assets/icons/icon-152x152.png",
       "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "../assets/icons/icon-192.png",
+      "src": "assets/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "../assets/icons/icon-384.png",
+      "src": "assets/icons/icon-384x384.png",
       "sizes": "384x384",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "../assets/icons/icon-512.png",
+      "src": "assets/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "assets/screenshots/mobile-1.png",
+      "sizes": "360x640",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "الصفحة الرئيسية على الهاتف"
+    },
+    {
+      "src": "assets/screenshots/tablet-1.png",
+      "sizes": "768x1024",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "لعبة الميزان على التابلت"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "الميزان الذكي",
+      "short_name": "الميزان",
+      "description": "العبة لتعلم الوزن والكتلة",
+      "url": "/fresh-learning.github.io/games/balance-game.html",
+      "icons": [
+        {
+          "src": "assets/icons/balance-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "جميع الألعاب",
+      "short_name": "الألعاب",
+      "description": "استعراض جميع الألعاب التعليمية",
+      "url": "/fresh-learning.github.io/#games"
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": []
 }
