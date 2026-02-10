@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <!-- الترميز ودعم العربية -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- معلومات الموقع -->
     <title>مختبر العلوم الصغير - تعليم الأطفال 9-10 سنوات</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="description" content="موقع تعليمي تفاعلي لتعليم العلوم للأطفال بطريقة ممتعة">
+    <meta name="theme-color" content="#4a6fa5">
+    
+    <!-- دعم PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- الخطوط العربية -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ملفات CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- شريط التنقل -->
@@ -22,19 +37,28 @@
                 <a href="#about">عن المشروع</a>
                 <a href="#contact">اتصل بنا</a>
             </div>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- قسم الهيرو -->
+    <!-- القسم الرئيسي -->
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <h2>مرحباً يا صغيري العالم!</h2>
-                <p>انطلق في رحلة علمية ممتعة مع ألعاب تفاعلية تشرح لك أسرار الفيزياء والعلوم بطريقة سهلة وممتعة</p>
-                <a href="#games" class="btn">اكتشف الألعاب <i class="fas fa-arrow-left"></i></a>
+                <h2>مرحباً يا صغيري العالم! 👋</h2>
+                <p>انطلق في رحلة علمية ممتعة مع ألعاب تفاعلية تشرح لك أسرار الفيزياء والعلوم بطريقة سهلة وممتعة. استمتع بالتعلم من خلال التجربة واللعب!</p>
+                <a href="#games" class="btn">
+                    <i class="fas fa-gamepad"></i> اكتشف الألعاب
+                </a>
             </div>
             <div class="hero-image">
-                <img src="https://cdn.pixabay.com/photo/2017/08/02/14/26/people-2572976_1280.jpg" alt="أطفال يتعلمون العلوم">
+                <div class="science-illustration">
+                    <i class="fas fa-atom"></i>
+                    <i class="fas fa-vial"></i>
+                    <i class="fas fa-rocket"></i>
+                </div>
             </div>
         </div>
     </section>
@@ -42,63 +66,71 @@
     <!-- قسم الألعاب -->
     <section class="games-section" id="games">
         <div class="container">
-            <h2 class="section-title">ألعابنا التعليمية</h2>
+            <h2 class="section-title">🎮 ألعابنا التعليمية</h2>
             <p class="section-subtitle">اختر لعبة لتبدأ رحلتك العلمية</p>
             
             <div class="games-grid">
                 <!-- لعبة الميزان الذكي -->
                 <div class="game-card">
-                    <div class="game-icon">
+                    <div class="game-icon" style="background: linear-gradient(135deg, #4a6fa5, #166088);">
                         <i class="fas fa-balance-scale"></i>
                     </div>
                     <h3>الميزان الذكي ⚖️</h3>
-                    <p>تعلم مفهوم الوزن والكتلة من خلال تحقيق التوازن في الميزان</p>
-                    <a href="games/balance-game.html" class="game-btn">العب الآن</a>
+                    <p>تعلم مفهوم الوزن والكتلة من خلال تحقيق التوازن في الميزان. جرب وضع أجسام مختلفة!</p>
+                    <a href="games/balance-game.html" class="game-btn">
+                        <i class="fas fa-play"></i> العب الآن
+                    </a>
                     <div class="game-tags">
-                        <span>الوزن والكتلة</span>
-                        <span>تفاعلي</span>
+                        <span><i class="fas fa-weight-hanging"></i> الوزن</span>
+                        <span><i class="fas fa-cube"></i> الكتلة</span>
                     </div>
                 </div>
 
-                <!-- لعبة اسحب وحرك (قريباً) -->
+                <!-- لعبة اسحب وحرك -->
                 <div class="game-card coming-soon">
-                    <div class="game-icon">
+                    <div class="game-icon" style="background: linear-gradient(135deg, #ff6b6b, #ee5a52);">
                         <i class="fas fa-drag"></i>
                     </div>
                     <h3>اسحب وحرّك 🎮</h3>
-                    <p>افهم قوة الاحتكاك على مختلف الأسطح</p>
-                    <button class="game-btn" disabled>قريباً</button>
+                    <p>افهم قوة الاحتكاك على مختلف الأسطح: الخشب، الرمل، الجليد!</p>
+                    <button class="game-btn" disabled>
+                        <i class="fas fa-clock"></i> قريباً
+                    </button>
                     <div class="game-tags">
-                        <span>الحركة</span>
-                        <span>الاحتكاك</span>
+                        <span><i class="fas fa-shoe-prints"></i> الاحتكاك</span>
+                        <span><i class="fas fa-running"></i> الحركة</span>
                     </div>
                 </div>
 
-                <!-- لعبة سباق السيارات (قريباً) -->
+                <!-- لعبة سباق السيارات -->
                 <div class="game-card coming-soon">
-                    <div class="game-icon">
+                    <div class="game-icon" style="background: linear-gradient(135deg, #1dd1a1, #10ac84);">
                         <i class="fas fa-car"></i>
                     </div>
                     <h3>سباق السيارات 🏎️</h3>
-                    <p>اكتشف تأثير القوة والاحتكاك على الحركة</p>
-                    <button class="game-btn" disabled>قريباً</button>
+                    <p>اكتشف تأثير القوة والاحتكاك على حركة السيارات في مسارات مختلفة!</p>
+                    <button class="game-btn" disabled>
+                        <i class="fas fa-clock"></i> قريباً
+                    </button>
                     <div class="game-tags">
-                        <span>السرعة</span>
-                        <span>القوة</span>
+                        <span><i class="fas fa-tachometer-alt"></i> السرعة</span>
+                        <span><i class="fas fa-bolt"></i> القوة</span>
                     </div>
                 </div>
 
-                <!-- لعبة الضوء والظل (قريباً) -->
+                <!-- لعبة الضوء والظل -->
                 <div class="game-card coming-soon">
-                    <div class="game-icon">
+                    <div class="game-icon" style="background: linear-gradient(135deg, #feca57, #ff9f43);">
                         <i class="fas fa-sun"></i>
                     </div>
                     <h3>الضوء والظل 🌞</h3>
-                    <p>تعلم كيف تتكون الظلال وتنعكس الأضواء</p>
-                    <button class="game-btn" disabled>قريباً</button>
+                    <p>تعلم كيف تتكون الظلال وتنعكس الأضواء في مواد مختلفة!</p>
+                    <button class="game-btn" disabled>
+                        <i class="fas fa-clock"></i> قريباً
+                    </button>
                     <div class="game-tags">
-                        <span>الضوء</span>
-                        <span>الظل</span>
+                        <span><i class="fas fa-lightbulb"></i> الضوء</span>
+                        <span><i class="fas fa-moon"></i> الظل</span>
                     </div>
                 </div>
             </div>
@@ -108,64 +140,131 @@
     <!-- قسم حول المشروع -->
     <section class="about-section" id="about">
         <div class="container">
-            <h2 class="section-title">عن المشروع</h2>
+            <h2 class="section-title">📚 عن المشروع</h2>
             <div class="about-content">
                 <div class="about-text">
                     <h3>لماذا مختبر العلوم الصغير؟</h3>
-                    <p>نحن نقدم وسيلة تعليمية تفاعلية للأطفال بين 9-10 سنوات لتعلم مفاهيم العلوم الأساسية بطريقة ممتعة وجذابة.</p>
+                    <p>نحن نقدم وسيلة تعليمية تفاعلية للأطفال بين 9-10 سنوات لتعلم مفاهيم العلوم الأساسية بطريقة ممتعة وجذابة. تم تصميم الألعاب بناءً على المناهج التعليمية وبإشراف مختصين.</p>
                     
                     <div class="features">
                         <div class="feature">
-                            <i class="fas fa-gamepad"></i>
+                            <div class="feature-icon">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
                             <h4>ألعاب تفاعلية</h4>
-                            <p>تعلم من خلال اللعب والتجربة</p>
+                            <p>تعلم من خلال اللعب والتجربة العملية</p>
                         </div>
                         <div class="feature">
-                            <i class="fas fa-graduation-cap"></i>
+                            <div class="feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
                             <h4>أهداف تعليمية</h4>
-                            <p>مصمم وفق المناهج التعليمية</p>
+                            <p>مصمم وفق المناهج التعليمية العربية</p>
                         </div>
                         <div class="feature">
-                            <i class="fas fa-child"></i>
+                            <div class="feature-icon">
+                                <i class="fas fa-child"></i>
+                            </div>
                             <h4>مناسب للأطفال</h4>
                             <p>واجهة بسيطة وآمنة للاستخدام</p>
                         </div>
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="https://cdn.pixabay.com/photo/2018/09/27/09/22/artificial-intelligence-3706562_1280.jpg" alt="التعلم التفاعلي">
+                    <div class="science-facts">
+                        <div class="fact">
+                            <i class="fas fa-check-circle"></i>
+                            <span>مناسب للأعمار 9-10 سنوات</span>
+                        </div>
+                        <div class="fact">
+                            <i class="fas fa-check-circle"></i>
+                            <span>لا يحتاج إلى تنزيل</span>
+                        </div>
+                        <div class="fact">
+                            <i class="fas fa-check-circle"></i>
+                            <span>يعمل على جميع الأجهزة</span>
+                        </div>
+                        <div class="fact">
+                            <i class="fas fa-check-circle"></i>
+                            <span>مجاني تماماً</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- تذييل الصفحة -->
-    <footer class="footer" id="contact">
+    <!-- قسم الاتصال -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">📞 اتصل بنا</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>البريد الإلكتروني</h4>
+                            <p>info@science-lab.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <div>
+                            <h4>مقترحاتك تهمنا</h4>
+                            <p>شاركنا أفكارك لتحسين الموقع</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>أرسل لنا رسالة</h3>
+                    <form id="contactForm">
+                        <input type="text" placeholder="اسمك" required>
+                        <input type="email" placeholder="بريدك الإلكتروني" required>
+                        <textarea placeholder="رسالتك..." rows="4" required></textarea>
+                        <button type="submit" class="btn">
+                            <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>مختبر العلوم الصغير</h3>
-                    <p>مشروع تعليمي تفاعلي للأطفال</p>
+                    <div class="logo">
+                        <i class="fas fa-flask"></i>
+                        <h3>مختبر العلوم الصغير</h3>
+                    </div>
+                    <p>مشروع تعليمي تفاعلي لتعزيز حب العلوم لدى الأطفال</p>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <a href="#home">الرئيسية</a>
+                    <a href="#games">الألعاب</a>
+                    <a href="#about">عن المشروع</a>
+                    <a href="#contact">اتصل بنا</a>
                 </div>
                 <div class="footer-section">
                     <h4>تابعنا</h4>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="فيسبوك"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="تويتر"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
                     </div>
-                </div>
-                <div class="footer-section">
-                    <h4>اتصل بنا</h4>
-                    <p>البريد: info@science-lab.com</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2024 مختبر العلوم الصغير. جميع الحقوق محفوظة</p>
+                <p>© 2024 مختبر العلوم الصغير. جميع الحقوق محفوظة | صمم بحب ❤️ للأطفال</p>
             </div>
         </div>
     </footer>
 
+    <!-- ملفات JavaScript -->
+    <script src="device-detector.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
