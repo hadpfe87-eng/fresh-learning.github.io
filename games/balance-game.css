@@ -1262,3 +1262,99 @@ body {
         background-color: #2d3748;
     }
 }
+
+/* === معلومات التوازن في الوسط === */
+.balance-info-beam {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px 40px;
+    margin: 30px auto 20px;
+    box-shadow: var(--shadow-light);
+    max-width: 600px;
+    position: relative;
+    z-index: 40;
+    border: 2px solid var(--accent-color);
+}
+
+.balance-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    min-width: 160px;
+}
+
+.balance-info-item i {
+    font-size: 28px;
+    color: var(--primary-color);
+}
+
+.balance-info-item span {
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+}
+
+.balance-info-item strong {
+    color: var(--secondary-color);
+    font-size: 22px;
+}
+
+.balance-info-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    color: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    min-width: 180px;
+    box-shadow: var(--shadow-light);
+    border: 3px solid white;
+    position: relative;
+    z-index: 2;
+}
+
+.balance-info-center i {
+    font-size: 32px;
+    color: #ffd700;
+}
+
+.balance-info-center span {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.balance-info-center strong {
+    font-size: 24px;
+    color: white;
+}
+
+/* تحسينات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .balance-info-beam {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        max-width: 90%;
+    }
+    
+    .balance-info-item {
+        min-width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .balance-info-center {
+        order: -1;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
