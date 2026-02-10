@@ -1,214 +1,425 @@
-// نسخة مبسطة من لعبة الميزان الذكي
+// لعبة الميزان الذكي - إصلاح مشكلة السحب والإفلات
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🎮 لعبة الميزان الذكي - جاهزة للتجربة!');
+    console.log('⚖️ لعبة الميزان - الإصدار المصحح');
     
-    // عناصر أساسية
+    // العناصر الأساسية
     const leftPan = document.getElementById('left-objects');
     const rightPan = document.getElementById('right-objects');
-    const leftWeightDisplay = document.getElementById('left-weight');
-    const rightWeightDisplay = document.getElementById('right-weight');
+    const leftWeight = document.getElementById('left-weight');
+    const rightWeight = document.getElementById('right-weight');
     const balanceBeam = document.querySelector('.balance-beam');
-    const checkBtn = document.getElementById('check-btn');
-    const resetBtn = document.getElementById('reset-btn');
     
-    let leftWeight = 0;
-    let rightWeight = 0;
-    let draggedObject = null;
+    let currentLeftWeight = 0;
+    let currentRightWeight = 0;
     
-    // تعريف الأجسام البسيطة
-    const objects = [
-        { id: 1, name: 'تفاحة', weight: 2, icon: '🍎', color: '#ff6b6b' },
-        { id: 2, name: 'كتاب', weight: 5, icon: '📚', color: '#ffa502' },
-        { id: 3, name: 'كرة', weight: 1, icon: '⚽', color: '#1e90ff' }
-    ];
-    
-    // إنشاء الأجسام
-    function createObjects() {
-        const objectsGrid = document.getElementById('objects-grid');
-        objectsGrid.innerHTML = '';
+    // 1. إعداد الأجسام القابلة للسحب
+    function setupDraggableObjects() {
+        const objects = [
+            { name: 'تفاحة', weight: 2, emoji: '🍎', color: '#ff6b6b' },
+            { name: 'كتاب', weight: 5, emoji: '📚', color: '#ffa502' },
+            { name: 'كرة', weight: 1, emoji: '⚽', color: '#1e90ff' },
+            { name: 'قلم', weight: 1, emoji: '✏️', color: '#2ed573' }
+        ];
         
-        objects.forEach(obj => {
-            const div = document.createElement('div');
-            div.className = 'object-item';
-            div.draggable = true;
-            div.innerHTML = `
-                <div style="font-size: 36px; color: ${obj.color}">${obj.icon}</div>
-                <div style="font-weight: bold; margin: 5px 0">${obj.name}</div>
-                <div style="background: ${obj.color}; color: white; padding: 4px 12px; border-radius: 15px">
+        const container = document.getElementById('objects-grid');
+        
+        objects.forEach((obj, index) => {
+            const objElement = document.createElement('div');
+            objElement.className = 'draggable-object';
+            objElement.id = `obj-${index}`;
+            objElement.draggable = true;
+            objElement.dataset.weight = obj.weight;
+            objElement.dataset.name = obj.name;
+            
+            objElement.innerHTML = `
+                <div style="font-size: 40px; margin-bottom: 10px;">${obj.emoji}</div>
+                <div style="font-weight: bold; margin-bottom: 5px;">${obj.name}</div>
+                <div style="background: ${obj.color}; color: white; padding: 5px 10px; border-radius: 15px; font-weight: bold;">
                     ${obj.weight} كجم
                 </div>
             `;
             
-            div.addEventListener('dragstart', function(e) {
-                draggedObject = this;
-                this.style.opacity = '0.5';
-                e.dataTransfer.setData('text/plain', JSON.stringify(obj));
+            // إضافة CSS مباشرة
+            objElement.style.cssText = `
+                background: white;
+                border-radius: 15px;
+                padding: 20px;
+                text-align: center;
+                cursor: grab;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                transition: all 0.3s;
+                margin: 10px;
+                border: 3px solid ${obj.color};
+                user-select: none;
+            `;
+            
+            // أحداث السحب
+            objElement.addEventListener('dragstart', function(e) {
+                this.style.opacity = '0.6';
+                this.style.cursor = 'grabbing';
+                e.dataTransfer.setData('text/plain', JSON.stringify({
+                    id: this.id,
+                    weight: obj.weight,
+                    name: obj.name,
+                    emoji: obj.emoji,
+                    color: obj.color
+                }));
+                console.log('بدء سحب:', obj.name);
             });
             
-            div.addEventListener('dragend', function() {
+            objElement.addEventListener('dragend', function() {
                 this.style.opacity = '1';
-                draggedObject = null;
+                this.style.cursor = 'grab';
+                console.log('انتهى السحب');
             });
             
-            objectsGrid.appendChild(div);
+            container.appendChild(objElement);
         });
     }
     
-    // جعل الكفات قابلة للإفلات
-    [leftPan, rightPan].forEach(pan => {
-        pan.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#17bebb';
-            this.style.backgroundColor = 'rgba(23, 190, 187, 0.1)';
-        });
+    // 2. جعل الكفات قابلة للإفلات
+    function setupDropZones() {
+        const pans = [leftPan, rightPan];
         
-        pan.addEventListener('dragleave', function() {
-            this.style.borderColor = '#ddd';
-            this.style.backgroundColor = '';
-        });
-        
-        pan.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.style.borderColor = '#ddd';
-            this.style.backgroundColor = '';
+        pans.forEach((pan, panIndex) => {
+            const side = panIndex === 0 ? 'left' : 'right';
             
-            if (draggedObject) {
-                // إنشاء نسخة من الجسم
-                const newObj = draggedObject.cloneNode(true);
-                newObj.style.opacity = '1';
-                newObj.style.margin = '5px';
-                newObj.style.transform = 'scale(0.9)';
-                newObj.style.animation = 'popIn 0.3s ease';
+            // CSS للكفة
+            pan.style.cssText = `
+                min-height: 150px;
+                border: 3px dashed #ddd;
+                border-radius: 15px;
+                padding: 20px;
+                margin: 10px;
+                background: rgba(248,249,250,0.5);
+                transition: all 0.3s;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                align-items: flex-start;
+                justify-content: center;
+            `;
+            
+            // رسالة فارغة
+            pan.innerHTML = `
+                <div class="empty-message" style="width: 100%; text-align: center; color: #999; padding: 20px;">
+                    <i class="fas fa-hand-point-up" style="font-size: 30px; margin-bottom: 10px;"></i>
+                    <p style="margin: 0; font-size: 14px;">اسحب الأجسام إلى هنا</p>
+                </div>
+            `;
+            
+            // حدث dragover (السماح بالإفلات)
+            pan.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#17bebb';
+                this.style.background = 'rgba(23, 190, 187, 0.1)';
+            });
+            
+            // حدث dragleave
+            pan.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#ddd';
+                this.style.background = 'rgba(248,249,250,0.5)';
+            });
+            
+            // حدث drop (الإفلات الفعلي)
+            pan.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.borderColor = '#ddd';
+                this.style.background = 'rgba(248,249,250,0.5)';
                 
-                this.appendChild(newObj);
+                // الحصول على بيانات الجسم المسحوب
+                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                console.log('إفلات:', data.name, 'في الكفة', side);
+                
+                // إزالة رسالة "فارغ" إذا كانت موجودة
+                const emptyMsg = this.querySelector('.empty-message');
+                if (emptyMsg) emptyMsg.remove();
+                
+                // إنشاء نسخة من الجسم في الكفة
+                const objCopy = createObjectCopy(data);
+                this.appendChild(objCopy);
+                
+                // تحديث الوزن
                 updateWeights();
                 
-                // إصدار صوت بسيط
-                try {
-                    const audio = new AudioContext();
-                    const oscillator = audio.createOscillator();
-                    oscillator.connect(audio.destination);
-                    oscillator.frequency.value = 400;
-                    oscillator.start();
-                    setTimeout(() => oscillator.stop(), 100);
-                } catch (e) {}
-            }
+                // تأثير بسيط
+                objCopy.style.animation = 'popIn 0.3s ease';
+                
+                // صوت الإفلات
+                playDropSound();
+            });
         });
-    });
-    
-    // تحديث الأوزان
-    function updateWeights() {
-        leftWeight = calculateWeight(leftPan);
-        rightWeight = calculateWeight(rightPan);
-        
-        leftWeightDisplay.textContent = leftWeight;
-        rightWeightDisplay.textContent = rightWeight;
-        
-        updateBalance();
     }
     
-    function calculateWeight(pan) {
+    // 3. إنشاء نسخة من الجسم
+    function createObjectCopy(data) {
+        const copy = document.createElement('div');
+        copy.className = 'object-in-pan';
+        copy.dataset.weight = data.weight;
+        
+        copy.innerHTML = `
+            <div style="font-size: 30px;">${data.emoji}</div>
+            <div style="background: ${data.color}; color: white; padding: 3px 8px; border-radius: 10px; font-size: 12px; margin-top: 5px;">
+                ${data.weight} كجم
+            </div>
+        `;
+        
+        copy.style.cssText = `
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid ${data.color};
+            animation: popIn 0.3s ease;
+        `;
+        
+        // زر إزالة
+        const removeBtn = document.createElement('button');
+        removeBtn.innerHTML = '✕';
+        removeBtn.style.cssText = `
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: none;
+        `;
+        
+        copy.appendChild(removeBtn);
+        
+        // إظهار زر الإزالة عند التمرير
+        copy.addEventListener('mouseenter', () => {
+            removeBtn.style.display = 'block';
+        });
+        
+        copy.addEventListener('mouseleave', () => {
+            removeBtn.style.display = 'none';
+        });
+        
+        // إزالة الجسم
+        removeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            copy.remove();
+            updateWeights();
+            
+            // إعادة رسالة "فارغ" إذا كانت الكفة خالية
+            const pan = copy.parentElement;
+            if (pan.children.length === 0) {
+                pan.innerHTML = `
+                    <div class="empty-message" style="width: 100%; text-align: center; color: #999; padding: 20px;">
+                        <i class="fas fa-hand-point-up" style="font-size: 30px; margin-bottom: 10px;"></i>
+                        <p style="margin: 0; font-size: 14px;">اسحب الأجسام إلى هنا</p>
+                    </div>
+                `;
+            }
+        });
+        
+        return copy;
+    }
+    
+    // 4. تحديث الأوزان والميزان
+    function updateWeights() {
+        // حساب وزن كل كفة
+        currentLeftWeight = calculatePanWeight(leftPan);
+        currentRightWeight = calculatePanWeight(rightPan);
+        
+        // تحديث العرض
+        leftWeight.textContent = currentLeftWeight;
+        rightWeight.textContent = currentRightWeight;
+        
+        // تحديث الميزان
+        updateBalance();
+        
+        console.log('الأوزان:', { left: currentLeftWeight, right: currentRightWeight });
+    }
+    
+    function calculatePanWeight(pan) {
         let total = 0;
-        const items = pan.querySelectorAll('.object-item');
-        items.forEach(item => {
-            const weightText = item.querySelector('div:nth-child(3)').textContent;
-            const weight = parseFloat(weightText) || 0;
+        const objects = pan.querySelectorAll('.object-in-pan');
+        
+        objects.forEach(obj => {
+            const weight = parseFloat(obj.dataset.weight) || 0;
             total += weight;
         });
+        
         return total;
     }
     
-    // تحديث الميزان
     function updateBalance() {
-        const difference = leftWeight - rightWeight;
-        const tilt = Math.min(Math.max(difference * 2, -15), 15);
+        const difference = currentLeftWeight - currentRightWeight;
+        const tilt = Math.min(Math.max(difference * 0.5, -20), 20);
         
         if (balanceBeam) {
             balanceBeam.style.transform = `rotate(${tilt}deg)`;
+            balanceBeam.style.transition = 'transform 0.5s ease';
         }
         
         // تحديث السهم المؤشر
         const arrow = document.getElementById('balance-arrow');
         if (arrow) {
-            const position = Math.min(Math.max(difference * 10, -100), 100);
+            const position = Math.min(Math.max(difference * 2, -100), 100);
             arrow.style.left = `calc(50% + ${position}px)`;
+            arrow.style.transition = 'left 0.5s ease';
             
+            // تغيير اللون حسب الاتجاه
             if (difference > 5) {
                 arrow.style.borderBottomColor = '#ff4757';
             } else if (difference < -5) {
                 arrow.style.borderBottomColor = '#1e90ff';
-            } else {
+            } else if (Math.abs(difference) <= 0.5) {
                 arrow.style.borderBottomColor = '#2ed573';
+            } else {
+                arrow.style.borderBottomColor = '#ffa502';
             }
         }
-    }
-    
-    // التحقق من التوازن
-    function checkBalance() {
-        const difference = Math.abs(leftWeight - rightWeight);
-        let message = '';
         
-        if (difference === 0) {
-            message = '🎉 ممتاز! الميزان متوازن تماماً!';
-            alert(message);
-        } else if (difference <= 2) {
-            message = '👍 جيد! الميزان قريب من التوازن. الفرق: ' + difference + ' كجم';
-            alert(message);
-        } else {
-            message = '⚠️ حاول مرة أخرى! الفرق كبير: ' + difference + ' كجم';
-            alert(message);
+        // تحديث الفرق
+        const diffElement = document.getElementById('weight-difference');
+        if (diffElement) {
+            diffElement.textContent = Math.abs(difference).toFixed(1);
         }
     }
     
-    // إعادة التعيين
-    function resetGame() {
-        leftPan.innerHTML = '<div>اسحب الأجسام هنا</div>';
-        rightPan.innerHTML = '<div>اسحب الأجسام هنا</div>';
-        leftWeight = 0;
-        rightWeight = 0;
+    // 5. مؤثرات صوتية
+    function playDropSound() {
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 400;
+            gainNode.gain.value = 0.1;
+            
+            oscillator.start();
+            setTimeout(() => oscillator.stop(), 100);
+        } catch (e) {
+            console.log('لا دعم للأصوات:', e);
+        }
+    }
+    
+    // 6. إعداد أزرار التحكم
+    function setupControls() {
+        const checkBtn = document.getElementById('check-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        
+        if (checkBtn) {
+            checkBtn.addEventListener('click', function() {
+                const difference = Math.abs(currentLeftWeight - currentRightWeight);
+                
+                if (difference === 0) {
+                    alert('🎉 ممتاز! الميزان متوازن تماماً!');
+                } else if (difference <= 2) {
+                    alert(`👍 جيد جداً! الفرق صغير: ${difference.toFixed(1)} كجم`);
+                } else {
+                    alert(`⚠️ حاول مرة أخرى! الفرق كبير: ${difference.toFixed(1)} كجم`);
+                }
+            });
+        }
+        
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function() {
+                leftPan.innerHTML = `
+                    <div class="empty-message" style="width: 100%; text-align: center; color: #999; padding: 20px;">
+                        <i class="fas fa-hand-point-up" style="font-size: 30px; margin-bottom: 10px;"></i>
+                        <p style="margin: 0; font-size: 14px;">اسحب الأجسام إلى هنا</p>
+                    </div>
+                `;
+                
+                rightPan.innerHTML = `
+                    <div class="empty-message" style="width: 100%; text-align: center; color: #999; padding: 20px;">
+                        <i class="fas fa-hand-point-up" style="font-size: 30px; margin-bottom: 10px;"></i>
+                        <p style="margin: 0; font-size: 14px;">اسحب الأجسام إلى هنا</p>
+                    </div>
+                `;
+                
+                currentLeftWeight = 0;
+                currentRightWeight = 0;
+                updateWeights();
+                
+                alert('تم إعادة التعيين! يمكنك البدء من جديد.');
+            });
+        }
+    }
+    
+    // 7. إضافة CSS للحركات
+    function addStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes popIn {
+                0% { transform: scale(0.5); opacity: 0; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+            
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+            
+            .draggable-object:hover {
+                transform: translateY(-5px) scale(1.05);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            }
+            
+            .object-in-pan {
+                position: relative;
+            }
+            
+            .object-in-pan:hover {
+                transform: scale(1.05);
+                z-index: 10;
+            }
+            
+            .empty-message {
+                animation: float 2s ease-in-out infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // 8. التهيئة
+    function initGame() {
+        console.log('تهيئة اللعبة...');
+        setupDraggableObjects();
+        setupDropZones();
+        setupControls();
+        addStyles();
         updateWeights();
+        
+        console.log('✅ اللعبة جاهزة! جرب سحب تفاحة إلى إحدى الكفتين.');
+        
+        // رسالة ترحيبية
+        setTimeout(() => {
+            if (confirm('مرحباً! 🤗\n\nاسحب أي جسم إلى إحدى الكفتين وشاهد كيف يتغير الميزان.\n\nهل تريد رؤية مثال؟')) {
+                // مثال توضيحي
+                const sampleData = {
+                    id: 'obj-0',
+                    weight: 2,
+                    name: 'تفاحة',
+                    emoji: '🍎',
+                    color: '#ff6b6b'
+                };
+                
+                const objCopy = createObjectCopy(sampleData);
+                leftPan.querySelector('.empty-message')?.remove();
+                leftPan.appendChild(objCopy);
+                updateWeights();
+                
+                alert('رائع! لقد وضعت تفاحة في الكفة اليسرى. \n\nلاحظ كيف مال الميزان! ⚖️\n\nجرب الآن وضع كتاب في الكفة اليمنى لتحقيق التوازن.');
+            }
+        }, 1000);
     }
     
-    // إضافة CSS للحركات
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(0.9); opacity: 1; }
-        }
-        
-        .object-item {
-            cursor: grab;
-            transition: all 0.3s;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .object-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        
-        .object-item:active {
-            cursor: grabbing;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // تهيئة اللعبة
-    createObjects();
-    
-    // إضافة الأحداث للأزرار
-    if (checkBtn) checkBtn.addEventListener('click', checkBalance);
-    if (resetBtn) resetBtn.addEventListener('click', resetGame);
-    
-    // رسالة ترحيبية
-    setTimeout(() => {
-        alert('مرحباً! اسحب الأجسام إلى إحدى الكفتين وشاهد كيف يتغير الميزان ⚖️');
-    }, 1000);
-    
-    console.log('🎮 اللعبة جاهزة! اسحب وأفلت الأجسام.');
+    // بدء اللعبة
+    initGame();
 });
