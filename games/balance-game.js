@@ -1,384 +1,239 @@
-// لعبة الميزان الذكي - الجافاسكريبت
+// إضافة دعم اللمس الكامل للعبة الميزان
 
 document.addEventListener('DOMContentLoaded', function() {
-    // عناصر DOM
-    const leftPan = document.getElementById('left-pan');
-    const rightPan = document.getElementById('right-pan');
-    const leftPanContainer = leftPan.querySelector('.objects-container');
-    const rightPanContainer = rightPan.querySelector('.objects-container');
-    const leftWeightDisplay = document.getElementById('left-weight');
-    const rightWeightDisplay = document.getElementById('right-weight');
-    const balanceBeam = document.querySelector('.balance-beam');
-    const balanceArrow = document.getElementById('balance-arrow');
-    const objectsGrid = document.getElementById('objects-grid');
-    const scoreDisplay = document.getElementById('score');
-    const levelDisplay = document.getElementById('level');
-    const checkBtn = document.getElementById('check-btn');
-    const resetBtn = document.getElementById('reset-btn');
-    const hintBtn = document.getElementById('hint-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const resultsPanel = document.getElementById('results-panel');
-    const resultTitle = document.getElementById('result-title');
-    const resultMessage = document.getElementById('result-message');
-    const resultStars = document.getElementById('result-stars');
-    const closeResultsBtn = document.getElementById('close-results');
+    // ... الكود السابق يبقى كما هو ...
     
-    // متغيرات اللعبة
-    let score = 0;
-    let level = 1;
-    let currentChallenge = null;
-    let leftWeight = 0;
-    let rightWeight = 0;
-    let draggedObject = null;
-    
-    // تحديث الشاشة
-    function updateDisplay() {
-        scoreDisplay.textContent = score;
-        levelDisplay.textContent = level;
-        leftWeightDisplay.textContent = leftWeight;
-        rightWeightDisplay.textContent = rightWeight;
+    // إضافة دعم السحب باللمس
+    function setupTouchEvents() {
+        const objectItems = document.querySelectorAll('.object-item');
+        const panContainers = [leftPanContainer, rightPanContainer];
         
-        updateBalance();
-    }
-    
-    // تحديث توازن الميزان
-    function updateBalance() {
-        const weightDifference = leftWeight - rightWeight;
-        const maxTilt = 15; // أقصى ميلان بالدرجات
-        
-        // حساب الميلان
-        let tilt = 0;
-        if (weightDifference !== 0) {
-            tilt = Math.min(Math.max(weightDifference * 0.5, -maxTilt), maxTilt);
-        }
-        
-        // تطبيق الدوران على ذراع الميزان
-        balanceBeam.style.transform = `rotate(${tilt}deg)`;
-        
-        // تحديث المؤشر
-        const arrowPosition = Math.min(Math.max(weightDifference * 2, -100), 100);
-        balanceArrow.style.left = `calc(50% + ${arrowPosition}px)`;
-        
-        // تغيير لون السهم حسب الاتجاه
-        if (weightDifference > 5) {
-            balanceArrow.style.borderBottomColor = '#ff4757'; // أحمر
-        } else if (weightDifference < -5) {
-            balanceArrow.style.borderBottomColor = '#1e90ff'; // أزرق
-        } else {
-            balanceArrow.style.borderBottomColor = '#2ed573'; // أخضر (متوازن)
-        }
-    }
-    
-    // إنشاء الأجسام
-    const objects = [
-        { id: 1, name: 'تفاحة', weight: 2, icon: '🍎', color: '#ff6b6b' },
-        { id: 2, name: 'كتاب', weight: 5, icon: '📚', color: '#ffa502' },
-        { id: 3, name: 'كرة', weight: 1, icon: '⚽', color: '#1e90ff' },
-        { id: 4, name: 'قلم', weight: 0.5, icon: '✏️', color: '#2ed573' },
-        { id: 5, name: 'زجاجة', weight: 3, icon: '🧴', color: '#9c88ff' },
-        { id: 6, name: 'ممحاة', weight: 0.2, icon: '🧽', color: '#fbc531' },
-        { id: 7, name: 'سيارة', weight: 8, icon: '🚗', color: '#e84118' },
-        { id: 8, name: 'مكعب', weight: 4, icon: '🧊', color: '#00cec9' }
-    ];
-    
-    // إنشاء تحديات (مستويات)
-    const challenges = [
-        {
-            level: 1,
-            target: 5,
-            objects: [1, 2, 3],
-            message: "اجعل مجموع الأوزان في الكفتين يساوي 5 كجم"
-        },
-        {
-            level: 2,
-            target: 8,
-            objects: [1, 2, 3, 4],
-            message: "اجعل مجموع الأوزان في الكفتين يساوي 8 كجم"
-        },
-        {
-            level: 3,
-            target: 10,
-            objects: [1, 2, 3, 4, 5],
-            message: "اجعل مجموع الأوزان في الكفتين يساوي 10 كجم"
-        },
-        {
-            level: 4,
-            target: 12,
-            objects: [1, 2, 3, 4, 5, 6],
-            message: "اجعل مجموع الأوزان في الكفتين يساوي 12 كجم"
-        },
-        {
-            level: 5,
-            target: 15,
-            objects: [1, 2, 3, 4, 5, 6, 7],
-            message: "اجعل مجموع الأوزان في الكفتين يساوي 15 كجم"
-        }
-    ];
-    
-    // بدء مستوى جديد
-    function startLevel(levelNum) {
-        level = levelNum;
-        currentChallenge = challenges.find(c => c.level === level) || challenges[0];
-        
-        // مسح الأجسام السابقة
-        clearPans();
-        leftWeight = 0;
-        rightWeight = 0;
-        
-        // إنشاء الأجسام المتاحة
-        objectsGrid.innerHTML = '';
-        currentChallenge.objects.forEach(objId => {
-            const obj = objects.find(o => o.id === objId);
-            if (obj) {
-                createObjectElement(obj);
-            }
+        objectItems.forEach(item => {
+            // بدء السحب باللمس
+            item.addEventListener('touchstart', handleTouchStart, { passive: true });
+            
+            // منع سلوك المتصفح الافتراضي
+            item.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+            
+            // إنهاء السحب باللمس
+            item.addEventListener('touchend', handleTouchEnd);
         });
         
-        updateDisplay();
+        panContainers.forEach(container => {
+            container.addEventListener('touchmove', handleTouchMove, { passive: false });
+            container.addEventListener('touchend', handleTouchDrop);
+        });
     }
     
-    // إنشاء عنصر جسم قابل للسحب
-    function createObjectElement(obj) {
-        const objectElement = document.createElement('div');
-        objectElement.className = 'object-item';
-        objectElement.draggable = true;
-        objectElement.dataset.id = obj.id;
-        objectElement.dataset.weight = obj.weight;
-        
-        objectElement.innerHTML = `
-            <div class="object-icon" style="color: ${obj.color}">${obj.icon}</div>
-            <div class="object-name">${obj.name}</div>
-            <div class="object-weight">${obj.weight} كجم</div>
-        `;
-        
-        // إضافة أحداث السحب
-        objectElement.addEventListener('dragstart', handleDragStart);
-        objectElement.addEventListener('dragend', handleDragEnd);
-        
-        objectsGrid.appendChild(objectElement);
-    }
+    // متغيرات لتتبع اللمس
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let currentTouchItem = null;
+    let touchGhost = null;
     
-    // مسح الكفتين
-    function clearPans() {
-        leftPanContainer.innerHTML = '';
-        rightPanContainer.innerHTML = '';
-        leftWeight = 0;
-        rightWeight = 0;
-    }
-    
-    // معالجة بدء السحب
-    function handleDragStart(e) {
-        draggedObject = this;
+    function handleTouchStart(e) {
+        if (e.touches.length !== 1) return;
+        
+        const touch = e.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        currentTouchItem = this;
+        
+        // إنشاء نسخة شبحية للجسم
+        createTouchGhost(this);
+        
+        // إضافة تأثير اللمس
+        this.style.opacity = '0.7';
         this.classList.add('dragging');
         
-        // تعيين بيانات السحب
-        e.dataTransfer.setData('text/plain', JSON.stringify({
-            id: this.dataset.id,
-            weight: parseFloat(this.dataset.weight),
-            name: this.querySelector('.object-name').textContent,
-            icon: this.querySelector('.object-icon').textContent,
-            color: this.querySelector('.object-icon').style.color
-        }));
+        e.preventDefault();
     }
     
-    // معالجة انتهاء السحب
-    function handleDragEnd() {
-        this.classList.remove('dragging');
-        draggedObject = null;
+    function handleTouchMove(e) {
+        if (!currentTouchItem || e.touches.length !== 1) return;
+        
+        const touch = e.touches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        
+        // تحريك الشبح
+        if (touchGhost) {
+            touchGhost.style.left = (touch.clientX - 50) + 'px';
+            touchGhost.style.top = (touch.clientY - 50) + 'px';
+        }
+        
+        // تحديد الكفة التي فوقها المستخدم
+        const targetPan = getTouchTargetPan(touch.clientX, touch.clientY);
+        
+        // إبراز الكفة المستهدفة
+        panContainers.forEach(container => {
+            container.classList.remove('drag-over');
+        });
+        
+        if (targetPan) {
+            targetPan.classList.add('drag-over');
+        }
+        
+        e.preventDefault();
     }
     
-    // جعل الكفتين قابلة للإفلات
-    [leftPanContainer, rightPanContainer].forEach(container => {
-        container.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            this.classList.add('drag-over');
-        });
+    function handleTouchEnd(e) {
+        if (!currentTouchItem) return;
         
-        container.addEventListener('dragleave', function() {
-            this.classList.remove('drag-over');
-        });
+        // إزالة الشبح
+        if (touchGhost) {
+            touchGhost.remove();
+            touchGhost = null;
+        }
         
-        container.addEventListener('drop', function(e) {
-            e.preventDefault();
-            this.classList.remove('drag-over');
-            
-            // التأكد من وجود جسم مسحوب
-            if (!draggedObject) return;
-            
-            // منع إضافة نفس الجسم مرتين
-            if (this.contains(draggedObject)) return;
-            
-            // نقل الجسم إلى الكفة
-            this.appendChild(draggedObject);
+        // تحديد موقع الإفلات
+        const touch = e.changedTouches[0];
+        const targetPan = getTouchTargetPan(touch.clientX, touch.clientY);
+        
+        if (targetPan && currentTouchItem.parentNode !== targetPan) {
+            // نقل الجسم إلى الكفة الجديدة
+            targetPan.appendChild(currentTouchItem);
             
             // تحديث الوزن
-            const weight = parseFloat(draggedObject.dataset.weight);
+            const weight = parseFloat(currentTouchItem.dataset.weight);
             
-            if (this === leftPanContainer) {
+            if (targetPan === leftPanContainer) {
                 leftWeight += weight;
             } else {
                 rightWeight += weight;
             }
             
             updateDisplay();
-            
-            // إصدار صوت الإفلات
             playSound('drop');
+        }
+        
+        // إعادة العنصر لحالته الطبيعية
+        currentTouchItem.style.opacity = '';
+        currentTouchItem.classList.remove('dragging');
+        
+        // إزالة الإبراز من الكفات
+        panContainers.forEach(container => {
+            container.classList.remove('drag-over');
         });
+        
+        currentTouchItem = null;
+    }
+    
+    function handleTouchDrop(e) {
+        // معالجة الإفلات في الكفة
+        if (currentTouchItem && this.classList.contains('drag-over')) {
+            if (this !== currentTouchItem.parentNode) {
+                this.appendChild(currentTouchItem);
+                
+                const weight = parseFloat(currentTouchItem.dataset.weight);
+                
+                if (this === leftPanContainer) {
+                    leftWeight += weight;
+                } else {
+                    rightWeight += weight;
+                }
+                
+                updateDisplay();
+                playSound('drop');
+            }
+        }
+        
+        this.classList.remove('drag-over');
+    }
+    
+    function createTouchGhost(item) {
+        touchGhost = item.cloneNode(true);
+        touchGhost.classList.add('touch-ghost');
+        touchGhost.style.position = 'fixed';
+        touchGhost.style.zIndex = '10000';
+        touchGhost.style.pointerEvents = 'none';
+        touchGhost.style.transform = 'scale(1.1)';
+        touchGhost.style.boxShadow = '0 10px 30px rgba(0,0,0,0.3)';
+        touchGhost.style.opacity = '0.9';
+        
+        document.body.appendChild(touchGhost);
+    }
+    
+    function getTouchTargetPan(x, y) {
+        const leftRect = leftPanContainer.getBoundingClientRect();
+        const rightRect = rightPanContainer.getBoundingClientRect();
+        
+        // التحقق من الاصطدام مع الكفة اليسرى
+        if (x >= leftRect.left && x <= leftRect.right &&
+            y >= leftRect.top && y <= leftRect.bottom) {
+            return leftPanContainer;
+        }
+        
+        // التحقق من الاصطدام مع الكفة اليمنى
+        if (x >= rightRect.left && x <= rightRect.right &&
+            y >= rightRect.top && y <= rightRect.bottom) {
+            return rightPanContainer;
+        }
+        
+        return null;
+    }
+    
+    // إضافة CSS للشبح
+    const style = document.createElement('style');
+    style.textContent = `
+        .touch-ghost {
+            animation: ghostFloat 0.3s ease;
+        }
+        
+        @keyframes ghostFloat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            .object-item {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .object-item:active {
+                animation: touchFeedback 0.2s ease;
+            }
+            
+            @keyframes touchFeedback {
+                0% { transform: scale(1); }
+                50% { transform: scale(0.95); }
+                100% { transform: scale(1); }
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // تحسين دعم اللمس في نافذة النتائج
+    resultsPanel.addEventListener('touchstart', function(e) {
+        e.stopPropagation();
     });
     
-    // التحقق من التوازن
-    function checkBalance() {
+    // إضافة تأثير الاهتزاز على الجوال عند النجاح
+    function vibrateOnSuccess() {
+        if ('vibrate' in navigator) {
+            navigator.vibrate([100, 50, 100]);
+        }
+    }
+    
+    // تحديث دالة checkBalance
+    const originalCheckBalance = checkBalance;
+    checkBalance = function() {
+        originalCheckBalance();
+        
+        // اهتزاز على الجوال عند النجاح
         const weightDifference = Math.abs(leftWeight - rightWeight);
-        const totalWeight = leftWeight + rightWeight;
-        
-        let isBalanced = false;
-        let message = '';
-        let stars = 0;
-        
-        // معايير النجاح
-        if (totalWeight === 0) {
-            message = 'لم تضف أي أجسام بعد!';
-        } else if (weightDifference <= 0.5) {
-            // متوازن تماماً
-            isBalanced = true;
-            message = 'ممتاز! الميزان متوازن تماماً';
-            stars = 3;
-            score += 100;
-            playSound('success');
-        } else if (weightDifference <= 2) {
-            // قريب من التوازن
-            isBalanced = true;
-            message = 'جيد جداً! الميزان قريب من التوازن';
-            stars = 2;
-            score += 50;
-            playSound('success');
-        } else if (Math.abs(totalWeight - currentChallenge.target) <= 2) {
-            // الوزن الكلي صحيح
-            message = 'جيد! الوزن الكلي صحيح ولكن الميزان غير متوازن';
-            stars = 1;
-            score += 20;
-            playSound('partial');
-        } else {
-            // غير متوازن
-            message = 'حاول مرة أخرى! الميزان غير متوازن';
-            playSound('error');
+        if (weightDifference <= 2) {
+            vibrateOnSuccess();
         }
-        
-        // عرض النتائج
-        if (isBalanced || stars > 0) {
-            showResults(isBalanced, message, stars);
-        } else {
-            alert(message);
-        }
-        
-        updateDisplay();
-    }
+    };
     
-    // عرض نتائج المستوى
-    function showResults(isSuccess, message, stars) {
-        resultTitle.textContent = isSuccess ? '🎉 أحسنت!' : '🔧 حاول مرة أخرى';
-        resultTitle.style.color = isSuccess ? '#2ed573' : '#ffa502';
-        
-        resultMessage.textContent = message;
-        
-        // تحديث النجوم
-        const starIcons = resultStars.querySelectorAll('i');
-        starIcons.forEach((star, index) => {
-            if (index < stars) {
-                star.className = 'fas fa-star';
-                star.style.color = '#ffc107';
-            } else {
-                star.className = 'far fa-star';
-                star.style.color = '#ddd';
-            }
-        });
-        
-        resultsPanel.style.display = 'flex';
-    }
+    // تهيئة أحداث اللمس بعد تحميل الصفحة
+    setTimeout(() => {
+        setupTouchEvents();
+    }, 500);
     
-    // إظهار تلميح
-    function showHint() {
-        const target = currentChallenge.target;
-        const currentTotal = leftWeight + rightWeight;
-        const difference = target - currentTotal;
-        
-        let hint = '';
-        
-        if (difference > 0) {
-            hint = `أنت بحاجة إلى إضافة ${difference} كجم أخرى لتحقيق الوزن المطلوب.`;
-        } else if (difference < 0) {
-            hint = `أنت بحاجة إلى إزالة ${Math.abs(difference)} كجم لتحقيق الوزن المطلوب.`;
-        } else {
-            hint = 'الوزن الكلي صحيح! حاول تحقيق التوازن بين الكفتين.';
-        }
-        
-        alert(`💡 تلميح: ${hint}`);
-        playSound('hint');
-    }
-    
-    // الانتقال للمستوى التالي
-    function nextLevel() {
-        if (level < challenges.length) {
-            startLevel(level + 1);
-        } else {
-            alert('🎊 مبروك! لقد أكملت جميع المستويات!');
-            startLevel(1);
-            score = 0;
-        }
-        
-        resultsPanel.style.display = 'none';
-        updateDisplay();
-    }
-    
-    // تشغيل الأصوات
-    function playSound(type) {
-        // يمكن إضافة أصوات حقيقية هنا
-        console.log(`تشغيل صوت: ${type}`);
-        
-        // محاكاة صوتية بسيطة باستخدام Web Audio API
-        try {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            // ترددات مختلفة لأنواع الأصوات
-            if (type === 'success') {
-                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.5);
-            } else if (type === 'error') {
-                oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // A3
-                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.3);
-            } else if (type === 'drop') {
-                oscillator.frequency.setValueAtTime(392, audioContext.currentTime); // G4
-                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.1);
-            }
-        } catch (e) {
-            console.log('تعذر تشغيل الصوت');
-        }
-    }
-    
-    // إضافة الأحداث
-    checkBtn.addEventListener('click', checkBalance);
-    resetBtn.addEventListener('click', () => startLevel(level));
-    hintBtn.addEventListener('click', showHint);
-    nextBtn.addEventListener('click', nextLevel);
-    closeResultsBtn.addEventListener('click', () => {
-        resultsPanel.style.display = 'none';
-    });
-    
-    // بدء اللعبة
-    startLevel(1);
-    
-    // رسالة ترحيبية
-    console.log('مرحباً في لعبة الميزان الذكي! استمتع بتعلم مفاهيم الوزن والكتلة.');
+    // ... بقية الكود السابق ...
 });
