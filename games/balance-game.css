@@ -1,16 +1,182 @@
-/* لعبة الميزان الذكي - إصلاح الميزان المخفي */
+/* ====== لعبة الميزان الذكي - تصميم كامل مصحح ====== */
+
+/* ----- المتغيرات ----- */
 :root {
     --balance-primary: #4a6fa5;
     --balance-secondary: #166088;
     --balance-accent: #17bebb;
+    --balance-success: #28a745;
+    --balance-warning: #ffc107;
+    --balance-danger: #dc3545;
+    
     --pan-left-color: #ff6b6b;
     --pan-right-color: #1e90ff;
+    --pan-balanced: #2ed573;
 }
 
+/* ----- شريط لعبة الميزان ----- */
+.game-navbar {
+    background: linear-gradient(135deg, var(--balance-primary), var(--balance-secondary));
+    color: white;
+    padding: 12px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.game-navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.back-btn {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.back-btn:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateX(5px);
+}
+
+.game-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.game-title i {
+    font-size: 24px;
+    color: #ffd700;
+}
+
+.game-title h1 {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.game-stats {
+    display: flex;
+    gap: 25px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.stat-label {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* ----- حاوية اللعبة الرئيسية ----- */
+.game-container {
+    padding: 20px 0;
+    min-height: calc(100vh - 200px);
+    background: linear-gradient(135deg, #f5f7fa 0%, #e3f2fd 100%);
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ----- لوحة التعليمات ----- */
+.instructions-panel {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-right: 5px solid var(--balance-accent);
+}
+
+.instructions-panel h2 {
+    color: var(--balance-secondary);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+}
+
+.instructions-panel > p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.objectives {
+    background: #e8f4fd;
+    border-radius: 10px;
+    padding: 20px;
+    border-right: 4px solid var(--balance-accent);
+}
+
+.objectives h3 {
+    color: var(--balance-secondary);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+}
+
+.objectives ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.objectives li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #444;
+    font-size: 15px;
+}
+
+.objectives li i {
+    color: var(--balance-success);
+}
+
+/* ====== منطقة الميزان - مصححة ومركزة ====== */
 .balance-area {
     background: white;
     border-radius: 20px;
-    padding: 40px 20px;
+    padding: 30px;
     margin: 20px auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 900px;
@@ -19,33 +185,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 450px;
+    min-height: 500px;
 }
 
-/* حاوية الميزان الرئيسية - توسيط */
 .balance-container-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     position: relative;
-    margin: 0 auto;
-    padding-bottom: 40px;
+    height: 300px;
 }
 
 .balance-container {
     position: relative;
-    height: 300px;
+    height: 100%;
     width: 100%;
     max-width: 700px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    margin: 0 auto;
 }
 
-/* قاعدة الميزان - توسيط */
+/* قاعدة الميزان - مركزة */
 .balance-base {
     position: absolute;
     bottom: 0;
@@ -61,7 +223,7 @@
         0 0 0 2px #5d4037;
 }
 
-/* ذراع الميزان - توسيط */
+/* ذراع الميزان - مركز */
 .balance-beam {
     position: absolute;
     bottom: 20px;
@@ -77,7 +239,7 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* مركز الميزان - توسيط */
+/* مركز الميزان - مركز */
 .balance-center {
     position: absolute;
     bottom: -15px;
@@ -99,7 +261,7 @@
     font-size: 16px;
 }
 
-/* الكفات - توسيط */
+/* الكفات - مركزة */
 .balance-pan {
     position: absolute;
     top: 30px;
@@ -145,10 +307,74 @@
     border-radius: 4px 4px 0 0;
 }
 
-/* مؤشر التوازن */
+.weight-display {
+    background: linear-gradient(135deg, var(--balance-primary), var(--balance-secondary));
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    min-width: 150px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.weight-display i {
+    font-size: 18px;
+    color: #ffd700;
+}
+
+.objects-container {
+    min-height: 120px;
+    width: 100%;
+    border: 3px dashed #ddd;
+    border-radius: 15px;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: flex-start;
+    transition: all 0.3s;
+    background: rgba(248, 249, 250, 0.5);
+}
+
+.objects-container.drag-over {
+    border-color: var(--balance-accent);
+    background-color: rgba(23, 190, 187, 0.1);
+    box-shadow: inset 0 0 20px rgba(23, 190, 187, 0.2);
+}
+
+.empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.empty-message i {
+    font-size: 32px;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+.empty-message p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* مؤشر التوازن - مركز */
 .balance-indicator {
     width: 400px;
-    margin: 20px auto;
+    margin: 30px auto 20px;
     position: relative;
     height: 80px;
 }
@@ -156,7 +382,7 @@
 .indicator-line {
     width: 100%;
     height: 5px;
-    background: linear-gradient(90deg, var(--pan-left-color), #2ed573, var(--pan-right-color));
+    background: linear-gradient(90deg, var(--pan-left-color), var(--pan-balanced), var(--pan-right-color));
     border-radius: 3px;
     position: absolute;
     top: 50%;
@@ -172,24 +398,23 @@
     height: 0;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
-    border-bottom: 25px solid #17bebb;
+    border-bottom: 25px solid var(--balance-accent);
     transition: all 0.8s ease;
 }
 
 .indicator-labels {
     display: flex;
     justify-content: space-between;
-    width: 100%;
     margin-top: 15px;
     font-size: 13px;
     font-weight: 600;
 }
 
 .label-left { color: var(--pan-left-color); }
-.label-center { color: #2ed573; }
+.label-center { color: var(--pan-balanced); }
 .label-right { color: var(--pan-right-color); }
 
-/* معلومات التوازن - توسيط */
+/* معلومات التوازن - مركز */
 .balance-info {
     background: white;
     border-radius: 12px;
@@ -198,8 +423,7 @@
     align-items: center;
     gap: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border: 2px solid #17bebb;
-    margin-top: 20px;
+    border: 2px solid var(--balance-accent);
 }
 
 .balance-info i {
@@ -212,69 +436,598 @@
     color: #333;
 }
 
-/* منطقة الأجسام - تقليل الارتفاع */
+/* ----- منطقة الأدوات والأجسام ----- */
+.tools-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 30px auto;
+    max-width: 900px;
+}
+
+@media (max-width: 768px) {
+    .tools-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* لوحة الأجسام */
 .objects-panel {
     background: white;
-    border-radius: 15px;
+    border-radius: 20px;
     padding: 25px;
-    margin: 20px auto;
-    max-width: 1000px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.objects-panel h3 {
+    color: var(--balance-secondary);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+}
+
+.panel-subtitle {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 15px;
 }
 
 .objects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 15px;
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
 
-/* تحسينات للجوال */
-@media (max-width: 768px) {
-    .balance-container {
-        height: 220px;
-        margin-bottom: 30px;
-    }
-    
-    .balance-beam {
-        width: 350px;
-    }
-    
-    .left-pan {
-        margin-right: 70px;
-        transform: scale(0.8);
-    }
-    
-    .right-pan {
-        margin-left: 70px;
-        transform: scale(0.8);
-    }
-    
-    .pan-container {
-        width: 110px;
-        height: 110px;
-    }
-    
-/* مؤشر التوازن - توسيط */
-.balance-indicator {
-    width: 400px;
-    margin: 30px auto 20px;
-    position: relative;
-    height: 80px;
+.object-item {
+    background: white;
+    border-radius: 15px;
+    padding: 20px 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: grab;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border: 3px solid transparent;
+    transition: all 0.3s;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
 }
 
-    .indicator-line {
+.object-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
     width: 100%;
     height: 5px;
-    background: linear-gradient(90deg, #ff6b6b, #2ed573, #1e90ff);
-    border-radius: 3px;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
 }
+
+.object-item[data-color="red"]::before { background: #ff6b6b; }
+.object-item[data-color="orange"]::before { background: #ffa502; }
+.object-item[data-color="blue"]::before { background: #1e90ff; }
+.object-item[data-color="green"]::before { background: #2ed573; }
+
+.object-item:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.object-item.dragging {
+    opacity: 0.7;
+    cursor: grabbing;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.object-icon {
+    font-size: 36px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.object-name {
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.object-weight {
+    background: #4a6fa5;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* لوحة التحكم */
+.controls-panel {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.controls-panel h3 {
+    color: var(--balance-secondary);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.control-btn {
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 60px;
+}
+
+.control-btn.success {
+    background: linear-gradient(135deg, var(--balance-success), #218838);
+    color: white;
+}
+
+.control-btn.warning {
+    background: linear-gradient(135deg, var(--balance-warning), #e0a800);
+    color: #212529;
+}
+
+.control-btn.info {
+    background: linear-gradient(135deg, var(--balance-accent), #149c9a);
+    color: white;
+}
+
+.control-btn:not(:disabled):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* شريط التقدم */
+.progress-container {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--balance-secondary);
+}
+
+.progress-bar {
+    height: 12px;
+    background: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--balance-accent), var(--balance-primary));
+    border-radius: 6px;
+    width: 0%;
+    transition: width 0.8s ease;
+    box-shadow: 0 0 15px rgba(23, 190, 187, 0.3);
+}
+
+/* ----- لوحة النتائج ----- */
+.results-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.results-panel.active {
+    display: flex;
+}
+
+.results-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.results-content {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.results-header {
+    margin-bottom: 25px;
+}
+
+.results-header i {
+    font-size: 60px;
+    color: #ffd700;
+    margin-bottom: 15px;
+    animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+#result-title {
+    color: var(--balance-secondary);
+    font-size: 36px;
+    margin: 0;
+}
+
+.results-body {
+    margin-bottom: 30px;
+}
+
+#result-message {
+    color: #555;
+    font-size: 18px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.stars-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    font-size: 40px;
+}
+
+.stars-container i {
+    color: #ffd700;
+    text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+.stars-container i.empty {
+    color: #ddd;
+}
+
+.results-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.action-btn {
+    padding: 15px 25px;
+    border-radius: 12px;
+    border: 2px solid var(--balance-primary);
+    background: white;
+    color: var(--balance-primary);
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 140px;
+}
+
+.action-btn.secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ----- القسم التعليمي ----- */
+.educational-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%);
+    padding: 60px 0;
+    border-top: 5px solid var(--balance-accent);
+}
+
+.educational-section .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.educational-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.concept-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s;
+    border-top: 5px solid var(--balance-accent);
+}
+
+.concept-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.concept-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--balance-accent), var(--balance-primary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.concept-icon i {
+    font-size: 32px;
+    color: white;
+}
+
+.concept-card h3 {
+    color: var(--balance-secondary);
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.concept-card p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+/* ----- تذييل اللعبة ----- */
+.game-footer {
+    background: linear-gradient(135deg, var(--balance-secondary), var(--balance-primary));
+    color: white;
+    padding: 40px 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 30px;
+    }
+}
+
+.footer-info h4 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.footer-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-info li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-info li i {
+    color: #ffd700;
+}
+
+.footer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+    .footer-actions {
+        align-items: center;
+    }
+}
+
+.footer-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    min-width: 200px;
+    justify-content: center;
+}
+
+.footer-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: white;
+    transform: translateY(-3px);
+}
+
+.footer-copyright {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+/* ====== تحسينات التوسيط والاستجابة ====== */
+@media (max-width: 1200px) {
+    .balance-area {
+        max-width: 800px;
+    }
+    
+    .balance-beam {
+        width: 450px;
+    }
+    
+    .left-pan {
+        right: calc(50% + 90px);
+    }
+    
+    .right-pan {
+        left: calc(50% + 90px);
+    }
+}
+
+@media (max-width: 992px) {
+    .balance-area {
+        max-width: 700px;
+        min-height: 450px;
+    }
+    
+    .balance-beam {
+        width: 400px;
+    }
+    
+    .left-pan {
+        right: calc(50% + 80px);
+    }
+    
+    .right-pan {
+        left: calc(50% + 80px);
+    }
+    
+    .pan-container {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .balance-indicator {
+        width: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-navbar .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .game-stats {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .balance-area {
+        max-width: 95%;
+        min-height: 400px;
+        padding: 25px 15px;
+    }
+    
+    .balance-container-wrapper {
+        height: 250px;
+    }
+    
+    .balance-beam {
+        width: 320px;
+    }
+    
+    .left-pan {
+        right: calc(50% + 60px);
+        transform: scale(0.9);
+    }
+    
+    .right-pan {
+        left: calc(50% + 60px);
+        transform: scale(0.9);
+    }
+    
+    .pan-container {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .balance-indicator {
+        width: 280px;
+    }
     
     .objects-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -287,74 +1040,66 @@
     }
     
     .left-pan {
-        margin-right: 50px;
-        transform: scale(0.7);
+        right: calc(50% + 50px);
+        transform: scale(0.8);
     }
     
     .right-pan {
-        margin-left: 50px;
-        transform: scale(0.7);
+        left: calc(50% + 50px);
+        transform: scale(0.8);
     }
     
     .pan-container {
-        width: 90px;
-        height: 90px;
+        width: 85px;
+        height: 85px;
     }
     
     .balance-indicator {
-        width: 250px;
+        width: 240px;
     }
     
-    .indicator-labels {
-        font-size: 11px;
+    .results-content {
+        padding: 25px;
+    }
+    
+    .results-actions {
+        flex-direction: column;
     }
 }
 
-/* إضافة CSS للتأكد من ظهور القاعدة */
-.balance-base::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: -10px;
-    right: -10px;
-    height: 10px;
-    background: rgba(139, 69, 19, 0.3);
-    border-radius: 10px;
-    z-index: -1;
+/* ----- تحسينات لللمس والتفاعل ----- */
+.object-item {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-/* تأكيد ظهور الميزان */
-.balance-area:before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, 
-        rgba(74, 111, 165, 0.1),
-        rgba(22, 96, 136, 0.2),
-        rgba(23, 190, 187, 0.1)
-    );
-    z-index: 1;
+@media (hover: none) and (pointer: coarse) {
+    .object-item:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    
+    .control-btn:active {
+        opacity: 0.8;
+        transform: scale(0.98);
+    }
 }
 
-/* جعل القاعدة أكثر وضوحاً */
-.balance-base {
-    box-shadow: 
-        0 -3px 10px rgba(0, 0, 0, 0.3),
-        0 0 0 2px #5d4037,
-        inset 0 2px 5px rgba(255, 255, 255, 0.2);
+/* ----- حركات وتأثيرات ----- */
+@keyframes floatObject {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
-/* تحسين الرؤية على الخلفية البيضاء */
-.balance-container {
-    background: linear-gradient(to bottom, 
-        rgba(248, 249, 250, 0.8) 0%,
-        rgba(233, 236, 239, 0.6) 30%,
-        rgba(222, 226, 230, 0.4) 70%,
-        transparent 100%
-    );
-    border-radius: 20px;
-    margin: 10px;
+.object-item:hover {
+    animation: floatObject 2s ease-in-out infinite;
+}
+
+@keyframes dropEffect {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.object-in-pan {
+    animation: dropEffect 0.3s ease;
 }
