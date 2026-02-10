@@ -122,6 +122,91 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // === تفاعل العناصر العلمية المتحركة ===
+    const scienceElements = document.querySelectorAll('.science-element');
+    
+    scienceElements.forEach(element => {
+        // تأثير النقر على العناصر
+        element.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            const originalClass = icon.className;
+            
+            // تغيير الأيقونة مؤقتاً
+            icon.className = 'fas fa-check';
+            this.style.background = 'linear-gradient(135deg, #2ed573, #28a745)';
+            this.style.transform = 'scale(1.3) rotate(360deg)';
+            
+            // إعادة التعيين بعد ثانية
+            setTimeout(() => {
+                icon.className = originalClass;
+                this.style.background = '';
+                this.style.transform = '';
+            }, 1000);
+            
+            // إظهار رسالة
+            const elementNames = {
+                'fa-atom': 'ذرة ⚛️',
+                'fa-vial': 'أنبوب اختبار 🧪',
+                'fa-rocket': 'صاروخ 🚀',
+                'fa-flask': 'قارورة 🧫',
+                'fa-magnet': 'مغناطيس 🧲',
+                'fa-microscope': 'ميكروسكوب 🔬',
+                'fa-bolt': 'برق ⚡',
+                'fa-star': 'نجمة ⭐',
+                'fa-cloud': 'سحابة ☁️',
+                'fa-seedling': 'نبتة 🌱'
+            };
+            
+            const iconClass = originalClass.split(' ')[1];
+            const elementName = elementNames[iconClass] || 'عنصر علمي';
+            showNotification(`🎯 لقد وجدت ${elementName}!`, 'success');
+        });
+        
+        // تأثير التمرير بالماوس
+        element.addEventListener('mouseenter', function() {
+            this.style.zIndex = '10';
+            // إضافة توهج
+            this.style.boxShadow = '0 0 30px rgba(23, 190, 187, 0.6), 0 8px 20px rgba(0,0,0,0.3)';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            this.style.zIndex = '2';
+            this.style.boxShadow = '0 8px 20px rgba(23, 190, 187, 0.3)';
+        });
+        
+        // تأثير اللمس للجوال
+        element.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.9)';
+        });
+        
+        element.addEventListener('touchend', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // === إضافة تأثيرات عشوائية للعناصر ===
+    function addRandomEffects() {
+        scienceElements.forEach(element => {
+            // تغيير حجم العناصر عشوائياً
+            const randomSize = 0.8 + Math.random() * 0.4;
+            element.style.transform = `scale(${randomSize})`;
+            
+            // تغيير سرعة الأنيميشن عشوائياً
+            const randomDuration = 5 + Math.random() * 5;
+            element.style.animationDuration = `${randomDuration}s`;
+            
+            // تغيير التأخير عشوائياً
+            const randomDelay = Math.random() * 2;
+            element.style.animationDelay = `${randomDelay}s`;
+        });
+    }
+    
+    // تشغيل التأثيرات العشوائية
+    addRandomEffects();
+    
+    // تحديث التأثيرات كل 30 ثانية
+    setInterval(addRandomEffects, 30000);
+    
     // === تأثيرات التمرير ===
     const observerOptions = {
         threshold: 0.1,
