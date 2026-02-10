@@ -320,3 +320,16 @@
         font-size: 16px;
     }
 }
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    position: relative;
+}
+
+/* إزالة الأنيميشن القديمة للعناصر */
+.science-illustration {
+    display: none;
+}
