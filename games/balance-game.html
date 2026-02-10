@@ -66,73 +66,76 @@
                 </div>
             </div>
 
-            <!-- منطقة الميزان -->
-            <div class="balance-area">
-                <div class="balance-container">
-                    <!-- قاعدة الميزان -->
-                    <div class="balance-base"></div>
-                    
-                    <!-- ذراع الميزان -->
-                    <div class="balance-beam" id="balance-beam">
-                        <div class="balance-center">
-                            <i class="fas fa-dot-circle"></i>
-                        </div>
-                        
-                        <!-- الكفة اليسرى -->
-                        <div class="balance-pan left-pan" id="left-pan">
-                            <div class="pan-container">
-                                <div class="pan"></div>
-                                <div class="pan-stand"></div>
-                            </div>
-                            <div class="weight-display">
-                                <i class="fas fa-weight-hanging"></i>
-                                <span>الكفة اليسرى: <strong id="left-weight">0</strong> كجم</span>
-                            </div>
-                            <div class="objects-container" id="left-objects">
-                                <div class="empty-message">
-                                    <i class="fas fa-hand-point-up"></i>
-                                    <p>اسحب الأجسام هنا</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- الكفة اليمنى -->
-                        <div class="balance-pan right-pan" id="right-pan">
-                            <div class="pan-container">
-                                <div class="pan"></div>
-                                <div class="pan-stand"></div>
-                            </div>
-                            <div class="weight-display">
-                                <i class="fas fa-weight-hanging"></i>
-                                <span>الكفة اليمنى: <strong id="right-weight">0</strong> كجم</span>
-                            </div>
-                            <div class="objects-container" id="right-objects">
-                                <div class="empty-message">
-                                    <i class="fas fa-hand-point-up"></i>
-                                    <p>اسحب الأجسام هنا</p>
-                                </div>
-                            </div>
+          <!-- منطقة الميزان -->
+<div class="balance-area">
+    <div class="balance-container-wrapper">
+        <div class="balance-container">
+            <!-- قاعدة الميزان -->
+            <div class="balance-base"></div>
+            
+            <!-- ذراع الميزان -->
+            <div class="balance-beam" id="balance-beam">
+                <!-- مركز الميزان -->
+                <div class="balance-center">
+                    <i class="fas fa-dot-circle"></i>
+                </div>
+                
+                <!-- الكفة اليسرى -->
+                <div class="balance-pan left-pan" id="left-pan">
+                    <div class="pan-container">
+                        <div class="pan"></div>
+                        <div class="pan-stand"></div>
+                    </div>
+                    <div class="weight-display">
+                        <i class="fas fa-weight-hanging"></i>
+                        <span>اليسار: <strong id="left-weight">0</strong> كجم</span>
+                    </div>
+                    <div class="objects-container" id="left-objects">
+                        <div class="empty-message">
+                            <i class="fas fa-hand-point-up"></i>
+                            <p>اسحب الأجسام هنا</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- مؤشر التوازن -->
-                <div class="balance-indicator">
-                    <div class="indicator-line"></div>
-                    <div class="indicator-arrow" id="balance-arrow"></div>
-                    <div class="indicator-labels">
-                        <span class="label-left">يميل لليسار</span>
-                        <span class="label-center">متوازن</span>
-                        <span class="label-right">يميل لليمين</span>
+                <!-- الكفة اليمنى -->
+                <div class="balance-pan right-pan" id="right-pan">
+                    <div class="pan-container">
+                        <div class="pan"></div>
+                        <div class="pan-stand"></div>
                     </div>
-                </div>
-                
-                <!-- معلومات التوازن -->
-                <div class="balance-info" id="balance-info">
-                    <i class="fas fa-balance-scale"></i>
-                    <span>الفرق: <strong id="weight-difference">0</strong> كجم</span>
+                    <div class="weight-display">
+                        <i class="fas fa-weight-hanging"></i>
+                        <span>اليمين: <strong id="right-weight">0</strong> كجم</span>
+                    </div>
+                    <div class="objects-container" id="right-objects">
+                        <div class="empty-message">
+                            <i class="fas fa-hand-point-up"></i>
+                            <p>اسحب الأجسام هنا</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <!-- مؤشر التوازن -->
+    <div class="balance-indicator">
+        <div class="indicator-line"></div>
+        <div class="indicator-arrow" id="balance-arrow"></div>
+        <div class="indicator-labels">
+            <span class="label-left">يميل لليسار</span>
+            <span class="label-center">متوازن</span>
+            <span class="label-right">يميل لليمين</span>
+        </div>
+    </div>
+    
+    <!-- معلومات التوازن -->
+    <div class="balance-info" id="balance-info">
+        <i class="fas fa-balance-scale"></i>
+        <span>الفرق: <strong id="weight-difference">0</strong> كجم</span>
+    </div>
+</div>
 
             <!-- منطقة الأدوات والأجسام -->
             <div class="tools-section">
