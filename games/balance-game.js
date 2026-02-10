@@ -423,3 +423,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // بدء اللعبة
     initGame();
 });
+
+// إضافة أحداث النقر للأجسام
+document.querySelectorAll('.draggable-object').forEach(obj => {
+    obj.addEventListener('click', function() {
+        const pan = confirm('ضع في الكفة اليسرى؟ (موافق) أو اليمنى؟ (إلغاء)') 
+                   ? leftPan : rightPan;
+        
+        pan.querySelector('.empty-message')?.remove();
+        
+        const data = {
+            weight: this.dataset.weight,
+            name: this.dataset.name,
+            emoji: this.querySelector('div').textContent,
+            color: this.style.borderColor || '#4a6fa5'
+        };
+        
+        const objCopy = createObjectCopy(data);
+        pan.appendChild(objCopy);
+        updateWeights();
+    });
+});
