@@ -1,438 +1,142 @@
-/* التنسيقات العامة */
-:root {
-    --primary-color: #4a6fa5;
-    --secondary-color: #166088;
-    --accent-color: #17bebb;
-    --light-color: #f8f9fa;
-    --dark-color: #343a40;
-    --success-color: #28a745;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
+/* تحسينات للاستجابة على جميع الأجهزة */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 95%;
+        padding: 0 15px;
+    }
     
-    --font-primary: 'Cairo', sans-serif;
+    .hero .container {
+        gap: 30px;
+    }
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: var(--font-primary);
-    line-height: 1.6;
-    color: var(--dark-color);
-    background-color: #f5f7fa;
-    direction: rtl;
-}
-
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* شريط التنقل */
-.navbar {
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-.navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo i {
-    font-size: 28px;
-    color: var(--primary-color);
-}
-
-.logo h1 {
-    font-size: 22px;
-    color: var(--primary-color);
-}
-
-.nav-links {
-    display: flex;
-    gap: 30px;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--dark-color);
-    font-weight: 600;
-    transition: color 0.3s;
-    padding: 5px 0;
-    position: relative;
-}
-
-.nav-links a:hover {
-    color: var(--primary-color);
-}
-
-.nav-links a.active {
-    color: var(--primary-color);
-}
-
-.nav-links a.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    height: 3px;
-    background-color: var(--primary-color);
-    border-radius: 3px;
-}
-
-/* قسم الهيرو */
-.hero {
-    padding: 150px 0 80px;
-    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-    overflow: hidden;
-}
-
-.hero .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-}
-
-.hero-content {
-    flex: 1;
-}
-
-.hero h2 {
-    font-size: 42px;
-    color: var(--secondary-color);
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-.hero p {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 30px;
-    max-width: 600px;
-}
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background-color: var(--accent-color);
-    color: white;
-    padding: 15px 30px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 18px;
-    transition: all 0.3s;
-    border: none;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.hero-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.hero-image img {
-    max-width: 100%;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* قسم الألعاب */
-.section-title {
-    text-align: center;
-    font-size: 36px;
-    color: var(--secondary-color);
-    margin-bottom: 15px;
-}
-
-.section-subtitle {
-    text-align: center;
-    color: #666;
-    font-size: 18px;
-    margin-bottom: 50px;
-}
-
-.games-section {
-    padding: 80px 0;
-    background-color: white;
-}
-
-.games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-.game-card {
-    background-color: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s;
-    border: 2px solid transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.game-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    border-color: var(--accent-color);
-}
-
-.game-card.coming-soon {
-    opacity: 0.8;
-    filter: grayscale(20%);
-}
-
-.game-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.game-icon i {
-    font-size: 36px;
-    color: white;
-}
-
-.game-card h3 {
-    font-size: 24px;
-    color: var(--secondary-color);
-    margin-bottom: 15px;
-}
-
-.game-card p {
-    color: #666;
-    margin-bottom: 25px;
-    flex-grow: 1;
-}
-
-.game-btn {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    font-size: 16px;
-}
-
-.game-btn:hover {
-    background-color: var(--secondary-color);
-}
-
-.game-btn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.game-tags {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.game-tags span {
-    background-color: #e9ecef;
-    color: var(--dark-color);
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-}
-
-/* قسم حول المشروع */
-.about-section {
-    padding: 80px 0;
-    background-color: #f8f9fa;
-}
-
-.about-content {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-}
-
-.about-text {
-    flex: 1;
-}
-
-.about-text h3 {
-    font-size: 32px;
-    color: var(--secondary-color);
-    margin-bottom: 20px;
-}
-
-.about-text p {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 40px;
-    line-height: 1.8;
-}
-
-.features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 25px;
-}
-
-.feature {
-    background-color: white;
-    padding: 25px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-}
-
-.feature i {
-    font-size: 36px;
-    color: var(--accent-color);
-    margin-bottom: 15px;
-}
-
-.feature h4 {
-    font-size: 20px;
-    color: var(--secondary-color);
-    margin-bottom: 10px;
-}
-
-.about-image {
-    flex: 1;
-}
-
-.about-image img {
-    max-width: 100%;
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-/* التذييل */
-.footer {
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 60px 0 20px;
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-.footer-section h3, .footer-section h4 {
-    color: white;
-    margin-bottom: 20px;
-    font-size: 22px;
-}
-
-.footer-section p {
-    color: #ddd;
-    margin-bottom: 10px;
-}
-
-.social-links {
-    display: flex;
-    gap: 15px;
-}
-
-.social-links a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    color: white;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.social-links a:hover {
-    background-color: var(--accent-color);
-    transform: translateY(-3px);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: #aaa;
-    font-size: 14px;
-}
-
-/* تصميم متجاوب */
 @media (max-width: 992px) {
     .hero .container {
         flex-direction: column;
         text-align: center;
     }
     
-    .about-content {
-        flex-direction: column;
+    .hero-content, .hero-image {
+        width: 100%;
     }
     
     .hero h2 {
         font-size: 36px;
     }
+    
+    .about-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .about-text, .about-image {
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
+    /* تحسين شريط التنقل للجوال */
+    .navbar .container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px 15px;
+    }
+    
     .nav-links {
-        display: none;
+        width: 100%;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    
+    .nav-links a {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+    
+    /* تحسين الهيرو للجوال */
+    .hero {
+        padding: 130px 0 50px;
+    }
+    
+    .hero h2 {
+        font-size: 28px;
+    }
+    
+    .hero p {
+        font-size: 16px;
+    }
+    
+    .btn {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+    
+    /* تحسين بطاقات الألعاب */
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     
     .section-title {
-        font-size: 30px;
+        font-size: 28px;
     }
     
-    .hero {
-        padding: 120px 0 60px;
+    .section-subtitle {
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+    
+    /* تحسين الميزات */
+    .features {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .feature {
+        padding: 20px;
+    }
+    
+    /* تحسين التذييل */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    /* تحسينات للشاشات الصغيرة جداً */
+    .hero h2 {
+        font-size: 24px;
+    }
+    
+    .hero p {
+        font-size: 15px;
+    }
+    
+    .logo h1 {
+        font-size: 18px;
+    }
+    
+    .game-card {
+        padding: 20px;
+    }
+    
+    .game-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .game-icon i {
+        font-size: 28px;
+    }
+    
+    .game-card h3 {
+        font-size: 20px;
     }
 }
