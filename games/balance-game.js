@@ -454,24 +454,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const diff = Math.abs(gameState.leftWeight - gameState.rightWeight);
         elements.weightDiff.textContent = diff;
         
-        // تحديث لون معلومات التوازن
-        const infoElement = document.getElementById('balance-info');
-        if (infoElement) {
-            if (diff === 0) {
-                infoElement.style.borderColor = '#2ed573';
-                infoElement.style.background = '#e8f6ef';
-                infoElement.style.color = '#155724';
-            } else if (diff < 3) {
-                infoElement.style.borderColor = '#ffa502';
-                infoElement.style.background = '#fff4e6';
-                infoElement.style.color = '#856404';
-            } else {
-                infoElement.style.borderColor = '#ff6b6b';
-                infoElement.style.background = '#ffeaea';
-                infoElement.style.color = '#721c24';
-            }
-        }
+        // تحديث لون معلومات الفرق
+const centerInfo = document.querySelector('.balance-info-center');
+if (centerInfo) {
+    if (diff === 0) {
+        centerInfo.style.background = 'linear-gradient(135deg, #2ed573, #28a745)';
+        centerInfo.style.borderColor = '#218838';
+    } else if (diff < 3) {
+        centerInfo.style.background = 'linear-gradient(135deg, #ffa502, #ff9800)';
+        centerInfo.style.borderColor = '#e0a800';
+    } else {
+        centerInfo.style.background = 'linear-gradient(135deg, #ff6b6b, #dc3545)';
+        centerInfo.style.borderColor = '#bd2130';
     }
+}
     
     // === تحديث الميزان ===
     function updateBalance() {
