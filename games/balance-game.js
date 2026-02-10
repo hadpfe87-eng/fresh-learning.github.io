@@ -455,19 +455,20 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.weightDiff.textContent = diff;
         
         // تحديث لون معلومات الفرق
-const centerInfo = document.querySelector('.balance-info-center');
-if (centerInfo) {
-    if (diff === 0) {
-        centerInfo.style.background = 'linear-gradient(135deg, #2ed573, #28a745)';
-        centerInfo.style.borderColor = '#218838';
-    } else if (diff < 3) {
-        centerInfo.style.background = 'linear-gradient(135deg, #ffa502, #ff9800)';
-        centerInfo.style.borderColor = '#e0a800';
-    } else {
-        centerInfo.style.background = 'linear-gradient(135deg, #ff6b6b, #dc3545)';
-        centerInfo.style.borderColor = '#bd2130';
-    }
-}
+        const centerInfo = document.querySelector('.balance-info-center');
+        if (centerInfo) {
+            if (diff === 0) {
+                centerInfo.style.background = 'linear-gradient(135deg, #2ed573, #28a745)';
+                centerInfo.style.borderColor = '#218838';
+            } else if (diff < 3) {
+                centerInfo.style.background = 'linear-gradient(135deg, #ffa502, #ff9800)';
+                centerInfo.style.borderColor = '#e0a800';
+            } else {
+                centerInfo.style.background = 'linear-gradient(135deg, #ff6b6b, #dc3545)';
+                centerInfo.style.borderColor = '#bd2130';
+            }
+        }
+    } // Fixed: Added missing closing brace here
     
     // === تحديث الميزان ===
     function updateBalance() {
