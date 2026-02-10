@@ -7,59 +7,82 @@
     --pan-right-color: #1e90ff;
 }
 
-/* إصلاح حاوية الميزان */
 .balance-area {
     background: white;
     border-radius: 20px;
-    padding: 30px;
+    padding: 40px 20px;
     margin: 20px auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
+    max-width: 900px;
     position: relative;
     overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 450px;
+}
+
+/* حاوية الميزان الرئيسية - توسيط */
+.balance-container-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    margin: 0 auto;
+    padding-bottom: 40px;
 }
 
 .balance-container {
     position: relative;
-    height: 300px; /* تقليل الارتفاع */
+    height: 300px;
+    width: 100%;
+    max-width: 700px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    margin-bottom: 40px;
+    margin: 0 auto;
 }
 
-/* قاعدة الميزان - إصلاح لجعلها ظاهرة */
+/* قاعدة الميزان - توسيط */
 .balance-base {
     position: absolute;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 180px;
     height: 20px;
     background: linear-gradient(90deg, #8b4513, #654321);
     border-radius: 10px 10px 0 0;
     z-index: 10;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+        0 -5px 15px rgba(0, 0, 0, 0.3),
+        0 0 0 2px #5d4037;
 }
 
-/* ذراع الميزان - تصغير الحجم */
+/* ذراع الميزان - توسيط */
 .balance-beam {
     position: absolute;
-    bottom: 20px; /* رفعه فوق القاعدة */
-    width: 500px; /* تصغير العرض */
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
     height: 10px;
     background: linear-gradient(90deg, #a0522d, #8b4513);
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
     transform-origin: center bottom;
     transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 5;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* مركز الميزان */
+/* مركز الميزان - توسيط */
 .balance-center {
     position: absolute;
     bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
     width: 40px;
     height: 40px;
     background: linear-gradient(135deg, #c19a6b, #8b4513);
@@ -76,11 +99,10 @@
     font-size: 16px;
 }
 
-/* الكفات - تصغير حجمها */
+/* الكفات - توسيط */
 .balance-pan {
     position: absolute;
     top: 30px;
-    width: 160px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -88,13 +110,11 @@
 }
 
 .left-pan {
-    right: 50%;
-    margin-right: 100px;
+    right: calc(50% + 100px);
 }
 
 .right-pan {
-    left: 50%;
-    margin-left: 100px;
+    left: calc(50% + 100px);
 }
 
 .pan-container {
@@ -152,13 +172,14 @@
     height: 0;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
-    border-bottom: 25px solid var(--balance-accent);
+    border-bottom: 25px solid #17bebb;
     transition: all 0.8s ease;
 }
 
 .indicator-labels {
     display: flex;
     justify-content: space-between;
+    width: 100%;
     margin-top: 15px;
     font-size: 13px;
     font-weight: 600;
@@ -168,7 +189,7 @@
 .label-center { color: #2ed573; }
 .label-right { color: var(--pan-right-color); }
 
-/* معلومات التوازن */
+/* معلومات التوازن - توسيط */
 .balance-info {
     background: white;
     border-radius: 12px;
@@ -176,9 +197,9 @@
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    margin: 0 auto;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border: 2px solid var(--balance-accent);
+    border: 2px solid #17bebb;
+    margin-top: 20px;
 }
 
 .balance-info i {
@@ -234,9 +255,26 @@
         height: 110px;
     }
     
-    .balance-indicator {
-        width: 300px;
-    }
+/* مؤشر التوازن - توسيط */
+.balance-indicator {
+    width: 400px;
+    margin: 30px auto 20px;
+    position: relative;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .indicator-line {
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #ff6b6b, #2ed573, #1e90ff);
+    border-radius: 3px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
     
     .objects-grid {
         grid-template-columns: repeat(2, 1fr);
