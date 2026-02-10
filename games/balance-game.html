@@ -17,10 +17,22 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="balance-game.css">
     
-    <!-- منع التكبير على الجوال -->
+    <!-- تحسينات إضافية -->
     <style>
+        /* تحسينات عامة */
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* منع التكبير على الجوال */
         input, select, textarea {
             font-size: 16px !important;
+        }
+        
+        /* جعل النقر على الأزرار سهلًا */
+        button, .btn {
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
     </style>
 </head>
@@ -58,16 +70,17 @@
                 <div class="objectives">
                     <h3><i class="fas fa-bullseye"></i> أهداف المستوى 1:</h3>
                     <ul>
-                        <li><i class="fas fa-check"></i> وضع جسمين في كل كفة</li>
-                        <li><i class="fas fa-check"></i> تحقيق توازن كامل</li>
-                        <li><i class="fas fa-check"></i> الفوز بـ 3 نجوم</li>
+                        <li><i class="fas fa-check"></i> تحقيق توازن بين الكفتين</li>
+                        <li><i class="fas fa-check"></i> استخدام 2-3 أجسام على الأقل</li>
+                        <li><i class="fas fa-check"></i> الفوز بـ 3 نجوم ⭐⭐⭐</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- منطقة الميزان -->
-            <div class="balance-area">
-                <div class="balance-container-wrapper">
+            <!-- منطقة الميزان الرئيسية -->
+            <div class="balance-main-area">
+                <div class="balance-visual-area">
+                    <!-- حاوية الميزان -->
                     <div class="balance-container">
                         <!-- قاعدة الميزان -->
                         <div class="balance-base"></div>
@@ -80,17 +93,17 @@
                             </div>
                             
                             <!-- الكفة اليسرى -->
-                            <div class="balance-pan left-pan" id="left-pan-container">
+                            <div class="balance-pan left-pan">
                                 <div class="pan-container">
                                     <div class="pan"></div>
                                     <div class="pan-stand"></div>
                                 </div>
                                 <div class="weight-display">
                                     <i class="fas fa-weight-hanging"></i>
-                                    <span>اليسار: <strong id="left-weight">0</strong> كجم</span>
+                                    <span>الكفة اليسرى: <strong id="left-weight">0</strong> كجم</span>
                                 </div>
-                                <div class="objects-container" id="left-objects">
-                                    <div class="empty-message">
+                                <div class="drop-zone" id="left-drop-zone">
+                                    <div class="drop-message">
                                         <i class="fas fa-hand-point-up"></i>
                                         <p>اسحب الأجسام هنا</p>
                                     </div>
@@ -98,17 +111,17 @@
                             </div>
                             
                             <!-- الكفة اليمنى -->
-                            <div class="balance-pan right-pan" id="right-pan-container">
+                            <div class="balance-pan right-pan">
                                 <div class="pan-container">
                                     <div class="pan"></div>
                                     <div class="pan-stand"></div>
                                 </div>
                                 <div class="weight-display">
                                     <i class="fas fa-weight-hanging"></i>
-                                    <span>اليمين: <strong id="right-weight">0</strong> كجم</span>
+                                    <span>الكفة اليمنى: <strong id="right-weight">0</strong> كجم</span>
                                 </div>
-                                <div class="objects-container" id="right-objects">
-                                    <div class="empty-message">
+                                <div class="drop-zone" id="right-drop-zone">
+                                    <div class="drop-message">
                                         <i class="fas fa-hand-point-up"></i>
                                         <p>اسحب الأجسام هنا</p>
                                     </div>
@@ -116,30 +129,27 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- مؤشر التوازن -->
-                <div class="balance-indicator">
-                    <div class="indicator-line"></div>
-                    <div class="indicator-arrow" id="balance-arrow"></div>
-                    <div class="indicator-labels">
-                        <span class="label-left">يميل لليسار</span>
-                        <span class="label-center">متوازن</span>
-                        <span class="label-right">يميل لليمين</span>
+                    
+                    <!-- مؤشر التوازن -->
+                    <div class="balance-indicator">
+                        <div class="indicator-line"></div>
+                        <div class="indicator-arrow" id="balance-arrow"></div>
+                        <div class="indicator-labels">
+                            <span class="label-left">يميل لليسار</span>
+                            <span class="label-center">متوازن</span>
+                            <span class="label-right">يميل لليمين</span>
+                        </div>
+                    </div>
+                    
+                    <!-- معلومات التوازن -->
+                    <div class="balance-info" id="balance-info">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>الفرق: <strong id="weight-difference">0</strong> كجم</span>
                     </div>
                 </div>
                 
-                <!-- معلومات التوازن -->
-                <div class="balance-info" id="balance-info">
-                    <i class="fas fa-balance-scale"></i>
-                    <span>الفرق: <strong id="weight-difference">0</strong> كجم</span>
-                </div>
-            </div>
-
-            <!-- منطقة الأدوات والأجسام -->
-            <div class="tools-section">
                 <!-- الأجسام المتاحة -->
-                <div class="objects-panel">
+                <div class="objects-area">
                     <h3><i class="fas fa-shapes"></i> الأجسام المتاحة</h3>
                     <p class="panel-subtitle">اسحب الجسم وأفلته في إحدى الكفتين</p>
                     
@@ -147,37 +157,37 @@
                         <!-- سيتم إضافة الأجسام هنا تلقائياً -->
                     </div>
                 </div>
+            </div>
+
+            <!-- منطقة التحكم (منفصلة تماماً) -->
+            <div class="controls-area">
+                <h3><i class="fas fa-gamepad"></i> أدوات التحكم</h3>
                 
-                <!-- أدوات التحكم -->
-                <div class="controls-panel">
-                    <h3><i class="fas fa-gamepad"></i> أدوات التحكم</h3>
+                <div class="controls-grid">
+                    <button id="check-btn" class="control-btn success">
+                        <i class="fas fa-check-circle"></i>
+                        <span>تحقق من التوازن</span>
+                    </button>
                     
-                    <div class="controls-grid">
-                        <button id="check-btn" class="control-btn success">
-                            <i class="fas fa-check-circle"></i>
-                            <span>تحقق من التوازن</span>
-                        </button>
-                        
-                        <button id="reset-btn" class="control-btn warning">
-                            <i class="fas fa-redo"></i>
-                            <span>إعادة المحاولة</span>
-                        </button>
-                        
-                        <button id="hint-btn" class="control-btn info">
-                            <i class="fas fa-lightbulb"></i>
-                            <span>تلميح</span>
-                        </button>
+                    <button id="reset-btn" class="control-btn warning">
+                        <i class="fas fa-redo"></i>
+                        <span>إعادة المحاولة</span>
+                    </button>
+                    
+                    <button id="hint-btn" class="control-btn info">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>تلميح</span>
+                    </button>
+                </div>
+                
+                <!-- شريط التقدم -->
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>تقدم المستوى:</span>
+                        <span id="progress-percent">0%</span>
                     </div>
-                    
-                    <!-- شريط التقدم -->
-                    <div class="progress-container">
-                        <div class="progress-label">
-                            <span>تقدم المستوى:</span>
-                            <span id="progress-percent">0%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-fill"></div>
-                        </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
                     </div>
                 </div>
             </div>
