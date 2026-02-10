@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -57,111 +56,85 @@
                 <p>اسحب الأجسام إلى كفتي الميزان لتحقيق التوازن. حاول جعل الوزن متساوياً في الكفتين!</p>
                 
                 <div class="objectives">
-                    <h3><i class="fas fa-bullseye"></i> أهداف هذا المستوى:</h3>
+                    <h3><i class="fas fa-bullseye"></i> أهداف المستوى 1:</h3>
                     <ul>
-                        <li><i class="fas fa-check"></i> فهم الفرق بين الوزن والكتلة</li>
-                        <li><i class="fas fa-check"></i> تعلم كيف يعمل الميزان</li>
-                        <li><i class="fas fa-check"></i> تحقيق التوازن بين الكفتين</li>
+                        <li><i class="fas fa-check"></i> وضع جسمين في كل كفة</li>
+                        <li><i class="fas fa-check"></i> تحقيق توازن كامل</li>
+                        <li><i class="fas fa-check"></i> الفوز بـ 3 نجوم</li>
                     </ul>
                 </div>
             </div>
 
-          <!-- منطقة الميزان -->
-<div class="balance-area">
-    <div class="balance-container-wrapper">
-        <div class="balance-container">
-            <!-- قاعدة الميزان -->
-            <div class="balance-base"></div>
-            
-            <!-- ذراع الميزان -->
-            <div class="balance-beam" id="balance-beam">
-                <!-- مركز الميزان -->
-                <div class="balance-center">
-                    <i class="fas fa-dot-circle"></i>
-                </div>
-                
-                <!-- الكفة اليسرى -->
-                <div class="balance-pan left-pan" id="left-pan">
-                    <div class="pan-container">
-                        <div class="pan"></div>
-                        <div class="pan-stand"></div>
-                    </div>
-                    <div class="weight-display">
-                        <i class="fas fa-weight-hanging"></i>
-                        <span>اليسار: <strong id="left-weight">0</strong> كجم</span>
-                    </div>
-                    <div class="objects-container" id="left-objects">
-                        <div class="empty-message">
-                            <i class="fas fa-hand-point-up"></i>
-                            <p>اسحب الأجسام هنا</p>
+            <!-- منطقة الميزان -->
+            <div class="balance-area">
+                <div class="balance-container-wrapper">
+                    <div class="balance-container">
+                        <!-- قاعدة الميزان -->
+                        <div class="balance-base"></div>
+                        
+                        <!-- ذراع الميزان -->
+                        <div class="balance-beam" id="balance-beam">
+                            <!-- مركز الميزان -->
+                            <div class="balance-center">
+                                <i class="fas fa-dot-circle"></i>
+                            </div>
+                            
+                            <!-- الكفة اليسرى -->
+                            <div class="balance-pan left-pan" id="left-pan-container">
+                                <div class="pan-container">
+                                    <div class="pan"></div>
+                                    <div class="pan-stand"></div>
+                                </div>
+                                <div class="weight-display">
+                                    <i class="fas fa-weight-hanging"></i>
+                                    <span>اليسار: <strong id="left-weight">0</strong> كجم</span>
+                                </div>
+                                <div class="objects-container" id="left-objects">
+                                    <div class="empty-message">
+                                        <i class="fas fa-hand-point-up"></i>
+                                        <p>اسحب الأجسام هنا</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- الكفة اليمنى -->
+                            <div class="balance-pan right-pan" id="right-pan-container">
+                                <div class="pan-container">
+                                    <div class="pan"></div>
+                                    <div class="pan-stand"></div>
+                                </div>
+                                <div class="weight-display">
+                                    <i class="fas fa-weight-hanging"></i>
+                                    <span>اليمين: <strong id="right-weight">0</strong> كجم</span>
+                                </div>
+                                <div class="objects-container" id="right-objects">
+                                    <div class="empty-message">
+                                        <i class="fas fa-hand-point-up"></i>
+                                        <p>اسحب الأجسام هنا</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- الكفة اليمنى -->
-                <div class="balance-pan right-pan" id="right-pan">
-                    <div class="pan-container">
-                        <div class="pan"></div>
-                        <div class="pan-stand"></div>
+                <!-- مؤشر التوازن -->
+                <div class="balance-indicator">
+                    <div class="indicator-line"></div>
+                    <div class="indicator-arrow" id="balance-arrow"></div>
+                    <div class="indicator-labels">
+                        <span class="label-left">يميل لليسار</span>
+                        <span class="label-center">متوازن</span>
+                        <span class="label-right">يميل لليمين</span>
                     </div>
-                    <div class="weight-display">
-                        <i class="fas fa-weight-hanging"></i>
-                        <span>اليمين: <strong id="right-weight">0</strong> كجم</span>
-                    </div>
-                    <div class="objects-container" id="right-objects">
-                        <div class="empty-message">
-                            <i class="fas fa-hand-point-up"></i>
-                            <p>اسحب الأجسام هنا</p>
-                        </div>
-                    </div>
+                </div>
+                
+                <!-- معلومات التوازن -->
+                <div class="balance-info" id="balance-info">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>الفرق: <strong id="weight-difference">0</strong> كجم</span>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- مساعدة بصرية للتوسيط -->
-<div class="center-guide" style="
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    border: 2px dashed rgba(23, 190, 187, 0.3);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1;
-    display: none;
-">
-    <div style="
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 10px;
-        height: 10px;
-        background: rgba(23, 190, 187, 0.5);
-        border-radius: 50%;
-    "></div>
-</div>
-    
-    <!-- مؤشر التوازن -->
-    <div class="balance-indicator">
-        <div class="indicator-line"></div>
-        <div class="indicator-arrow" id="balance-arrow"></div>
-        <div class="indicator-labels">
-            <span class="label-left">يميل لليسار</span>
-            <span class="label-center">متوازن</span>
-            <span class="label-right">يميل لليمين</span>
-        </div>
-    </div>
-    
-    <!-- معلومات التوازن -->
-    <div class="balance-info" id="balance-info">
-        <i class="fas fa-balance-scale"></i>
-        <span>الفرق: <strong id="weight-difference">0</strong> كجم</span>
-    </div>
-</div>
 
             <!-- منطقة الأدوات والأجسام -->
             <div class="tools-section">
@@ -171,19 +144,7 @@
                     <p class="panel-subtitle">اسحب الجسم وأفلته في إحدى الكفتين</p>
                     
                     <div class="objects-grid" id="objects-grid">
-                        <!-- سيتم إضافة الأجسام ديناميكياً -->
-                    </div>
-                    
-                    <!-- معلومات إضافية -->
-                    <div class="objects-info">
-                        <div class="info-item">
-                            <i class="fas fa-ruler"></i>
-                            <span>الوحدة: كيلوجرام (كجم)</span>
-                        </div>
-                        <div class="info-item">
-                            <i class="fas fa-exchange-alt"></i>
-                            <span>اسحب لنقل الجسم بين الكفتين</span>
-                        </div>
+                        <!-- سيتم إضافة الأجسام هنا تلقائياً -->
                     </div>
                 </div>
                 
@@ -205,21 +166,6 @@
                         <button id="hint-btn" class="control-btn info">
                             <i class="fas fa-lightbulb"></i>
                             <span>تلميح</span>
-                        </button>
-                        
-                        <button id="next-btn" class="control-btn primary" disabled>
-                            <i class="fas fa-forward"></i>
-                            <span>المستوى التالي</span>
-                        </button>
-                        
-                        <button id="auto-btn" class="control-btn secondary">
-                            <i class="fas fa-robot"></i>
-                            <span>توازن تلقائي</span>
-                        </button>
-                        
-                        <button id="sound-btn" class="control-btn toggle active">
-                            <i class="fas fa-volume-up"></i>
-                            <span>الصوت: تشغيل</span>
                         </button>
                     </div>
                     
@@ -248,24 +194,6 @@
                     <div class="results-body">
                         <p id="result-message">لقد نجحت في تحقيق التوازن!</p>
                         
-                        <div class="results-stats">
-                            <div class="stat-box">
-                                <i class="fas fa-star"></i>
-                                <span class="stat-label">النجوم</span>
-                                <span class="stat-value" id="result-stars">3/3</span>
-                            </div>
-                            <div class="stat-box">
-                                <i class="fas fa-clock"></i>
-                                <span class="stat-label">الوقت</span>
-                                <span class="stat-value" id="result-time">00:30</span>
-                            </div>
-                            <div class="stat-box">
-                                <i class="fas fa-balance-scale"></i>
-                                <span class="stat-label">الدقة</span>
-                                <span class="stat-value" id="result-accuracy">100%</span>
-                            </div>
-                        </div>
-                        
                         <div class="stars-container" id="stars-container">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -276,22 +204,11 @@
                             <button id="retry-btn" class="action-btn">
                                 <i class="fas fa-redo"></i> إعادة المحاولة
                             </button>
-                            <button id="continue-btn" class="action-btn primary">
-                                <i class="fas fa-forward"></i> المتابعة
-                            </button>
                             <button id="close-results" class="action-btn secondary">
                                 <i class="fas fa-times"></i> إغلاق
                             </button>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- رسائل التلميح -->
-            <div class="hint-toast" id="hint-toast">
-                <div class="hint-content">
-                    <i class="fas fa-lightbulb"></i>
-                    <p id="hint-text">جرب وضع جسمين في كل كفة!</p>
                 </div>
             </div>
         </div>
@@ -308,10 +225,7 @@
                         <i class="fas fa-weight"></i>
                     </div>
                     <h3>الوزن</h3>
-                    <p>الوزن هو قوة جذب الأرض للأجسام. يتغير الوزن حسب قوة الجاذبية.</p>
-                    <div class="concept-example">
-                        <small>مثال: وزنك على القمر أقل من وزنك على الأرض</small>
-                    </div>
+                    <p>الوزن هو قوة جذب الأرض للأجسام. كلما زادت كتلة الجسم، زاد وزنه.</p>
                 </div>
                 
                 <div class="concept-card">
@@ -320,9 +234,6 @@
                     </div>
                     <h3>الكتلة</h3>
                     <p>الكتلة هي كمية المادة في الجسم. تبقى الكتلة ثابتة في أي مكان.</p>
-                    <div class="concept-example">
-                        <small>مثال: كتلة الكتاب تبقى نفسها على الأرض والقمر</small>
-                    </div>
                 </div>
                 
                 <div class="concept-card">
@@ -331,27 +242,7 @@
                     </div>
                     <h3>التوازن</h3>
                     <p>يتوازن الميزان عندما يتساوى الوزن في الكفتين. هذا يعني أن قوة الجذب متساوية.</p>
-                    <div class="concept-example">
-                        <small>مثال: 2 كجم في اليسار = 2 كجم في اليمين</small>
-                    </div>
                 </div>
-                
-                <div class="concept-card">
-                    <div class="concept-icon">
-                        <i class="fas fa-ruler-combined"></i>
-                    </div>
-                    <h3>الوحدة</h3>
-                    <p>نستخدم الكيلوجرام (كجم) لقياس الوزن. 1 كجم = 1000 جرام.</p>
-                    <div class="concept-example">
-                        <small>مثال: تفاحة ≈ 0.2 كجم، كتاب ≈ 1 كجم</small>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- نصيحة عملية -->
-            <div class="practical-tip">
-                <h3><i class="fas fa-flask"></i> نصيحة عملية</h3>
-                <p>جرب في المنزل: خذ ميزان مطبخ وضع عليه أشياء مختلفة. لاحظ كيف يتغير الوزن!</p>
             </div>
         </div>
     </section>
@@ -365,20 +256,16 @@
                     <ul>
                         <li><i class="fas fa-check"></i> ابدأ بالأجسام الخفيفة ثم الثقيلة</li>
                         <li><i class="fas fa-check"></i> حاول تحقيق التوازن بأقل عدد من المحاولات</li>
-                        <li><i class="fas fa-check"></i> لاحظ كيف يتغير الميزان مع كل جسم تضيفه</li>
                     </ul>
                 </div>
                 <div class="footer-actions">
-                    <a href="../index.html" class="footer-btn">
+                    <a href="/fresh-learning.github.io/" class="footer-btn">
                         <i class="fas fa-home"></i> الصفحة الرئيسية
                     </a>
-                    <button id="share-btn" class="footer-btn">
-                        <i class="fas fa-share-alt"></i> شارك اللعبة
-                    </button>
                 </div>
             </div>
             <div class="footer-copyright">
-                <p>© 2024 مختبر العلوم الصغير | لعبة الميزان الذكي - تصميم تعليمي تفاعلي</p>
+                <p>© 2024 مختبر العلوم الصغير | لعبة الميزان الذكي</p>
             </div>
         </div>
     </footer>
