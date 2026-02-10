@@ -1380,3 +1380,87 @@
         border-color: var(--balance-accent);
     }
 }
+
+/* تحسينات السحب والإفلات */
+#objects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.draggable-object {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: grab;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+    border: 3px solid #4a6fa5;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.draggable-object:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+#left-objects, #right-objects {
+    min-height: 200px;
+    border: 3px dashed #ddd;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    background: rgba(248,249,250,0.5);
+    transition: all 0.3s;
+}
+
+#left-objects.drag-over, #right-objects.drag-over {
+    border-color: #17bebb;
+    background: rgba(23, 190, 187, 0.1);
+}
+
+.object-in-pan {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 5px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border: 2px solid;
+    display: inline-block;
+    position: relative;
+}
+
+/* تحسينات للجوال */
+@media (max-width: 768px) {
+    .draggable-object {
+        padding: 15px;
+        margin: 5px;
+    }
+    
+    #objects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #left-objects, #right-objects {
+        min-height: 150px;
+        padding: 15px;
+    }
+}
+
+/* تأكيد الإفلات */
+@keyframes drop-confirm {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.object-in-pan.just-dropped {
+    animation: drop-confirm 0.3s ease;
+}
