@@ -455,20 +455,20 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.weightDiff.textContent = diff;
         
         // تحديث لون معلومات الفرق
-        const centerInfo = document.querySelector('.balance-info-center');
-        if (centerInfo) {
+        const diffElement = document.querySelector('.difference-center-display');
+        if (diffElement) {
             if (diff === 0) {
-                centerInfo.style.background = 'linear-gradient(135deg, #2ed573, #28a745)';
-                centerInfo.style.borderColor = '#218838';
+                diffElement.style.background = 'linear-gradient(135deg, #2ed573, #28a745)';
+                diffElement.style.borderColor = '#218838';
             } else if (diff < 3) {
-                centerInfo.style.background = 'linear-gradient(135deg, #ffa502, #ff9800)';
-                centerInfo.style.borderColor = '#e0a800';
+                diffElement.style.background = 'linear-gradient(135deg, #ffa502, #ff9800)';
+                diffElement.style.borderColor = '#e0a800';
             } else {
-                centerInfo.style.background = 'linear-gradient(135deg, #ff6b6b, #dc3545)';
-                centerInfo.style.borderColor = '#bd2130';
+                diffElement.style.background = 'linear-gradient(135deg, #ff6b6b, #dc3545)';
+                diffElement.style.borderColor = '#bd2130';
             }
         }
-    } // Fixed: Added missing closing brace here
+    }
     
     // === تحديث الميزان ===
     function updateBalance() {
@@ -885,5 +885,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('   - لا تداخل مع الأزرار');
     console.log('   - السحب والإفلات يعمل');
     console.log('   - زر إعادة المحاولة يعمل الآن بشكل صحيح');
+    console.log('   - عرض الفرق في المنتصف بين الكفتين');
     console.log('   - النظام كامل وجاهز للعب!');
 });
