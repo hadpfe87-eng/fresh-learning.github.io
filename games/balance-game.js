@@ -291,10 +291,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 this.classList.remove('drag-over');
                 
-                const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-                addObjectToZone(data, this);
-                
-                playSound('drop');
+                try {
+                    const data = JSON.parse(e.dataTransfer.getData('text/plain'));
+                    addObjectToZone(data, this);
+                    playSound('drop');
+                } catch (error) {
+                    console.log('Error parsing dropped data:', error);
+                }
             });
         });
     }
@@ -309,6 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
         objElement.className = 'object-in-pan';
         objElement.dataset.weight = data.weight;
         objElement.dataset.id = data.id;
+        objElement.dataset.name = data.name;
         
         // تحديد اللون
         let iconColor = '#4a6fa5';
@@ -339,6 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
             margin: 8px;
             display: inline-block;
             position: relative;
+            cursor: pointer;
         `;
         
         // إضافة زر الإزالة
@@ -387,6 +392,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         <p>اسحب الأجسام هنا</p>
                     </div>
                 `;
+            }
+        });
+        
+        // Click to remove on touch devices
+        objElement.addEventListener('touchend', function(e) {
+            if (e.touches && e.touches.length === 0) {
+                e.preventDefault();
+                setTimeout(() => {
+                    if (!removeBtn.matches(':hover')) {
+                        removeBtn.style.display = removeBtn.style.display === 'block' ? 'none' : 'block';
+                    }
+                }, 100);
             }
         });
         
@@ -623,6 +640,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // === إعادة التعيين ===
     function resetGame() {
+        console.log('🔄 إعادة تعيين اللعبة...');
+        
         // مسح مناطق الإفلات
         elements.leftDropZone.innerHTML = `
             <div class="drop-message">
@@ -642,9 +661,28 @@ document.addEventListener('DOMContentLoaded', function() {
         gameState.leftWeight = 0;
         gameState.rightWeight = 0;
         gameState.attempts = 0;
+        // Note: Not resetting score or level intentionally
+        
+        // إعادة تعيين الميزان
+        if (elements.balanceBeam) {
+            elements.balanceBeam.style.transform = 'translateX(-50%) rotate(0deg)';
+        }
+        
+        if (elements.balanceArrow) {
+            elements.balanceArrow.style.left = 'calc(50% + 0px)';
+            elements.balanceArrow.style.borderBottomColor = '#17bebb';
+        }
+        
+        // إعادة تعيين شريط التقدم
+        elements.progressFill.style.width = '0%';
+        elements.progressPercent.textContent = '0%';
+        elements.progressFill.style.background = 'linear-gradient(90deg, #17bebb, #4a6fa5)';
         
         // تحديث العرض
         updateDisplay();
+        
+        // إغلاق لوحة النتائج إذا كانت مفتوحة
+        elements.resultsPanel.classList.remove('active');
         
         showMessage('🔄 تم إعادة التعيين! يمكنك البدء من جديد.', 'success');
         playSound('reset');
@@ -655,18 +693,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // زر التحقق
         elements.checkBtn.addEventListener('click', checkBalance);
         
-        // زر إعادة المحاولة
-        elements.resetBtn.addEventListener('click', resetGame);
+        // زر إعادة المحاولة (الموجود في لوحة التحكم)
+        elements.resetBtn.addEventListener('click', function() {
+            console.log('🔄 زر إعادة المحاولة الرئيسي تم النقر عليه');
+            resetGame();
+        });
         
         // زر التلميح
         elements.hintBtn.addEventListener('click', showHint);
         
-        // أزرار النتائج
+        // زر إعادة المحاولة (الموجود في لوحة النتائج) - FIXED
         elements.retryBtn.addEventListener('click', function() {
+            console.log('🔄 زر إعادة المحاولة في النتائج تم النقر عليه');
             elements.resultsPanel.classList.remove('active');
             resetGame();
         });
         
+        // زر إغلاق النتائج
         elements.closeResults.addEventListener('click', function() {
             elements.resultsPanel.classList.remove('active');
         });
@@ -844,5 +887,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('   - قاعدة الميزان ظاهرة');
     console.log('   - لا تداخل مع الأزرار');
     console.log('   - السحب والإفلات يعمل');
+    console.log('   - زر إعادة المحاولة يعمل الآن بشكل صحيح');
     console.log('   - النظام كامل وجاهز للعب!');
 });
