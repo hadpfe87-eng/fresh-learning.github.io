@@ -59,7 +59,9 @@
                     <img src="Media/epingle-sur-coisas-aleatorias-que-yoyo_G25SUprb.gif" 
                          alt="شخصية متحركة" 
                          class="character-gif"
-                         loading="lazy">
+                         loading="eager"
+                         decoding="sync"
+                         fetchpriority="high">
                     
                     <!-- عناصر تفاعلية مع الشخصية -->
                     <div class="science-item item-1">
@@ -288,5 +290,36 @@
     <!-- ملفات JavaScript -->
     <script src="device-detector.js"></script>
     <script src="script.js"></script>
+    
+    <!-- كود إضافي لضمان تشغيل GIF -->
+    <script>
+        // هذا الكود يضمن إعادة تحميل GIF إذا توقف عن الحركة
+        document.addEventListener('DOMContentLoaded', function() {
+            const gifElement = document.querySelector('.character-gif');
+            
+            if (gifElement) {
+                // التأكد من تحميل GIF بشكل صحيح
+                gifElement.onload = function() {
+                    console.log('✅ GIF تم تحميله بنجاح');
+                };
+                
+                gifElement.onerror = function() {
+                    console.log('❌ خطأ في تحميل GIF، محاولة إعادة التحميل...');
+                    // إعادة تحميل GIF إذا فشل التحميل
+                    setTimeout(() => {
+                        gifElement.src = 'Media/epingle-sur-coisas-aleatorias-que-yoyo_G25SUprb.gif?' + new Date().getTime();
+                    }, 1000);
+                };
+                
+                // إضافة حدث للنقر لإعادة تشغيل GIF إذا توقف
+                gifElement.addEventListener('click', function() {
+                    // إعادة تعيين مصدر GIF لتشغيله من جديد
+                    const currentSrc = this.src;
+                    this.src = '';
+                    this.src = currentSrc;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
