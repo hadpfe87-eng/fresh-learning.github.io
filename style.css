@@ -1376,6 +1376,8 @@ img[src*="epingle"] {
 
 /* ====== تحديثات البوب أب مع الصورة الشفافة ====== */
 
+/* ====== تحديثات البوب أب مع الصورة الشفافة ====== */
+
 /* حاوية الصورة في الزاوية العلوية اليسرى */
 .popup-corner-image {
     position: absolute;
@@ -1387,21 +1389,28 @@ img[src*="epingle"] {
     animation: cornerImageFloat 3s ease-in-out infinite;
 }
 
-/* الصورة الشفافة */
+/* الصورة الشفافة - مع تدوير عكس عقارب الساعة */
 .corner-character {
     width: 100%;
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 10px 15px rgba(74, 111, 165, 0.3));
+    transform: rotate(-5deg); /* تدوير عكس عقارب الساعة بمقدار 5 درجات */
+    transition: transform 0.3s ease;
+}
+
+/* تأثير عند تمرير الماوس (اختياري) */
+.corner-character:hover {
+    transform: rotate(-8deg) scale(1.05); /* تدوير أكثر قليلاً عند التمرير */
 }
 
 /* حركة خفيفة للصورة */
 @keyframes cornerImageFloat {
     0%, 100% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0);
     }
     50% {
-        transform: translateY(-5px) rotate(2deg);
+        transform: translateY(-5px);
     }
 }
 
@@ -1419,6 +1428,10 @@ img[src*="epingle"] {
         height: 80px;
     }
     
+    .corner-character {
+        transform: rotate(-4deg); /* تدوير أقل على الجوال */
+    }
+    
     .popup-header {
         margin-top: 30px; /* مسافة أكبر للجوال */
     }
@@ -1430,6 +1443,10 @@ img[src*="epingle"] {
         left: -10px;
         width: 60px;
         height: 60px;
+    }
+    
+    .corner-character {
+        transform: rotate(-3deg); /* تدوير أقل على الشاشات الصغيرة جداً */
     }
     
     .popup-header {
