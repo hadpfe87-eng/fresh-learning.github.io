@@ -58,7 +58,6 @@
                     <i class="fas fa-gamepad"></i> اكتشف الألعاب
                 </a>
             </div>
-            <!-- فقط جزء الـ GIF - باقي الملف كما هو -->
             <div class="hero-image">
                 <!-- GIF المتحرك - ثابت تماماً -->
                 <div class="gif-fixed-container">
@@ -274,40 +273,7 @@
         </div>
     </footer>
 
-    <!-- ملفات JavaScript -->
-    <script src="device-detector.js"></script>
-    <script src="script.js"></script>
-    
-    <!-- كود الحفاظ على حركة GIF -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const gifElement = document.getElementById('animated-gif');
-        
-        if (gifElement) {
-            // دالة لإعادة تحميل GIF إذا توقف عن الحركة
-            function refreshGIF() {
-                const currentSrc = gifElement.src;
-                const baseSrc = currentSrc.split('?')[0];
-                gifElement.src = baseSrc + '?t=' + new Date().getTime();
-                console.log('🔄 إعادة تحميل GIF');
-            }
-            
-            // إعادة تحميل GIF كل 30 ثانية
-            setInterval(refreshGIF, 30000);
-            
-            // إعادة تحميل GIF عند النقر عليه
-            gifElement.addEventListener('click', function(e) {
-                e.preventDefault();
-                refreshGIF();
-            });
-            
-            // تحميل أولي مع timestamp
-            setTimeout(refreshGIF, 100);
-        }
-    });
-    </script>
-
-    <!-- نافذة الترحيب المنبثقة للأطفال -->
+    <!-- نافذة الترحيب المنبثقة للأطفال - يجب وضعها قبل أي سكريبت -->
     <div class="welcome-popup" id="welcomePopup">
         <div class="popup-content">
             <button class="popup-close" id="closePopup"><i class="fas fa-times"></i></button>
@@ -371,52 +337,93 @@
         </div>
     </div>
 
-    <!-- كود التحكم في النافذة المنبثقة -->
+    <!-- ملفات JavaScript - تأكد من تحميلها بعد البوب أب -->
+    <script src="device-detector.js"></script>
+    <script src="script.js"></script>
+    
+    <!-- كود الحفاظ على حركة GIF -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const gifElement = document.getElementById('animated-gif');
+        
+        if (gifElement) {
+            // دالة لإعادة تحميل GIF إذا توقف عن الحركة
+            function refreshGIF() {
+                const currentSrc = gifElement.src;
+                const baseSrc = currentSrc.split('?')[0];
+                gifElement.src = baseSrc + '?t=' + new Date().getTime();
+                console.log('🔄 إعادة تحميل GIF');
+            }
+            
+            // إعادة تحميل GIF كل 30 ثانية
+            setInterval(refreshGIF, 30000);
+            
+            // إعادة تحميل GIF عند النقر عليه
+            gifElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                refreshGIF();
+            });
+            
+            // تحميل أولي مع timestamp
+            setTimeout(refreshGIF, 100);
+        }
+    });
+    </script>
+
+    <!-- كود التحكم في النافذة المنبثقة - مبسط ومضمون -->
+    <script>
+    // تأكد من تحميل الصفحة بالكامل
+    window.addEventListener('load', function() {
+        console.log('✅ الصفحة تحملت بالكامل');
+        
         // عناصر النافذة المنبثقة
         const welcomePopup = document.getElementById('welcomePopup');
         const closePopup = document.getElementById('closePopup');
         const startExploring = document.getElementById('startExploring');
         const remindLater = document.getElementById('remindLater');
         
+        // تأكد من وجود العناصر
+        if (!welcomePopup) {
+            console.log('❌ النافذة غير موجودة');
+            return;
+        }
+        
+        console.log('✅ النافذة موجودة');
+        
         // دالة لإظهار النافذة
         function showPopup() {
+            console.log('👆 محاولة إظهار النافذة');
             welcomePopup.classList.add('show');
-            document.body.style.overflow = 'hidden'; // منع التمرير خلف النافذة
+            document.body.style.overflow = 'hidden';
         }
         
         // دالة لإخفاء النافذة
         function hidePopup() {
             welcomePopup.classList.remove('show');
-            document.body.style.overflow = ''; // إعادة التمرير
+            document.body.style.overflow = '';
         }
         
-        // التحقق مما إذا تم عرض النافذة من قبل
-        const hasSeenPopup = localStorage.getItem('welcomePopupSeen');
-        
-        // إذا لم يشاهدها من قبل، اعرضها بعد ثانية واحدة
-        if (!hasSeenPopup) {
-            setTimeout(showPopup, 1000);
-            // سجل أنه تم عرضها
-            localStorage.setItem('welcomePopupSeen', 'true');
-        }
+        // إظهار النافذة بعد ثانيتين بغض النظر عن أي شيء (للتجربة)
+        setTimeout(function() {
+            console.log('⏰ تنفيذ setTimeout');
+            showPopup();
+        }, 2000);
         
         // إغلاق النافذة عند النقر على زر الإغلاق
         if (closePopup) {
-            closePopup.addEventListener('click', hidePopup);
+            closePopup.addEventListener('click', function(e) {
+                console.log('❌ إغلاق النافذة');
+                hidePopup();
+            });
         }
         
         // عند النقر على "هيا نبدأ الرحلة"
         if (startExploring) {
             startExploring.addEventListener('click', function() {
                 hidePopup();
-                // تمرير سلس إلى قسم الألعاب
                 const gamesSection = document.getElementById('games');
                 if (gamesSection) {
-                    setTimeout(() => {
-                        gamesSection.scrollIntoView({ behavior: 'smooth' });
-                    }, 300);
+                    gamesSection.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         }
@@ -425,8 +432,6 @@
         if (remindLater) {
             remindLater.addEventListener('click', function() {
                 hidePopup();
-                // إعادة تعيين الحالة ليتم عرضها في المرة القادمة
-                localStorage.removeItem('welcomePopupSeen');
             });
         }
         
@@ -436,18 +441,24 @@
                 hidePopup();
             }
         });
-        
-        // إغلاق النافذة عند الضغط على زر ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && welcomePopup.classList.contains('show')) {
-                hidePopup();
-            }
-        });
     });
     </script>
     
-    <!-- كود إضافي لتصحيح أي مشاكل في العرض -->
+    <!-- كود CSS إضافي بسيط للتأكد -->
     <style>
+        /* التأكد من ظهور النافذة */
+        .welcome-popup {
+            display: flex !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            transition: opacity 0.4s ease, visibility 0.4s ease !important;
+        }
+        
+        .welcome-popup.show {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
         /* تدمير أي حركة محتملة للـ GIF */
         .hero-image, .gif-fixed-container, .character-gif-fixed, #animated-gif {
             animation: none !important;
@@ -455,35 +466,6 @@
             transform: none !important;
             -webkit-transform: none !important;
             transition: none !important;
-            motion: none !important;
-            offset: none !important;
-            translate: none !important;
-            rotate: none !important;
-            scale: none !important;
-        }
-        
-        .gif-fixed-container {
-            position: static !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-        
-        .character-gif-fixed {
-            position: static !important;
-            display: block !important;
-            margin: 0 auto !important;
-        }
-        
-        /* التأكد من ظهور النافذة المنبثقة */
-        .welcome-popup {
-            display: flex !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-        }
-        
-        .welcome-popup.show {
-            visibility: visible !important;
-            opacity: 1 !important;
         }
     </style>
 </body>
