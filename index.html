@@ -22,6 +22,11 @@
     
     <!-- ملفات CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- منع التخزين المؤقت للـ GIF -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 </head>
 <body>
     <!-- شريط التنقل -->
@@ -54,34 +59,15 @@
                 </a>
             </div>
             <div class="hero-image">
-                <!-- GIF المتحرك الجديد -->
-                <div class="animated-gif-container">
+                <!-- GIF المتحرك - بدون عناصر متحركة -->
+                <div class="gif-fixed-container">
                     <img src="Media/epingle-sur-coisas-aleatorias-que-yoyo_G25SUprb.gif" 
                          alt="شخصية متحركة" 
-                         class="character-gif"
+                         class="character-gif-fixed"
+                         id="animated-gif"
                          loading="eager"
                          decoding="sync"
                          fetchpriority="high">
-                    
-                    <!-- عناصر تفاعلية مع الشخصية -->
-                    <div class="science-item item-1">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <div class="science-item item-2">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <div class="science-item item-3">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    
-                    <!-- فقاعات كالماء -->
-                    <div class="bubble bubble-1"></div>
-                    <div class="bubble bubble-2"></div>
-                    <div class="bubble bubble-3"></div>
-                    <div class="bubble bubble-4"></div>
-                    
-                    <!-- نجمة بحر -->
-                    <div class="starfish"></div>
                 </div>
             </div>
         </div>
@@ -291,35 +277,33 @@
     <script src="device-detector.js"></script>
     <script src="script.js"></script>
     
-    <!-- كود إضافي لضمان تشغيل GIF -->
+    <!-- كود الحفاظ على حركة GIF -->
     <script>
-        // هذا الكود يضمن إعادة تحميل GIF إذا توقف عن الحركة
-        document.addEventListener('DOMContentLoaded', function() {
-            const gifElement = document.querySelector('.character-gif');
-            
-            if (gifElement) {
-                // التأكد من تحميل GIF بشكل صحيح
-                gifElement.onload = function() {
-                    console.log('✅ GIF تم تحميله بنجاح');
-                };
-                
-                gifElement.onerror = function() {
-                    console.log('❌ خطأ في تحميل GIF، محاولة إعادة التحميل...');
-                    // إعادة تحميل GIF إذا فشل التحميل
-                    setTimeout(() => {
-                        gifElement.src = 'Media/epingle-sur-coisas-aleatorias-que-yoyo_G25SUprb.gif?' + new Date().getTime();
-                    }, 1000);
-                };
-                
-                // إضافة حدث للنقر لإعادة تشغيل GIF إذا توقف
-                gifElement.addEventListener('click', function() {
-                    // إعادة تعيين مصدر GIF لتشغيله من جديد
-                    const currentSrc = this.src;
-                    this.src = '';
-                    this.src = currentSrc;
-                });
+    document.addEventListener('DOMContentLoaded', function() {
+        const gifElement = document.getElementById('animated-gif');
+        
+        if (gifElement) {
+            // دالة لإعادة تحميل GIF إذا توقف عن الحركة
+            function refreshGIF() {
+                const currentSrc = gifElement.src;
+                const baseSrc = currentSrc.split('?')[0];
+                gifElement.src = baseSrc + '?t=' + new Date().getTime();
+                console.log('🔄 إعادة تحميل GIF');
             }
-        });
+            
+            // إعادة تحميل GIF كل 30 ثانية
+            setInterval(refreshGIF, 30000);
+            
+            // إعادة تحميل GIF عند النقر عليه
+            gifElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                refreshGIF();
+            });
+            
+            // تحميل أولي مع timestamp
+            setTimeout(refreshGIF, 100);
+        }
+    });
     </script>
 </body>
 </html>
