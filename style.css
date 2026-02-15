@@ -134,19 +134,7 @@ body {
 
 .hero-content {
     flex: 1;
-    animation: fadeInRight 1s ease;
     max-width: 50%;
-}
-
-@keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
 }
 
 .hero h2 {
@@ -196,7 +184,7 @@ body {
     width: 100%;
 }
 
-/* ====== حاوية GIF الثابتة والموسعة ====== */
+/* ====== حاوية GIF الثابتة تماماً ====== */
 .gif-fixed-container {
     position: relative;
     width: 100%;
@@ -205,35 +193,32 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* إزالة أي حركة */
-    animation: none;
-    transform: none;
+    /* إزالة أي حركة تماماً */
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
 }
 
 .character-gif-fixed {
     width: 100%;
     height: auto;
-    max-width: 500px;
-    max-height: 500px;
+    max-width: 550px;
+    max-height: 550px;
     object-fit: contain;
     border-radius: 30px;
     box-shadow: 0 20px 40px rgba(23, 190, 187, 0.4);
     z-index: 10;
     position: relative;
-    /* إزالة أي حركة */
-    animation: none;
-    transform: none;
-    transition: transform 0.3s ease;
+    /* إزالة أي حركة تماماً */
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
     /* تحسينات لعرض GIF */
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
     -ms-interpolation-mode: nearest-neighbor;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-}
-
-.character-gif-fixed:hover {
-    transform: scale(1.02);
 }
 
 /* ====== قسم الألعاب ====== */
@@ -734,8 +719,8 @@ body {
     }
     
     .character-gif-fixed {
-        max-width: 300px;
-        max-height: 300px;
+        max-width: 280px;
+        max-height: 280px;
     }
 }
 
@@ -767,7 +752,7 @@ body {
     }
     
     .character-gif-fixed {
-        max-width: 220px;
-        max-height: 220px;
+        max-width: 200px;
+        max-height: 200px;
     }
 }
