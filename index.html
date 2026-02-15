@@ -333,5 +333,145 @@
         margin: 0 auto !important;
     }
 </style>
+
+    <!-- نافذة الترحيب المنبثقة للأطفال -->
+<div class="welcome-popup" id="welcomePopup">
+    <div class="popup-content">
+        <button class="popup-close" id="closePopup"><i class="fas fa-times"></i></button>
+        
+        <div class="popup-header">
+            <div class="popup-icon">
+                <i class="fas fa-flask"></i>
+            </div>
+            <h2>مرحباً يا صديقي الصغير! 👋</h2>
+        </div>
+        
+        <div class="popup-body">
+            <div class="popup-character">
+                <img src="Media/epingle-sur-coisas-aleatorias-que-yoyo_G25SUprb.gif" 
+                     alt="شخصية مرحبة" 
+                     class="popup-gif">
+            </div>
+            
+            <div class="popup-message">
+                <h3>أهلاً بك في مختبر العلوم الصغير! 🔬</h3>
+                <p>هيا بنا نبدأ رحلة ممتعة لاكتشاف أسرار العلوم والفيزياء من خلال ألعاب تفاعلية شيقة!</p>
+                
+                <div class="popup-features">
+                    <div class="popup-feature">
+                        <i class="fas fa-gamepad"></i>
+                        <span>ألعاب تفاعلية</span>
+                    </div>
+                    <div class="popup-feature">
+                        <i class="fas fa-star"></i>
+                        <span>مغامرات علمية</span>
+                    </div>
+                    <div class="popup-feature">
+                        <i class="fas fa-trophy"></i>
+                        <span>تحديات ممتعة</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="popup-footer">
+            <button class="popup-btn popup-btn-primary" id="startExploring">
+                <i class="fas fa-rocket"></i>
+                هيا نبدأ الرحلة!
+            </button>
+            <button class="popup-btn popup-btn-secondary" id="remindLater">
+                <i class="fas fa-clock"></i>
+                ذكرني لاحقاً
+            </button>
+        </div>
+        
+        <!-- عناصر متحركة صغيرة للتزيين -->
+        <div class="popup-bubble bubble-1"></div>
+        <div class="popup-bubble bubble-2"></div>
+        <div class="popup-bubble bubble-3"></div>
+        <div class="popup-bubble bubble-4"></div>
+        <div class="popup-bubble bubble-5"></div>
+        
+        <div class="popup-star star-1">⭐</div>
+        <div class="popup-star star-2">✨</div>
+        <div class="popup-star star-3">🌟</div>
+    </div>
+</div>
+
+<!-- كود التحكم في النافذة المنبثقة -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // عناصر النافذة المنبثقة
+    const welcomePopup = document.getElementById('welcomePopup');
+    const closePopup = document.getElementById('closePopup');
+    const startExploring = document.getElementById('startExploring');
+    const remindLater = document.getElementById('remindLater');
+    
+    // دالة لإظهار النافذة
+    function showPopup() {
+        welcomePopup.classList.add('show');
+        document.body.style.overflow = 'hidden'; // منع التمرير خلف النافذة
+    }
+    
+    // دالة لإخفاء النافذة
+    function hidePopup() {
+        welcomePopup.classList.remove('show');
+        document.body.style.overflow = ''; // إعادة التمرير
+    }
+    
+    // التحقق مما إذا تم عرض النافذة من قبل
+    const hasSeenPopup = localStorage.getItem('welcomePopupSeen');
+    
+    // إذا لم يشاهدها من قبل، اعرضها بعد ثانية واحدة
+    if (!hasSeenPopup) {
+        setTimeout(showPopup, 1000);
+        // سجل أنه تم عرضها
+        localStorage.setItem('welcomePopupSeen', 'true');
+    }
+    
+    // إغلاق النافذة عند النقر على زر الإغلاق
+    if (closePopup) {
+        closePopup.addEventListener('click', hidePopup);
+    }
+    
+    // عند النقر على "هيا نبدأ الرحلة"
+    if (startExploring) {
+        startExploring.addEventListener('click', function() {
+            hidePopup();
+            // تمرير سلس إلى قسم الألعاب
+            const gamesSection = document.getElementById('games');
+            if (gamesSection) {
+                setTimeout(() => {
+                    gamesSection.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            }
+        });
+    }
+    
+    // عند النقر على "ذكرني لاحقاً"
+    if (remindLater) {
+        remindLater.addEventListener('click', function() {
+            hidePopup();
+            // إعادة تعيين الحالة ليتم عرضها في المرة القادمة
+            localStorage.removeItem('welcomePopupSeen');
+        });
+    }
+    
+    // إغلاق النافذة عند النقر خارج المحتوى
+    welcomePopup.addEventListener('click', function(e) {
+        if (e.target === welcomePopup) {
+            hidePopup();
+        }
+    });
+    
+    // إغلاق النافذة عند الضغط على زر ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && welcomePopup.classList.contains('show')) {
+            hidePopup();
+        }
+    });
+});
+</script>
+    
 </body>
 </html>
