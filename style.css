@@ -135,6 +135,7 @@ body {
 .hero-content {
     flex: 1;
     animation: fadeInRight 1s ease;
+    max-width: 50%;
 }
 
 @keyframes fadeInRight {
@@ -190,287 +191,49 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 500px;
+    min-height: 600px;
     position: relative;
+    width: 100%;
 }
 
-/* ====== تحسينات القسم الرئيسي مع عناصر متحركة ====== */
-.animated-science-lab {
+/* ====== حاوية GIF الثابتة والموسعة ====== */
+.gif-fixed-container {
     position: relative;
-    width: 500px;
-    height: 500px;
-    max-width: 100%;
-    margin: 0 auto;
-}
-
-.science-element {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 24px;
-    box-shadow: 0 8px 20px rgba(23, 190, 187, 0.3);
-    z-index: 2;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.science-element:hover {
-    transform: scale(1.2) rotate(20deg);
-    box-shadow: 0 12px 30px rgba(23, 190, 187, 0.5);
-}
-
-/* مواضع العناصر العلمية */
-.element-1 {
-    top: 20%;
-    left: 10%;
-    animation: floatElement 6s ease-in-out infinite;
-}
-
-.element-2 {
-    top: 10%;
-    right: 20%;
-    animation: floatElement 7s ease-in-out infinite 0.5s;
-    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-}
-
-.element-3 {
-    top: 50%;
-    left: 5%;
-    animation: floatElement 8s ease-in-out infinite 1s;
-    background: linear-gradient(135deg, #1dd1a1, #10ac84);
-}
-
-.element-4 {
-    top: 60%;
-    right: 15%;
-    animation: floatElement 9s ease-in-out infinite 1.5s;
-    background: linear-gradient(135deg, #feca57, #ff9f43);
-}
-
-.element-5 {
-    top: 30%;
-    right: 5%;
-    animation: floatElement 5s ease-in-out infinite 0.2s;
-    background: linear-gradient(135deg, #54a0ff, #2e86de);
-}
-
-.element-6 {
-    top: 70%;
-    left: 20%;
-    animation: floatElement 7s ease-in-out infinite 0.8s;
-    background: linear-gradient(135deg, #5f27cd, #341f97);
-}
-
-.element-7 {
-    top: 40%;
-    left: 30%;
-    animation: floatElement 6.5s ease-in-out infinite 1.2s;
-    background: linear-gradient(135deg, #ff9ff3, #f368e0);
-}
-
-.element-8 {
-    top: 15%;
-    left: 40%;
-    animation: floatElement 8.5s ease-in-out infinite 0.3s;
-    background: linear-gradient(135deg, #ffd32a, #ffa801);
-}
-
-.element-9 {
-    top: 75%;
-    right: 30%;
-    animation: floatElement 7.5s ease-in-out infinite 1.8s;
-    background: linear-gradient(135deg, #00d2d3, #01a3a4);
-}
-
-.element-10 {
-    top: 85%;
-    left: 45%;
-    animation: floatElement 6s ease-in-out infinite 0.6s;
-    background: linear-gradient(135deg, #ff9f43, #ee5a52);
-}
-
-/* خطوط الاتصال المتحركة */
-.connection-line {
-    position: absolute;
-    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-    height: 2px;
-    z-index: 1;
-    opacity: 0.5;
-    animation: pulseLine 4s ease-in-out infinite;
-}
-
-.line-1 {
-    top: 25%;
-    left: 20%;
-    right: 30%;
-    animation-delay: 0s;
-}
-
-.line-2 {
-    top: 55%;
-    left: 10%;
-    right: 40%;
-    animation-delay: 1s;
-}
-
-.line-3 {
-    top: 80%;
-    left: 25%;
-    right: 20%;
-    animation-delay: 2s;
-}
-
-/* فقاعات متحركة */
-.bubble {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(23, 190, 187, 0.1);
-    border: 2px solid rgba(23, 190, 187, 0.3);
-    z-index: 1;
-    animation: bubbleFloat 15s linear infinite;
-}
-
-.bubble-1 {
-    width: 40px;
-    height: 40px;
-    top: 5%;
-    left: 15%;
-    animation-delay: 0s;
-}
-
-.bubble-2 {
-    width: 60px;
-    height: 60px;
-    top: 20%;
-    right: 10%;
-    animation-delay: 3s;
-}
-
-.bubble-3 {
-    width: 30px;
-    height: 30px;
-    top: 65%;
-    left: 10%;
-    animation-delay: 6s;
-}
-
-.bubble-4 {
-    width: 50px;
-    height: 50px;
-    top: 45%;
-    right: 5%;
-    animation-delay: 9s;
-}
-
-.bubble-5 {
-    width: 35px;
-    height: 35px;
-    top: 85%;
-    left: 35%;
-    animation-delay: 12s;
-}
-
-/* أنيميشن العناصر */
-@keyframes floatElement {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    25% {
-        transform: translateY(-20px) rotate(5deg);
-    }
-    50% {
-        transform: translateY(10px) rotate(-5deg);
-    }
-    75% {
-        transform: translateY(-10px) rotate(3deg);
-    }
-}
-
-@keyframes pulseLine {
-    0%, 100% {
-        opacity: 0.3;
-        transform: scaleX(0.9);
-    }
-    50% {
-        opacity: 0.7;
-        transform: scaleX(1);
-    }
-}
-
-@keyframes bubbleFloat {
-    0% {
-        transform: translateY(0) translateX(0) scale(1);
-        opacity: 0.3;
-    }
-    25% {
-        transform: translateY(-30px) translateX(20px) scale(1.1);
-        opacity: 0.5;
-    }
-    50% {
-        transform: translateY(-60px) translateX(-10px) scale(1);
-        opacity: 0.3;
-    }
-    75% {
-        transform: translateY(-30px) translateX(-20px) scale(0.9);
-        opacity: 0.5;
-    }
-    100% {
-        transform: translateY(0) translateX(0) scale(1);
-        opacity: 0.3;
-    }
-}
-
-/* تأثيرات تفاعلية للعناصر */
-.science-element::after {
-    content: '';
-    position: absolute;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    background: inherit;
-    z-index: -1;
-    animation: ripple 2s ease-out infinite;
-    opacity: 0;
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* إزالة أي حركة */
+    animation: none;
+    transform: none;
 }
 
-@keyframes ripple {
-    0% {
-        transform: scale(1);
-        opacity: 0.5;
-    }
-    100% {
-        transform: scale(2);
-        opacity: 0;
-    }
+.character-gif-fixed {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(23, 190, 187, 0.4);
+    z-index: 10;
+    position: relative;
+    /* إزالة أي حركة */
+    animation: none;
+    transform: none;
+    transition: transform 0.3s ease;
+    /* تحسينات لعرض GIF */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
-/* تأثيرات إضافية للجو العلمي */
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(23, 190, 187, 0.1) 0%, transparent 70%);
-    border-radius: 50%;
-}
-
-.hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(74, 111, 165, 0.1) 0%, transparent 70%);
-    border-radius: 50%;
+.character-gif-fixed:hover {
+    transform: scale(1.02);
 }
 
 /* ====== قسم الألعاب ====== */
@@ -834,11 +597,65 @@ body {
     font-size: 14px;
 }
 
+/* تحسينات للوضع الداكن */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+    }
+    
+    .navbar,
+    .games-section,
+    .contact-section,
+    .game-card,
+    .feature,
+    .science-facts,
+    .contact-form {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+    }
+    
+    .hero {
+        background: linear-gradient(135deg, #2c3e50, #4a235a);
+    }
+    
+    .about-section {
+        background-color: #222;
+    }
+    
+    .hero h2,
+    .section-title,
+    .about-text h3,
+    .game-card h3,
+    .feature h4 {
+        color: #fff;
+    }
+    
+    .hero p,
+    .section-subtitle,
+    .game-card p,
+    .about-text p,
+    .fact span {
+        color: #ccc;
+    }
+    
+    input,
+    textarea {
+        background-color: #3d3d3d;
+        color: #fff;
+        border-color: #555;
+    }
+}
+
 /* ====== تصميم متجاوب ====== */
 @media (max-width: 992px) {
     .hero .container {
         flex-direction: column;
         text-align: center;
+    }
+    
+    .hero-content {
+        max-width: 100%;
     }
     
     .about-content {
@@ -853,15 +670,13 @@ body {
         font-size: 32px;
     }
     
-    .animated-science-lab {
-        width: 400px;
-        height: 400px;
+    .gif-fixed-container {
+        min-height: 450px;
     }
     
-    .science-element {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
+    .character-gif-fixed {
+        max-width: 400px;
+        max-height: 400px;
     }
 }
 
@@ -914,19 +729,13 @@ body {
         grid-template-columns: 1fr;
     }
     
-    .animated-science-lab {
-        width: 300px;
-        height: 300px;
+    .gif-fixed-container {
+        min-height: 350px;
     }
     
-    .science-element {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-    }
-    
-    .bubble {
-        display: none;
+    .character-gif-fixed {
+        max-width: 300px;
+        max-height: 300px;
     }
 }
 
@@ -953,302 +762,12 @@ body {
         justify-content: center;
     }
     
-    .animated-science-lab {
-        width: 250px;
-        height: 250px;
+    .gif-fixed-container {
+        min-height: 250px;
     }
     
-    .science-element {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-    }
-}
-
-/* تحسينات للوضع الداكن */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #1a1a1a;
-        color: #e0e0e0;
-    }
-    
-    .navbar,
-    .games-section,
-    .contact-section,
-    .game-card,
-    .feature,
-    .science-facts,
-    .contact-form {
-        background-color: #2d2d2d;
-        color: #e0e0e0;
-    }
-    
-    .hero {
-        background: linear-gradient(135deg, #2c3e50, #4a235a);
-    }
-    
-    .about-section {
-        background-color: #222;
-    }
-    
-    .hero h2,
-    .section-title,
-    .about-text h3,
-    .game-card h3,
-    .feature h4 {
-        color: #fff;
-    }
-    
-    .hero p,
-    .section-subtitle,
-    .game-card p,
-    .about-text p,
-    .fact span {
-        color: #ccc;
-    }
-    
-    input,
-    textarea {
-        background-color: #3d3d3d;
-        color: #fff;
-        border-color: #555;
-    }
-    
-    .science-element {
-        box-shadow: 0 8px 20px rgba(23, 190, 187, 0.2);
-    }
-    
-    .science-element:hover {
-        box-shadow: 0 12px 30px rgba(23, 190, 187, 0.4);
-    }
-}
-
-/* ====== شخصية GIF المتحركة ====== */
-.animated-gif-container {
-    position: relative;
-    width: 400px;
-    height: 500px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.character-gif {
-    width: 100%;
-    height: auto;
-    max-width: 350px;
-    border-radius: 20px;
-    animation: gifFloat 3s ease-in-out infinite;
-    z-index: 10;
-    position: relative;
-    box-shadow: 0 15px 35px rgba(23, 190, 187, 0.3);
-    /* تحسينات لعرض GIF */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-    -ms-interpolation-mode: nearest-neighbor;
-    /* منع أي تأثيرات قد توقف الحركة */
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-}
-
-/* عناصر علمية تتفاعل مع الشخصية */
-.science-item {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background: white;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-color);
-    font-size: 24px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    z-index: 15;
-    transition: all 0.3s;
-}
-
-.science-item:hover {
-    transform: scale(1.2);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.item-1 {
-    top: 50px;
-    right: 20px;
-    animation: floatItem 6s ease-in-out infinite;
-}
-
-.item-2 {
-    top: 150px;
-    left: 10px;
-    animation: floatItem 7s ease-in-out infinite 1s;
-}
-
-.item-3 {
-    bottom: 100px;
-    right: 30px;
-    animation: floatItem 8s ease-in-out infinite 2s;
-}
-
-/* فقاعات */
-.animated-gif-container .bubble {
-    position: absolute;
-    background: rgba(23, 190, 187, 0.2);
-    border: 2px solid rgba(23, 190, 187, 0.3);
-    border-radius: 50%;
-    z-index: 1;
-}
-
-.animated-gif-container .bubble-1 {
-    width: 40px;
-    height: 40px;
-    top: 20%;
-    left: 10%;
-    animation: bubbleFloat 8s linear infinite;
-}
-
-.animated-gif-container .bubble-2 {
-    width: 30px;
-    height: 30px;
-    top: 30%;
-    right: 20%;
-    animation: bubbleFloat 10s linear infinite 2s;
-}
-
-.animated-gif-container .bubble-3 {
-    width: 25px;
-    height: 25px;
-    bottom: 40%;
-    left: 30%;
-    animation: bubbleFloat 12s linear infinite 4s;
-}
-
-.animated-gif-container .bubble-4 {
-    width: 35px;
-    height: 35px;
-    bottom: 20%;
-    right: 15%;
-    animation: bubbleFloat 9s linear infinite 1s;
-}
-
-/* نجمة البحر */
-.animated-gif-container .starfish {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: #ff6b6b;
-    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-    bottom: 20px;
-    left: 20px;
-    animation: starfishFloat 4s ease-in-out infinite;
-    opacity: 0.8;
-    z-index: 5;
-}
-
-/* ====== أنيميشن جديد للGIF ====== */
-@keyframes gifFloat {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-15px) rotate(2deg);
-    }
-}
-
-@keyframes floatItem {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    33% {
-        transform: translateY(-20px) rotate(10deg);
-    }
-    66% {
-        transform: translateY(10px) rotate(-10deg);
-    }
-}
-
-@keyframes starfishFloat {
-    0%, 100% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(-20px) rotate(180deg);
-    }
-}
-
-/* تحسينات للشاشات الصغيرة */
-@media (max-width: 992px) {
-    .animated-gif-container {
-        width: 350px;
-        height: 450px;
-    }
-    
-    .character-gif {
-        max-width: 300px;
-    }
-}
-
-@media (max-width: 768px) {
-    .animated-gif-container {
-        width: 300px;
-        height: 400px;
-    }
-    
-    .character-gif {
-        max-width: 250px;
-    }
-    
-    .science-item {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
-    }
-    
-    .starfish {
-        width: 35px;
-        height: 35px;
-    }
-}
-
-@media (max-width: 480px) {
-    .animated-gif-container {
-        width: 250px;
-        height: 350px;
-    }
-    
-    .character-gif {
-        max-width: 200px;
-    }
-    
-    .science-item {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
-    }
-    
-    .item-1 {
-        top: 30px;
-        right: 10px;
-    }
-    
-    .item-2 {
-        top: 120px;
-        left: 5px;
-    }
-    
-    .item-3 {
-        bottom: 80px;
-        right: 15px;
-    }
-    
-    .starfish {
-        width: 30px;
-        height: 30px;
-        bottom: 10px;
-        left: 10px;
+    .character-gif-fixed {
+        max-width: 220px;
+        max-height: 220px;
     }
 }
