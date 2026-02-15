@@ -1374,87 +1374,121 @@ img[src*="epingle"] {
     }
 }
 
-/* ====== تحديثات البوب أب مع الصورة الشفافة ====== */
+/* ====== تحديثات البوب أب مع الصورة الشفافة - حجم كبير جداً ====== */
 
-/* حاوية الصورة في الزاوية العلوية اليسرى - بحجم أكبر */
+/* حاوية الصورة في الزاوية العلوية اليسرى - حجم كبير 3x */
 .popup-corner-image {
     position: absolute;
-    top: -30px; /* زيادة المسافة للأعلى */
-    left: -25px; /* زيادة المسافة لليسار */
-    width: 140px; /* تكبير من 100px إلى 140px */
-    height: 140px; /* تكبير من 100px إلى 140px */
+    top: -50px; /* مسافة أكبر للأعلى */
+    left: -40px; /* مسافة أكبر لليسار */
+    width: 300px; /* 3 أضعاف الحجم الأصلي (كانت 100px) */
+    height: 300px; /* 3 أضعاف الحجم الأصلي (كانت 100px) */
     z-index: 20;
-    animation: cornerImageFloat 3s ease-in-out infinite;
+    animation: cornerImageFloat 4s ease-in-out infinite; /* حركة أبطأ قليلاً */
 }
 
-/* الصورة الشفافة - مع تدوير عكس عقارب الساعة */
+/* الصورة الشفافة - بحجم كبير */
 .corner-character {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 15px 20px rgba(74, 111, 165, 0.4)); /* ظل أكبر */
+    filter: drop-shadow(0 25px 30px rgba(74, 111, 165, 0.5)); /* ظل أكبر */
     transform: rotate(-5deg);
     transition: transform 0.3s ease;
 }
 
 /* تأثير عند تمرير الماوس */
 .corner-character:hover {
-    transform: rotate(-8deg) scale(1.1); /* تكبير أكبر عند التمرير */
+    transform: rotate(-8deg) scale(1.05);
 }
 
-/* حركة خفيفة للصورة */
+/* حركة خفيفة للصورة - أبطأ وأكثر سلاسة */
 @keyframes cornerImageFloat {
     0%, 100% {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(-8px); /* حركة أكبر قليلاً */
+        transform: translateY(-15px); /* حركة أكبر */
     }
 }
 
-/* تعديل المسافة العلوية للعناصر بسبب وجود الصورة */
+/* تعديل المسافة العلوية للعناصر بسبب وجود الصورة الكبيرة */
 .popup-header {
-    margin-top: 40px; /* زيادة المسافة من 20px إلى 40px */
+    margin-top: 150px; /* مسافة كبيرة للصورة */
+    position: relative;
+    z-index: 5;
+}
+
+/* تعديل باقي العناصر لتكون تحت الصورة */
+.popup-body {
+    position: relative;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.9); /* خلفية شبه شفافة لتحسين القراءة */
+    border-radius: 20px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.popup-footer {
+    position: relative;
+    z-index: 5;
 }
 
 /* تحسينات للشاشات الصغيرة */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .popup-corner-image {
-        top: -20px;
-        left: -15px;
-        width: 110px; /* أكبر من السابق (كانت 80px) */
-        height: 110px; /* أكبر من السابق (كانت 80px) */
-    }
-    
-    .corner-character {
-        transform: rotate(-4deg);
+        top: -40px;
+        left: -30px;
+        width: 250px; /* حجم كبير للتابلت */
+        height: 250px;
     }
     
     .popup-header {
-        margin-top: 45px; /* زيادة المسافة */
+        margin-top: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .popup-corner-image {
+        top: -30px;
+        left: -20px;
+        width: 200px; /* حجم متوسط للجوال */
+        height: 200px;
+    }
+    
+    .popup-header {
+        margin-top: 100px;
+    }
+    
+    .popup-body {
+        background: rgba(255, 255, 255, 0.95);
     }
 }
 
 @media (max-width: 480px) {
     .popup-corner-image {
-        top: -15px;
-        left: -10px;
-        width: 90px; /* أكبر من السابق (كانت 60px) */
-        height: 90px; /* أكبر من السابق (كانت 60px) */
-    }
-    
-    .corner-character {
-        transform: rotate(-3deg);
+        top: -20px;
+        left: -15px;
+        width: 150px; /* حجم مناسب للشاشات الصغيرة جداً */
+        height: 150px;
     }
     
     .popup-header {
-        margin-top: 40px;
+        margin-top: 80px;
+    }
+    
+    .popup-body {
+        padding: 12px;
     }
 }
 
 /* تحسينات للوضع الداكن */
 @media (prefers-color-scheme: dark) {
     .corner-character {
-        filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.6));
+        filter: drop-shadow(0 25px 30px rgba(0, 0, 0, 0.7));
+    }
+    
+    .popup-body {
+        background: rgba(45, 45, 45, 0.95); /* خلفية داكنة شبه شفافة */
     }
 }
