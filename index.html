@@ -273,69 +273,71 @@
         </div>
     </footer>
 
-    <!-- نافذة الترحيب المنبثقة للأطفال - يجب وضعها قبل أي سكريبت -->
-    <div class="welcome-popup" id="welcomePopup">
-        <div class="popup-content">
-            <button class="popup-close" id="closePopup"><i class="fas fa-times"></i></button>
-            
-            <div class="popup-header">
-                <div class="popup-icon">
-                    <i class="fas fa-flask"></i>
-                </div>
-                <h2>مرحباً يا صديقي الصغير! 👋</h2>
+<!-- نافذة الترحيب المنبثقة للأطفال - نسخة معدلة -->
+<div class="welcome-popup" id="welcomePopup">
+    <div class="popup-content">
+        <button class="popup-close" id="closePopup"><i class="fas fa-times"></i></button>
+        
+        <!-- الصورة الشفافة في الأعلى اليسار -->
+        <div class="popup-corner-image">
+            <img src="Media/EjKg9EBWkAAElQM-removebg-preview.png" 
+                 alt="شخصية مرحبة" 
+                 class="corner-character">
+        </div>
+        
+        <div class="popup-header">
+            <div class="popup-icon">
+                <i class="fas fa-flask"></i>
             </div>
-            
-            <div class="popup-body">
-                <div class="popup-character">
-                    <img src="Media/epingle-sur-coisas-aleatorias-que-yoyo_G25SUprb.gif" 
-                         alt="شخصية مرحبة" 
-                         class="popup-gif">
-                </div>
+            <h2>مرحباً يا صديقي الصغير! 👋</h2>
+        </div>
+        
+        <div class="popup-body">
+            <!-- تم إزالة الـ GIF من هنا -->
+            <div class="popup-message" style="width: 100%;">
+                <h3>أهلاً بك في مختبر العلوم الصغير! 🔬</h3>
+                <p>هيا بنا نبدأ رحلة ممتعة لاكتشاف أسرار العلوم والفيزياء من خلال ألعاب تفاعلية شيقة!</p>
                 
-                <div class="popup-message">
-                    <h3>أهلاً بك في مختبر العلوم الصغير! 🔬</h3>
-                    <p>هيا بنا نبدأ رحلة ممتعة لاكتشاف أسرار العلوم والفيزياء من خلال ألعاب تفاعلية شيقة!</p>
-                    
-                    <div class="popup-features">
-                        <div class="popup-feature">
-                            <i class="fas fa-gamepad"></i>
-                            <span>ألعاب تفاعلية</span>
-                        </div>
-                        <div class="popup-feature">
-                            <i class="fas fa-star"></i>
-                            <span>مغامرات علمية</span>
-                        </div>
-                        <div class="popup-feature">
-                            <i class="fas fa-trophy"></i>
-                            <span>تحديات ممتعة</span>
-                        </div>
+                <div class="popup-features">
+                    <div class="popup-feature">
+                        <i class="fas fa-gamepad"></i>
+                        <span>ألعاب تفاعلية</span>
+                    </div>
+                    <div class="popup-feature">
+                        <i class="fas fa-star"></i>
+                        <span>مغامرات علمية</span>
+                    </div>
+                    <div class="popup-feature">
+                        <i class="fas fa-trophy"></i>
+                        <span>تحديات ممتعة</span>
                     </div>
                 </div>
             </div>
-            
-            <div class="popup-footer">
-                <button class="popup-btn popup-btn-primary" id="startExploring">
-                    <i class="fas fa-rocket"></i>
-                    هيا نبدأ الرحلة!
-                </button>
-                <button class="popup-btn popup-btn-secondary" id="remindLater">
-                    <i class="fas fa-clock"></i>
-                    ذكرني لاحقاً
-                </button>
-            </div>
-            
-            <!-- عناصر متحركة صغيرة للتزيين -->
-            <div class="popup-bubble bubble-1"></div>
-            <div class="popup-bubble bubble-2"></div>
-            <div class="popup-bubble bubble-3"></div>
-            <div class="popup-bubble bubble-4"></div>
-            <div class="popup-bubble bubble-5"></div>
-            
-            <div class="popup-star star-1">⭐</div>
-            <div class="popup-star star-2">✨</div>
-            <div class="popup-star star-3">🌟</div>
         </div>
+        
+        <div class="popup-footer">
+            <button class="popup-btn popup-btn-primary" id="startExploring">
+                <i class="fas fa-rocket"></i>
+                هيا نبدأ الرحلة!
+            </button>
+            <button class="popup-btn popup-btn-secondary" id="remindLater">
+                <i class="fas fa-clock"></i>
+                ذكرني لاحقاً
+            </button>
+        </div>
+        
+        <!-- عناصر متحركة صغيرة للتزيين -->
+        <div class="popup-bubble bubble-1"></div>
+        <div class="popup-bubble bubble-2"></div>
+        <div class="popup-bubble bubble-3"></div>
+        <div class="popup-bubble bubble-4"></div>
+        <div class="popup-bubble bubble-5"></div>
+        
+        <div class="popup-star star-1">⭐</div>
+        <div class="popup-star star-2">✨</div>
+        <div class="popup-star star-3">🌟</div>
     </div>
+</div>
 
     <!-- ملفات JavaScript - تأكد من تحميلها بعد البوب أب -->
     <script src="device-detector.js"></script>
