@@ -1358,3 +1358,18 @@ img[src*="epingle"] {
         font-size: 14px;
     }
 }
+@media (max-width: 480px) {
+    .popup-content {
+        padding: 20px;
+        width: 95%;
+    }
+    .popup-body {
+        flex-direction: column;
+    }
+    .popup-character {
+        flex: 0 0 80px;
+    }
+    .popup-gif {
+        max-width: 80px;
+    }
+}
