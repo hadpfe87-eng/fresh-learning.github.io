@@ -1376,15 +1376,13 @@ img[src*="epingle"] {
 
 /* ====== تحديثات البوب أب مع الصورة الشفافة ====== */
 
-/* ====== تحديثات البوب أب مع الصورة الشفافة ====== */
-
-/* حاوية الصورة في الزاوية العلوية اليسرى */
+/* حاوية الصورة في الزاوية العلوية اليسرى - بحجم أكبر */
 .popup-corner-image {
     position: absolute;
-    top: -20px;
-    left: -20px;
-    width: 100px;
-    height: 100px;
+    top: -30px; /* زيادة المسافة للأعلى */
+    left: -25px; /* زيادة المسافة لليسار */
+    width: 140px; /* تكبير من 100px إلى 140px */
+    height: 140px; /* تكبير من 100px إلى 140px */
     z-index: 20;
     animation: cornerImageFloat 3s ease-in-out infinite;
 }
@@ -1394,14 +1392,14 @@ img[src*="epingle"] {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 10px 15px rgba(74, 111, 165, 0.3));
-    transform: rotate(-5deg); /* تدوير عكس عقارب الساعة بمقدار 5 درجات */
+    filter: drop-shadow(0 15px 20px rgba(74, 111, 165, 0.4)); /* ظل أكبر */
+    transform: rotate(-5deg);
     transition: transform 0.3s ease;
 }
 
-/* تأثير عند تمرير الماوس (اختياري) */
+/* تأثير عند تمرير الماوس */
 .corner-character:hover {
-    transform: rotate(-8deg) scale(1.05); /* تدوير أكثر قليلاً عند التمرير */
+    transform: rotate(-8deg) scale(1.1); /* تكبير أكبر عند التمرير */
 }
 
 /* حركة خفيفة للصورة */
@@ -1410,53 +1408,53 @@ img[src*="epingle"] {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(-5px);
+        transform: translateY(-8px); /* حركة أكبر قليلاً */
     }
 }
 
 /* تعديل المسافة العلوية للعناصر بسبب وجود الصورة */
 .popup-header {
-    margin-top: 20px; /* إضافة مسافة للصورة */
+    margin-top: 40px; /* زيادة المسافة من 20px إلى 40px */
 }
 
 /* تحسينات للشاشات الصغيرة */
 @media (max-width: 768px) {
     .popup-corner-image {
-        top: -15px;
+        top: -20px;
         left: -15px;
-        width: 80px;
-        height: 80px;
+        width: 110px; /* أكبر من السابق (كانت 80px) */
+        height: 110px; /* أكبر من السابق (كانت 80px) */
     }
     
     .corner-character {
-        transform: rotate(-4deg); /* تدوير أقل على الجوال */
+        transform: rotate(-4deg);
     }
     
     .popup-header {
-        margin-top: 30px; /* مسافة أكبر للجوال */
+        margin-top: 45px; /* زيادة المسافة */
     }
 }
 
 @media (max-width: 480px) {
     .popup-corner-image {
-        top: -10px;
+        top: -15px;
         left: -10px;
-        width: 60px;
-        height: 60px;
+        width: 90px; /* أكبر من السابق (كانت 60px) */
+        height: 90px; /* أكبر من السابق (كانت 60px) */
     }
     
     .corner-character {
-        transform: rotate(-3deg); /* تدوير أقل على الشاشات الصغيرة جداً */
+        transform: rotate(-3deg);
     }
     
     .popup-header {
-        margin-top: 25px;
+        margin-top: 40px;
     }
 }
 
 /* تحسينات للوضع الداكن */
 @media (prefers-color-scheme: dark) {
     .corner-character {
-        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.5));
+        filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.6));
     }
 }
