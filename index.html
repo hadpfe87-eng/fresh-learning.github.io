@@ -306,5 +306,32 @@
         }
     });
     </script>
+    <style>
+    /* تدمير أي حركة محتملة */
+    .hero-image, .gif-fixed-container, .character-gif-fixed, #animated-gif {
+        animation: none !important;
+        -webkit-animation: none !important;
+        transform: none !important;
+        -webkit-transform: none !important;
+        transition: none !important;
+        motion: none !important;
+        offset: none !important;
+        translate: none !important;
+        rotate: none !important;
+        scale: none !important;
+    }
+    
+    .gif-fixed-container {
+        position: static !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    .character-gif-fixed {
+        position: static !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+</style>
 </body>
 </html>
