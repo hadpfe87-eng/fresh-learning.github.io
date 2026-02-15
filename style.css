@@ -1043,6 +1043,14 @@ body {
     z-index: 10;
     position: relative;
     box-shadow: 0 15px 35px rgba(23, 190, 187, 0.3);
+    /* تحسينات لعرض GIF */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+    /* منع أي تأثيرات قد توقف الحركة */
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 /* عناصر علمية تتفاعل مع الشخصية */
@@ -1087,7 +1095,7 @@ body {
 }
 
 /* فقاعات */
-.bubble {
+.animated-gif-container .bubble {
     position: absolute;
     background: rgba(23, 190, 187, 0.2);
     border: 2px solid rgba(23, 190, 187, 0.3);
@@ -1095,7 +1103,7 @@ body {
     z-index: 1;
 }
 
-.bubble-1 {
+.animated-gif-container .bubble-1 {
     width: 40px;
     height: 40px;
     top: 20%;
@@ -1103,7 +1111,7 @@ body {
     animation: bubbleFloat 8s linear infinite;
 }
 
-.bubble-2 {
+.animated-gif-container .bubble-2 {
     width: 30px;
     height: 30px;
     top: 30%;
@@ -1111,7 +1119,7 @@ body {
     animation: bubbleFloat 10s linear infinite 2s;
 }
 
-.bubble-3 {
+.animated-gif-container .bubble-3 {
     width: 25px;
     height: 25px;
     bottom: 40%;
@@ -1119,7 +1127,7 @@ body {
     animation: bubbleFloat 12s linear infinite 4s;
 }
 
-.bubble-4 {
+.animated-gif-container .bubble-4 {
     width: 35px;
     height: 35px;
     bottom: 20%;
@@ -1128,7 +1136,7 @@ body {
 }
 
 /* نجمة البحر */
-.starfish {
+.animated-gif-container .starfish {
     position: absolute;
     width: 40px;
     height: 40px;
