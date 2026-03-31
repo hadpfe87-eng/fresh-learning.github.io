@@ -3,170 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>مختبر العظام | تعلم علم التشريح بطريقة تفاعلية</title>
+    <title>مختبر العظام | 3D Skeleton + Drag & Drop Game</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="app-container">
         <!-- Hero Section -->
         <div class="hero">
             <h1><i class="fas fa-skull"></i> مختبر العظام</h1>
-            <p>تعلم علم التشريح بطريقة تفاعلية وممتعة من خلال الألعاب</p>
+            <p>استكشف الهيكل العظمي ثلاثي الأبعاد ثم ابنه بنفسك في لعبة السحب والإفلات</p>
             <div class="badge-row">
                 <span class="badge"><i class="fas fa-child"></i> أعمار 9-10 سنوات</span>
-                <span class="badge"><i class="fas fa-gamepad"></i> ألعاب تفاعلية</span>
+                <span class="badge"><i class="fas fa-cube"></i> نموذج ثلاثي الأبعاد تفاعلي</span>
+                <span class="badge"><i class="fas fa-gamepad"></i> لعبة تركيب العظام</span>
                 <span class="badge"><i class="fas fa-language"></i> بالعربية</span>
             </div>
         </div>
 
-        <!-- Games Grid -->
-        <div class="games-grid">
-            <!-- Game 1: Maze Game -->
-            <div class="game-card">
-                <div class="card-header">
-                    <i class="fas fa-dungeon"></i>
-                    <h2>🧠 المتاهة العلمية</h2>
-                </div>
-                <div class="card-content">
-                    <div id="mazeGameArea">
-                        <p><i class="fas fa-map-signs"></i> <strong>مرحبًا في متاهة الهيكل العظمي!</strong> أجب عن الأسئلة لتفتح الطريق.</p>
-                        <div id="mazeQuestion"></div>
-                        <div id="mazeOptions"></div>
-                        <div id="mazeFeedback"></div>
-                        <button id="mazeNextBtn" class="next-btn" style="display:none;">🚪 السؤال التالي ➡️</button>
-                        <div id="mazeFinalMsg"></div>
-                    </div>
+        <!-- 3D Skeleton Viewer Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <i class="fas fa-cube"></i>
+                <h2>🦴 استكشاف الهيكل العظمي ثلاثي الأبعاد</h2>
+            </div>
+            <div class="section-content">
+                <div id="skeleton3dViewer" class="viewer-3d"></div>
+                <div class="viewer-instructions">
+                    <i class="fas fa-mouse-pointer"></i> اسحب بالفأرة لتدوير النموذج | 
+                    <i class="fas fa-search-plus"></i> استخدم الزر الأيمن للتكبير والتصغير
                 </div>
             </div>
+        </div>
 
-            <!-- Game 2: Puzzle Game -->
-            <div class="game-card">
-                <div class="card-header">
-                    <i class="fas fa-puzzle-piece"></i>
-                    <h2>🧩 تركيب الهيكل العظمي</h2>
-                </div>
-                <div class="card-content">
-                    <div id="puzzleArea">
-                        <p><i class="fas fa-hand-peace"></i> اضغط على العظم وضعه في المكان الصحيح:</p>
-                        <div id="bonesList" class="drag-container"></div>
-                        <div class="slot-area" id="slotsContainer"></div>
-                        <button id="resetPuzzleBtn" class="reset-puzzle">🔄 إعادة التركيب</button>
-                        <div id="puzzleSuccessMsg"></div>
-                    </div>
-                </div>
+        <!-- Drag & Drop Game Section -->
+        <div class="section-card">
+            <div class="section-header">
+                <i class="fas fa-gamepad"></i>
+                <h2>🧩 لعبة تركيب الهيكل العظمي</h2>
             </div>
-
-            <!-- Game 3: Speed Challenge -->
-            <div class="game-card">
-                <div class="card-header">
-                    <i class="fas fa-bolt"></i>
-                    <h2>⚡ التحدي السريع</h2>
-                </div>
-                <div class="card-content">
-                    <div id="challengeArea">
-                        <div class="flex-between">
-                            <span><i class="fas fa-stopwatch"></i> أسئلة سريعة</span>
-                            <span id="challengeScore" class="score-badge">⭐ 0/3</span>
-                        </div>
-                        <div id="challengeQText" style="margin: 15px 0; font-weight:700;"></div>
-                        <div id="challengeOptionsDiv"></div>
-                        <div id="challengeFeedback"></div>
-                        <button id="resetChallengeBtn" class="reset-challenge">🔄 إعادة التحدي</button>
-                        <div id="challengeFinalMsg"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Game 4: Drag & Drop Skeleton Builder -->
-            <div class="game-card">
-                <div class="card-header">
-                    <i class="fas fa-dragon"></i>
-                    <h2>🦴 بناء الهيكل العظمي</h2>
-                </div>
-                <div class="card-content">
-                    <div id="skeletonGameContainer">
-                        <p><i class="fas fa-hand-pointer"></i> <strong>اسحب العظام وضعها في المكان الصحيح على الجسم!</strong></p>
+            <div class="section-content">
+                <p class="game-instruction"><i class="fas fa-hand-pointer"></i> <strong>اسحب العظام من الأسفل وضعها في الأماكن الصحيحة على جسم الإنسان!</strong></p>
+                
+                <!-- Game Area -->
+                <div id="dragDropGameArea">
+                    <!-- Human Body Outline with Drop Zones -->
+                    <div class="body-outline" id="bodyOutline">
+                        <svg viewBox="0 0 450 550" class="body-svg">
+                            <!-- Head -->
+                            <circle cx="225" cy="70" r="35" stroke="#f4b942" stroke-width="3" fill="none"/>
+                            <!-- Neck -->
+                            <line x1="225" y1="105" x2="225" y2="125" stroke="#f4b942" stroke-width="3"/>
+                            <!-- Shoulders -->
+                            <line x1="180" y1="125" x2="270" y2="125" stroke="#f4b942" stroke-width="3"/>
+                            <!-- Rib Cage -->
+                            <path d="M195,125 L195,210 L255,210 L255,125" stroke="#f4b942" stroke-width="3" fill="none"/>
+                            <path d="M195,140 L255,140 M195,155 L255,155 M195,170 L255,170 M195,185 L255,185 M195,200 L255,200" stroke="#f4b942" stroke-width="2"/>
+                            <!-- Spine -->
+                            <line x1="225" y1="125" x2="225" y2="320" stroke="#f4b942" stroke-width="3"/>
+                            <!-- Pelvis -->
+                            <path d="M195,310 L255,310 L270,350 L180,350 L195,310" stroke="#f4b942" stroke-width="3" fill="none"/>
+                            <!-- Legs -->
+                            <line x1="205" y1="350" x2="190" y2="480" stroke="#f4b942" stroke-width="3"/>
+                            <line x1="245" y1="350" x2="260" y2="480" stroke="#f4b942" stroke-width="3"/>
+                            <line x1="190" y1="480" x2="180" y2="530" stroke="#f4b942" stroke-width="2.5"/>
+                            <line x1="260" y1="480" x2="270" y2="530" stroke="#f4b942" stroke-width="2.5"/>
+                            <!-- Arms -->
+                            <line x1="180" y1="160" x2="130" y2="220" stroke="#f4b942" stroke-width="3"/>
+                            <line x1="270" y1="160" x2="320" y2="220" stroke="#f4b942" stroke-width="3"/>
+                            <line x1="130" y1="220" x2="115" y2="280" stroke="#f4b942" stroke-width="2.5"/>
+                            <line x1="320" y1="220" x2="335" y2="280" stroke="#f4b942" stroke-width="2.5"/>
+                        </svg>
                         
-                        <!-- Game Area -->
-                        <div id="dragDropGameArea">
-                            <!-- Bones Palette -->
-                            <div class="bones-palette" id="gameBonesPalette">
-                                <div class="bone-card-drag" draggable="true" data-bone="skull" data-name="الجمجمة">
-                                    <i class="fas fa-bone"></i> الجمجمة
-                                </div>
-                                <div class="bone-card-drag" draggable="true" data-bone="ribs" data-name="القفص الصدري">
-                                    <i class="fas fa-bone"></i> القفص الصدري
-                                </div>
-                                <div class="bone-card-drag" draggable="true" data-bone="spine" data-name="العمود الفقري">
-                                    <i class="fas fa-bone"></i> العمود الفقري
-                                </div>
-                                <div class="bone-card-drag" draggable="true" data-bone="femur" data-name="عظم الفخذ">
-                                    <i class="fas fa-bone"></i> عظم الفخذ
-                                </div>
-                                <div class="bone-card-drag" draggable="true" data-bone="humerus" data-name="عظم العضد">
-                                    <i class="fas fa-bone"></i> عظم العضد
-                                </div>
-                                <div class="bone-card-drag" draggable="true" data-bone="pelvis" data-name="الحوض">
-                                    <i class="fas fa-bone"></i> الحوض
-                                </div>
-                            </div>
-                            
-                            <!-- Human Body Outline with Drop Zones -->
-                            <div class="body-outline" id="bodyOutline">
-                                <svg viewBox="0 0 400 500" class="body-svg">
-                                    <!-- Human Body Outline -->
-                                    <path d="M200,30 L200,80 M170,80 L230,80 M180,80 L200,150 L220,150 L200,80 M170,150 L230,150 M150,150 L150,250 L250,250 L250,150 M180,250 L200,400 L220,400 L200,250 M150,400 L180,480 L220,480 L250,400" stroke="#f4b942" stroke-width="3" fill="none" stroke-linecap="round"/>
-                                    <!-- Head -->
-                                    <circle cx="200" cy="55" r="28" stroke="#f4b942" stroke-width="3" fill="none"/>
-                                    <!-- Shoulders -->
-                                    <line x1="150" y1="85" x2="250" y2="85" stroke="#f4b942" stroke-width="2"/>
-                                </svg>
-                                
-                                <!-- Drop Zones (positioned absolutely over SVG) -->
-                                <div class="drop-zone-game" data-expected="skull" style="top: 5%; left: 40%; width: 20%; height: 12%;">
-                                    <span>الجمجمة</span>
-                                </div>
-                                <div class="drop-zone-game" data-expected="ribs" style="top: 22%; left: 35%; width: 30%; height: 12%;">
-                                    <span>القفص الصدري</span>
-                                </div>
-                                <div class="drop-zone-game" data-expected="spine" style="top: 35%; left: 45%; width: 10%; height: 25%;">
-                                    <span>العمود الفقري</span>
-                                </div>
-                                <div class="drop-zone-game" data-expected="humerus" style="top: 32%; left: 12%; width: 12%; height: 10%;">
-                                    <span>عظم العضد</span>
-                                </div>
-                                <div class="drop-zone-game" data-expected="humerus" style="top: 32%; right: 12%; width: 12%; height: 10%;">
-                                    <span>عظم العضد</span>
-                                </div>
-                                <div class="drop-zone-game" data-expected="pelvis" style="top: 55%; left: 40%; width: 20%; height: 10%;">
-                                    <span>الحوض</span>
-                                </div>
-                                <div class="drop-zone-game" data-expected="femur" style="top: 72%; left: 25%; width: 12%; height: 12%;">
-                                    <span>عظم الفخذ</span>
-                                </div>
-                                <div class="drop-zone-game" data-expected="femur" style="top: 72%; right: 25%; width: 12%; height: 12%;">
-                                    <span>عظم الفخذ</span>
-                                </div>
-                            </div>
+                        <!-- Drop Zones -->
+                        <div class="drop-zone-game" data-expected="skull" style="top: 3%; left: 38%; width: 24%; height: 12%;">
+                            <span>الجمجمة</span>
                         </div>
-                        
-                        <!-- Game Status -->
-                        <div id="dragDropGameStatus" class="game-status">
-                            <div class="progress-bar-container">
-                                <div class="progress-bar" id="gameProgressBar" style="width: 0%"></div>
-                            </div>
-                            <div id="gameFeedbackMessage" class="game-feedback-message"></div>
-                            <button id="resetDragDropGame" class="reset-game-btn">🔄 إعادة اللعبة</button>
+                        <div class="drop-zone-game" data-expected="ribs" style="top: 20%; left: 32%; width: 36%; height: 18%;">
+                            <span>القفص الصدري</span>
                         </div>
+                        <div class="drop-zone-game" data-expected="spine" style="top: 38%; left: 45%; width: 10%; height: 28%;">
+                            <span>العمود الفقري</span>
+                        </div>
+                        <div class="drop-zone-game" data-expected="humerus" style="top: 27%; left: 5%; width: 14%; height: 12%;">
+                            <span>عظم العضد</span>
+                        </div>
+                        <div class="drop-zone-game" data-expected="humerus" style="top: 27%; right: 5%; width: 14%; height: 12%;">
+                            <span>عظم العضد</span>
+                        </div>
+                        <div class="drop-zone-game" data-expected="pelvis" style="top: 55%; left: 38%; width: 24%; height: 10%;">
+                            <span>الحوض</span>
+                        </div>
+                        <div class="drop-zone-game" data-expected="femur" style="top: 72%; left: 20%; width: 14%; height: 14%;">
+                            <span>عظم الفخذ</span>
+                        </div>
+                        <div class="drop-zone-game" data-expected="femur" style="top: 72%; right: 20%; width: 14%; height: 14%;">
+                            <span>عظم الفخذ</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Bones Palette -->
+                    <div class="bones-palette" id="gameBonesPalette">
+                        <div class="bone-card-drag" draggable="true" data-bone="skull" data-name="الجمجمة">
+                            <i class="fas fa-bone"></i> 🦴 الجمجمة
+                        </div>
+                        <div class="bone-card-drag" draggable="true" data-bone="ribs" data-name="القفص الصدري">
+                            <i class="fas fa-bone"></i> 🦴 القفص الصدري
+                        </div>
+                        <div class="bone-card-drag" draggable="true" data-bone="spine" data-name="العمود الفقري">
+                            <i class="fas fa-bone"></i> 🦴 العمود الفقري
+                        </div>
+                        <div class="bone-card-drag" draggable="true" data-bone="pelvis" data-name="الحوض">
+                            <i class="fas fa-bone"></i> 🦴 الحوض
+                        </div>
+                        <div class="bone-card-drag" draggable="true" data-bone="femur" data-name="عظم الفخذ">
+                            <i class="fas fa-bone"></i> 🦴 عظم الفخذ (يسار/يمين)
+                        </div>
+                        <div class="bone-card-drag" draggable="true" data-bone="humerus" data-name="عظم العضد">
+                            <i class="fas fa-bone"></i> 🦴 عظم العضد (يسار/يمين)
+                        </div>
+                    </div>
+                    
+                    <!-- Game Status -->
+                    <div id="dragDropGameStatus" class="game-status">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="gameProgressBar" style="width: 0%"></div>
+                        </div>
+                        <div id="gameFeedbackMessage" class="game-feedback-message"></div>
+                        <button id="resetDragDropGame" class="reset-game-btn">🔄 إعادة اللعبة</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <footer>
-            ✨ اسحب العظام وضعها في الأماكن الصحيحة على الجسم — تعلم أسماء العظام ومواقعها ✨
+            <i class="fas fa-heart"></i> تعلم ممتع - استكشف الهيكل العظمي ثلاثي الأبعاد ثم ابنه بنفسك!
         </footer>
     </div>
 
