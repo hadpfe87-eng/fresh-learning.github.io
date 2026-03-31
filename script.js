@@ -1,90 +1,100 @@
-const boneData = [
-    { id: 'skull', name: 'الجمجمة', fact: 'الجمجمة تحمي دماغك، وهي مكونة من 22 عظمة!' },
-    { id: 'ribs', name: 'القفص الصدري', fact: 'القفص الصدري يحمي القلب والرئتين.' },
-    { id: 'pelvis', name: 'عظم الحوض', fact: 'عظم الحوض هو الأكبر في جسم الإنسان.' },
-    { id: 'arm-l', name: 'الذراع اليسرى', fact: 'عظمة العضد هي العظمة الطويلة في ذراعك.' },
-    { id: 'arm-r', name: 'الذراع اليمنى', fact: 'لديك 30 عظمة في كل ذراع!' },
-    { id: 'leg-l', name: 'الرجل اليسرى', fact: 'عظمة الفخذ هي أقوى عظمة في جسمك.' },
-    { id: 'leg-r', name: 'الرجل اليمنى', fact: 'أصغر عظمة في جسمك موجودة داخل أذنك!' }
+const bones = [
+    { id: 'skull', name: 'الجمجمة 💀', fact: 'الجمجمة تحمي الدماغ، وهي مكونة من عظام ملتحمة معاً!' },
+    { id: 'ribs', name: 'القفص الصدري 🫁', fact: 'يعمل القفص الصدري كدرع لحماية القلب والرئتين.' },
+    { id: 'spine', name: 'العمود الفقري 🦴', fact: 'يتكون من فقرات تسمح لك بالانحناء والوقوف بشكل مستقيم.' },
+    { id: 'pelvis', name: 'عظم الحوض 🩻', fact: 'يربط الجزء العلوي من جسمك بالأرجل.' },
+    { id: 'arm-l', name: 'عظام الذراع 🦾', fact: 'تحتوي اليد والذراع على أكبر عدد من العظام في الجسم.' },
+    { id: 'arm-r', name: 'عظام الذراع 🦾', fact: 'عظمة العضد هي الأطول في ذراعك.' },
+    { id: 'legs', name: 'عظام الأرجل 🦵', fact: 'عظمة الفخذ هي أقوى وأطول عظمة في جسم الإنسان!' }
 ];
 
 let score = 0;
 
-// Initialize Game
+// Start Game Logic
 document.getElementById('start-btn').addEventListener('click', () => {
-    document.getElementById('start-overlay').classList.add('hidden');
-    renderBones();
+    document.getElementById('start-screen').classList.add('hidden');
+    initGame();
 });
 
-function renderBones() {
-    const pile = document.getElementById('bones-pile');
-    boneData.sort(() => Math.random() - 0.5).forEach(bone => {
-        const el = document.createElement('div');
-        el.className = 'draggable-bone';
-        el.draggable = true;
-        el.id = bone.id;
-        el.innerText = bone.name;
-        
-        el.addEventListener('dragstart', e => {
+function initGame() {
+    const inventory = document.getElementById('bone-inventory');
+    // Shuffle bones
+    [...bones].sort(() => Math.random() - 0.5).forEach(bone => {
+        const div = document.createElement('div');
+        div.className = 'bone-item';
+        div.draggable = true;
+        div.id = bone.id;
+        div.innerText = bone.name;
+
+        div.addEventListener('dragstart', (e) => {
             e.dataTransfer.setData('text', e.target.id);
+            e.target.style.opacity = "0.4";
         });
-        
-        pile.appendChild(el);
+
+        div.addEventListener('dragend', (e) => {
+            e.target.style.opacity = "1";
+        });
+
+        inventory.appendChild(div);
     });
 }
 
-// Drop Zone Logic
+// Drop Logic
 const zones = document.querySelectorAll('.drop-zone');
 zones.forEach(zone => {
-    zone.addEventListener('dragover', e => {
+    zone.addEventListener('dragover', (e) => {
         e.preventDefault();
         zone.classList.add('hovered');
     });
 
-    zone.addEventListener('dragleave', () => zone.classList.remove('hovered'));
+    zone.addEventListener('dragleave', () => {
+        zone.classList.remove('hovered');
+    });
 
-    zone.addEventListener('drop', e => {
+    zone.addEventListener('drop', (e) => {
         e.preventDefault();
         zone.classList.remove('hovered');
-        const boneId = e.dataTransfer.getData('text');
-        
-        if (zone.dataset.bone === boneId) {
-            handleCorrectDrop(zone, boneId);
+        const draggedId = e.dataTransfer.getData('text');
+
+        if (zone.dataset.bone === draggedId) {
+            handleSuccess(zone, draggedId);
         } else {
-            showFact('❌ حاول مرة أخرى! ضع العظمة في مكانها الصحيح.');
+            showFact("❌ المكان غير صحيح، حاول مرة أخرى!");
         }
     });
 });
 
-function handleCorrectDrop(zone, boneId) {
-    const boneElement = document.getElementById(boneId);
-    boneElement.classList.add('hidden'); // Hide from sidebar
+function handleSuccess(zone, id) {
+    const boneData = bones.find(b => b.id === id);
+    const boneEl = document.getElementById(id);
     
-    zone.classList.add('correct');
-    zone.innerHTML = `<span style="font-size:1.5rem">🦴</span>`;
+    // Snap effect
+    boneEl.remove();
+    zone.classList.add('filled');
+    zone.innerHTML = `<i class="fas fa-check-circle"></i>`;
     
-    // Update Score
+    // Update Stats
     score++;
-    const progress = (score / boneData.length) * 100;
-    document.getElementById('progress-bar').style.width = `${progress}%`;
+    document.getElementById('score').innerText = score;
+    const percent = (score / bones.length) * 100;
+    document.getElementById('progress-fill').style.width = percent + "%";
     
-    // Show Fact
-    const fact = boneData.find(b => b.id === boneId).fact;
-    showFact(`✅ ${fact}`);
-    
-    if (score === boneData.length) {
+    showFact(boneData.fact);
+
+    if (score === bones.length) {
         setTimeout(() => {
-            document.getElementById('victory-overlay').classList.remove('hidden');
-        }, 1000);
+            alert("🎊 مبروك! لقد أعدت بناء الهيكل العظمي بنجاح!");
+            location.reload();
+        }, 1500);
     }
 }
 
 function showFact(text) {
-    const box = document.getElementById('fact-box');
-    const textEl = document.getElementById('fact-text');
-    textEl.innerText = text;
-    box.classList.remove('hidden');
+    const popup = document.getElementById('fact-overlay');
+    document.getElementById('fact-text').innerText = text;
+    popup.classList.remove('hidden');
     
-    // Auto hide fact after 4 seconds
-    setTimeout(() => box.classList.add('hidden'), 4000);
+    setTimeout(() => {
+        popup.classList.add('hidden');
+    }, 4000);
 }
