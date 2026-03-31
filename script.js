@@ -1,100 +1,48 @@
-const bones = [
-    { id: 'skull', name: 'الجمجمة 💀', fact: 'الجمجمة تحمي الدماغ، وهي مكونة من عظام ملتحمة معاً!' },
-    { id: 'ribs', name: 'القفص الصدري 🫁', fact: 'يعمل القفص الصدري كدرع لحماية القلب والرئتين.' },
-    { id: 'spine', name: 'العمود الفقري 🦴', fact: 'يتكون من فقرات تسمح لك بالانحناء والوقوف بشكل مستقيم.' },
-    { id: 'pelvis', name: 'عظم الحوض 🩻', fact: 'يربط الجزء العلوي من جسمك بالأرجل.' },
-    { id: 'arm-l', name: 'عظام الذراع 🦾', fact: 'تحتوي اليد والذراع على أكبر عدد من العظام في الجسم.' },
-    { id: 'arm-r', name: 'عظام الذراع 🦾', fact: 'عظمة العضد هي الأطول في ذراعك.' },
-    { id: 'legs', name: 'عظام الأرجل 🦵', fact: 'عظمة الفخذ هي أقوى وأطول عظمة في جسم الإنسان!' }
-];
+const boneFacts = {
+    skull: { title: "الجمجمة", text: "الجمجمة تحمي أهم عضو في جسمك: الدماغ!" },
+    ribs: { title: "القفص الصدري", text: "تعمل الأضلاع مثل القفص لحماية القلب والرئتين." },
+    spine: { title: "العمود الفقري", text: "يتكون من 33 فقرة تسمح لك بالوقوف والانحناء." },
+    pelvis: { title: "عظم الحوض", text: "عظم الحوض هو الذي يربط عمودك الفقري بساقيك." },
+    humerus: { title: "عظمة العضد", text: "هذه هي العظمة الطويلة في الجزء العلوي من ذراعك." },
+    femur: { title: "عظمة الفخذ", text: "عظمة الفخذ هي أطول وأقوى عظمة في جسم الإنسان!" }
+};
 
-let score = 0;
-
-// Start Game Logic
-document.getElementById('start-btn').addEventListener('click', () => {
-    document.getElementById('start-screen').classList.add('hidden');
-    initGame();
-});
-
-function initGame() {
-    const inventory = document.getElementById('bone-inventory');
-    // Shuffle bones
-    [...bones].sort(() => Math.random() - 0.5).forEach(bone => {
-        const div = document.createElement('div');
-        div.className = 'bone-item';
-        div.draggable = true;
-        div.id = bone.id;
-        div.innerText = bone.name;
-
-        div.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('text', e.target.id);
-            e.target.style.opacity = "0.4";
-        });
-
-        div.addEventListener('dragend', (e) => {
-            e.target.style.opacity = "1";
-        });
-
-        inventory.appendChild(div);
-    });
-}
-
-// Drop Logic
-const zones = document.querySelectorAll('.drop-zone');
-zones.forEach(zone => {
-    zone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        zone.classList.add('hovered');
+$(function() {
+    // Make bones draggable
+    $(".bone-item").draggable({
+        revert: "invalid", // Snap back if dropped in wrong place
+        cursor: "move",
+        containment: "window"
     });
 
-    zone.addEventListener('dragleave', () => {
-        zone.classList.remove('hovered');
-    });
-
-    zone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        zone.classList.remove('hovered');
-        const draggedId = e.dataTransfer.getData('text');
-
-        if (zone.dataset.bone === draggedId) {
-            handleSuccess(zone, draggedId);
-        } else {
-            showFact("❌ المكان غير صحيح، حاول مرة أخرى!");
+    // Make targets droppable
+    $(".target").droppable({
+        accept: function(draggable) {
+            return $(this).data("bone") === draggable.data("target");
+        },
+        over: function() {
+            $(this).addClass("highlight");
+        },
+        out: function() {
+            $(this).removeClass("highlight");
+        },
+        drop: function(event, ui) {
+            const boneId = ui.draggable.data("target");
+            $(this).addClass("correct").removeClass("highlight");
+            ui.draggable.fadeOut(); // Hide the dragged label
+            
+            showFact(boneId);
         }
     });
-});
 
-function handleSuccess(zone, id) {
-    const boneData = bones.find(b => b.id === id);
-    const boneEl = document.getElementById(id);
-    
-    // Snap effect
-    boneEl.remove();
-    zone.classList.add('filled');
-    zone.innerHTML = `<i class="fas fa-check-circle"></i>`;
-    
-    // Update Stats
-    score++;
-    document.getElementById('score').innerText = score;
-    const percent = (score / bones.length) * 100;
-    document.getElementById('progress-fill').style.width = percent + "%";
-    
-    showFact(boneData.fact);
-
-    if (score === bones.length) {
-        setTimeout(() => {
-            alert("🎊 مبروك! لقد أعدت بناء الهيكل العظمي بنجاح!");
-            location.reload();
-        }, 1500);
+    function showFact(id) {
+        const info = boneFacts[id];
+        $("#bone-title").text(info.title);
+        $("#bone-fact").text(info.text);
+        $("#info-modal").removeClass("hidden");
     }
-}
 
-function showFact(text) {
-    const popup = document.getElementById('fact-overlay');
-    document.getElementById('fact-text').innerText = text;
-    popup.classList.remove('hidden');
-    
-    setTimeout(() => {
-        popup.classList.add('hidden');
-    }, 4000);
-}
+    $(".close-btn").click(function() {
+        $("#info-modal").addClass("hidden");
+    });
+});
