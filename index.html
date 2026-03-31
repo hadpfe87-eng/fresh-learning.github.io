@@ -1,54 +1,512 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة جسم الإنسان | مختبر العظام</title>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="container">
-        <header>
-            <h1>بناء الهيكل العظمي</h1>
-            <p>اسحب العظام إلى مكانها الصحيح لتتعلم كيف يحميك جسمك!</p>
-        </header>
-
-        <div class="game-wrapper">
-            <div id="inventory">
-                <div class="bone-item" data-target="skull">الجمجمة</div>
-                <div class="bone-item" data-target="ribs">القفص الصدري</div>
-                <div class="bone-item" data-target="spine">العمود الفقري</div>
-                <div class="bone-item" data-target="pelvis">عظم الحوض</div>
-                <div class="bone-item" data-target="humerus">عظمة العضد</div>
-                <div class="bone-item" data-target="femur">عظمة الفخذ</div>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Human Body Game | Siemens Education | Games Arcade
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link rel="stylesheet" href="node_modules/@shs/ui-marcom/assets/fonts/webfonts/webfonts.css" />
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header__inner">
+          <div class="header__top">
+            <div class="header__logo">
+              <img src="./assets/images/logo-siemens.svg" />
             </div>
-
-            <div id="canvas">
-                <div class="skeleton-silhouette"></div>
-                
-                <div class="target" id="target-skull" data-bone="skull"></div>
-                <div class="target" id="target-ribs" data-bone="ribs"></div>
-                <div class="target" id="target-spine" data-bone="spine"></div>
-                <div class="target" id="target-pelvis" data-bone="pelvis"></div>
-                <div class="target" id="target-humerus" data-bone="humerus"></div>
-                <div class="target" id="target-femur" data-bone="femur"></div>
+            <div class="header__top__links">
+              <a href="https://www.siemens.com/uk/en/company/about/contact-us.html">              <img src="./assets/icons/icon-envelope.svg" />
+              <span>              Contact us
+</span>
+</a>
+              <a href="https://www.siemens.com/global/en/search.html">              <img src="./assets/icons/icon-search.svg" />
+</a>
             </div>
+          </div>
+          <div class="header__bottom">
+            <nav class="header__nav--primary">
+              <ul>
+                <li>
+                  <a href="https://www.siemens.com/uk/en/products.html" rel="noopener noreferrer" target="_blank">                  Products
+                  &amp; Services
+</a>
+                </li>
+                <li>
+                  <a href="https://www.siemens.com/uk/en/industries.html" rel="noopener noreferrer" target="_blank">                  Industries
+</a>
+                </li>
+                <li>
+                  <a href="https://www.siemens.com/uk/en/company.html" rel="noopener noreferrer" target="_blank">                  Company
+</a>
+                </li>
+              </ul>
+            </nav>
+            <nav class="header__nav--secondary">
+              <ul>
+                <li>
+                  <a href="http://www.siemens.co.uk/careers" rel="noopener noreferrer" target="_blank">                  Jobs &amp; Careers
+</a>
+                </li>
+                <li>
+                  <a href="http://news.siemens.co.uk/" rel="noopener noreferrer" target="_blank">                  Press
+</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
-
-        <div id="info-modal" class="hidden">
-            <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <h2 id="bone-title">اسم العظمة</h2>
-                <p id="bone-fact">المعلومة هنا...</p>
-            </div>
+      </div>
+    </header>
+    <div id="breadcrumbs">
+      <div class="container">
+        <div class="breadcrumbs__inner">
+          <nav>
+            <ul>
+              <li>
+                <a href="https://www.siemens.com/uk/en.html" rel="noopener noreferrer" target="_blank">                <img src="./assets/icons/icon-home.svg" />
+</a>
+                <span>                ›
+</span>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/uk/en/company/education.html" rel="noopener noreferrer" target="_blank">                Company
+</a>
+                <span>                ›
+</span>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/uk/en/company/education.html" rel="noopener noreferrer" target="_blank">                Education
+</a>
+                <span>                ›
+</span>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/uk/en/company/education/student.html" rel="noopener noreferrer" target="_blank">                Student Games Arcade
+</a>
+              </li>
+            </ul>
+          </nav>
         </div>
+      </div>
     </div>
+    <section id="game">
+      <div class="container">
+        <div class="game__inner">
+          <div class="game__content--top">
+            <h1>
+              The Human Body Game
+            </h1>
+            <p>
+              Dive into the exciting world inside you with The Human Body Game! Explore different systems of your body,
+            from bones to organs, and see how they all work together in this interactive simulation.
+            </p>
+            <p>
+              Use interactive simulations to label parts, learn their functions, identify bones on a skeleton and much
+            more. It&#39;s a fun way to discover the amazing secrets of the human body. Are you ready to start your journey
+            inside?
+            </p>
+          </div>
+          <div class="game__game">
+            <div id="game-container" class="game-container">
+              <iframe id="game-iframe" src="https://thehumanbodygame.co.uk/game" title="The Human Body Game" width="1024" style="border:none;" allow="fullscreen">
+              </iframe>
+            </div>
+            <div class="game__buttons">
+              <button id="game-button--fullscreen">
+                <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10.12 31H2V22.88M31 22.88V31H22.88M22.88 2H31V10.12M2 10.12V2H10.12" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                  </path>
+                </svg>
+              </button>
+              <button id="game-button--minimisescreen" class="hidden">
+                <svg width="33" height="33" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="minimiseIconTitle" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#ffffff">
+                  <polyline points="8 3 8 8 3 8">
+                  </polyline>
+                  <polyline points="21 8 16 8 16 3">
+                  </polyline>
+                  <polyline points="3 16 8 16 8 21">
+                  </polyline>
+                  <polyline points="16 21 16 16 21 16">
+                  </polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="game__tags">
+            <div class="game__tag">
+              <span>              Science, Biology
+</span>
+            </div>
+            <div class="game__tag">
+              <span>              7-11 Years
+</span>
+            </div>
+            <div class="game__tag">
+              <span>              Game
+</span>
+            </div>
+          </div>
+          <div class="game__content--bottom">
+            <p>
+              The Human Body Game offers an engaging educational experience for students aged 7-11 to learn about the
+            structure and functions of the human body.
+            </p>
+            <p>
+              Through interactive simulations, drag-and-drop gameplay, and quiz-based learning, students will explore
+            various bodily systems, diagram, and deepen their understanding of biology. This resource effectively
+            demonstrates how the body works, emphasising how these specific systems process air and food, making it
+            easier for students to grasp complex concepts in a memorable way.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="related">
+      <div class="container">
+        <h2>
+          Related Games, Interactives and Quizzes
+        </h2>
+        <ul class="related__list">
+          <!-- LIFE WITHOUT STEM -->
+          <li>
+            <div class="related__item">
+              <a href="https://lifewithoutstemgame.co.uk/" rel="noopener noreferrer" target="_blank">              <img src="./assets/images/game-thumbnails/game-life-without-stem.webp" />
+</a>
+              <a href="https://lifewithoutstemgame.co.uk/" rel="noopener noreferrer" target="_blank">              <h5>
+                Life without STEM
+              </h5>
+</a>
+              <p>
+                Discover how technology in IT, transport, communications, energy and healthcare is improving our lives.
+              </p>
+              <a href="https://lifewithoutstemgame.co.uk/" rel="noopener noreferrer" target="_blank">              Life without STEM
+</a>
+            </div>
+          </li>
+          <!-- CYBER SECURITY -->
+          <li>
+            <div class="related__item">
+              <a href="https://cybersecuritygame.co.uk/" rel="noopener noreferrer" target="_blank">              <img src="./assets/images/game-thumbnails/game-cyber-security.webp" />
+</a>
+              <a href="https://cybersecuritygame.co.uk/" rel="noopener noreferrer" target="_blank">              <h5>
+                Cyber Security
+              </h5>
+</a>
+              <p>
+                Take on encryption challenges and learn how you can protect against cybercrime using ancient encryption
+              techniques.
+              </p>
+              <a href="https://cybersecuritygame.co.uk/" rel="noopener noreferrer" target="_blank">              Cyber Security
+</a>
+            </div>
+          </li>
+          <!-- FLIGHT LAB -->
+          <li>
+            <div class="related__item">
+              <a href="https://flightlabgame.co.uk/flight-arcade/" rel="noopener noreferrer" target="_blank">              <img src="./assets/images/game-thumbnails/game-flight-lab.webp" />
+</a>
+              <a href="https://flightlabgame.co.uk/flight-arcade/" rel="noopener noreferrer" target="_blank">              <h5>
+                Flight Lab
+              </h5>
+</a>
+              <p>
+                Put your skills to the test and adjust the thrust, angle and duration to carry your plan over the landing
+              strip.
+              </p>
+              <a href="https://flightlabgame.co.uk/flight-arcade/" rel="noopener noreferrer" target="_blank">              Flight Lab
+</a>
+            </div>
+          </li>
+          <!-- INFINITY STARSHIP -->
+          <li>
+            <div class="related__item">
+              <a href="https://infinitystarshipgame.co.uk/" rel="noopener noreferrer" target="_blank">              <img src="./assets/images/game-thumbnails/game-infinity-starship.webp" />
+</a>
+              <a href="https://infinitystarshipgame.co.uk/" rel="noopener noreferrer" target="_blank">              <h5>
+                Infinity STARship
+              </h5>
+</a>
+              <p>
+                The Infinity STARship is our one stop shop to explore our quizzes and visit other interactives in the
+              Arcade Plaza.
+              </p>
+              <a href="https://infinitystarshipgame.co.uk/" rel="noopener noreferrer" target="_blank">              Infinity STARship
+</a>
+            </div>
+          </li>
+          <!-- GREEN LEADERS -->
+          <li>
+            <div class="related__item">
+              <a href="https://greenleadersgame.co.uk/" rel="noopener noreferrer" target="_blank">              <img src="./assets/images/game-thumbnails/game-green-leaders.webp" />
+</a>
+              <a href="https://greenleadersgame.co.uk/" rel="noopener noreferrer" target="_blank">              <h5>
+                Green Leaders
+              </h5>
+</a>
+              <p>
+                Become a Green Leader and take responsibility for our sustainable future, while encourgaing others to do
+              the same.
+              </p>
+              <a href="https://greenleadersgame.co.uk/" rel="noopener noreferrer" target="_blank">              Green Leaders
+</a>
+            </div>
+          </li>
+          <!-- FORMULA FOR THRILLS -->
+          <li>
+            <div class="related__item">
+              <a href="https://formulaforthrillsgame.co.uk/" rel="noopener noreferrer" target="_blank">              <img src="./assets/images/game-thumbnails/game-formula-for-thrills.webp" />
+</a>
+              <a href="https://formulaforthrillsgame.co.uk/" rel="noopener noreferrer" target="_blank">              <h5>
+                Formula for Thrills
+              </h5>
+</a>
+              <p>
+                Design a rollercoaster by completing a series of challenges. Change the track features and see how
+              different designs
+              effect the speed of the rollercoaster.
+              </p>
+              <a href="https://formulaforthrillsgame.co.uk/" rel="noopener noreferrer" target="_blank">              Formula for Thrills
+</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section id="resources">
+      <div class="container">
+        <h2>
+          Related Resources
+        </h2>
+        <ul class="resources__list">
+          <li>
+            <a href="https://assets.new.siemens.com/siemens/assets/api/uuid:1b5df38e-2cb1-4adc-88f0-80c5ce40c281/The-Human-Body-teachers-notes.pdf" rel="noopener noreferrer" target="_blank">            The Human Body - Teachers&#39; notes
+</a>
+          </li>
+          <li>
+            <a href="https://assets.new.siemens.com/siemens/assets/api/uuid:1c8e97deef7a021af7430eda585c8b4aba042783/ks2-human-body-supporting-lesson-plan-ppt.pptx" rel="noopener noreferrer" target="_blank">            The Human Body - PowerPoint
+</a>
+          </li>
+          <li>
+            <a href="https://assets.new.siemens.com/siemens/assets/api/uuid:fc66268f-4884-4ca4-8856-8825830b82f6/Human-Body-Student-Worksheet-Exploring-Support.pdf" rel="noopener noreferrer" target="_blank">            The Human Body - Exploring Support Activity Sheet
+</a>
+          </li>
+          <li>
+            <a href="https://assets.new.siemens.com/siemens/assets/api/uuid:5f17fe64-8deb-482f-b307-9a299827ce2a/Human-Body-Student-Worksheet-Exploring-Protection.pdf" rel="noopener noreferrer" target="_blank">            The Human Body - Exploring Protection Activity Sheet
+</a>
+          </li>
+          <li>
+            <a href="https://assets.new.siemens.com/siemens/assets/api/uuid:248eebba-d361-4a66-bfbd-e7444778e51c/Human-Body-Student-Worksheet-Exploring-Movement-.pdf" rel="noopener noreferrer" target="_blank">            The Human Body - Exploring Movement Activity Sheet
+</a>
+          </li>
+          <li>
+            <a href="https://assets.new.siemens.com/siemens/assets/api/uuid:df686707-6bb0-42bc-b827-382f78f03361/Human-Body-Student-Worksheet-Exploring-Digestion.pdf" rel="noopener noreferrer" target="_blank">            The Human Body - Exploring Digestion Activity Sheet
+</a>
+          </li>
+          <li>
+            <a href="https://assets.new.siemens.com/siemens/assets/api/uuid:9c7686c8-ff3c-4a4a-9cac-17bf0572eb54/Human-Body-Student-Worksheet-Arteries-veins-and-capillaries.pdf" rel="noopener noreferrer" target="_blank">            The Human Body - Arteries, Veins and Capillaries Activity Sheet
+</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <footer>
+      <div class="container">
+        <div class="footer__inner">
+          <nav class="footer__nav">
+            <ul>
+              <li>
+                <a href="https://www.siemens.com/uk/en/general/legal.html" rel="noopener noreferrer" target="_blank">                Corporate Information
+</a>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/uk/en/general/privacy-notice.html" rel="noopener noreferrer" target="_blank">                Privacy Notice
+</a>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/uk/en/general/cookie-notice.html" rel="noopener noreferrer" target="_blank">                Cookie Policy
+</a>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/uk/en/general/terms-of-use.html" rel="noopener noreferrer" target="_blank">                Terms of use
+</a>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/uk/en/general/digital-id.html" rel="noopener noreferrer" target="_blank">                Digital ID
+</a>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/uk/en/company/sustainability/modern-slavery.html" rel="noopener noreferrer" target="_blank">                Modern Slavery Act Transparency Statement
+</a>
+              </li>
+              <li>
+                <a href="https://www.siemens.com/global/en/company/about/compliance/reporting-channels.html" rel="noopener noreferrer" target="_blank">                Whistleblowing
+</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="footer__button">
+            <a href="#" class="button">            Contact us
+</a>
+          </div>
+          <div class="footer__bottom">
+            <a href="#">            siemens.co.uk
+</a>
+            <p>
+              © Siemens 1996 - 2024
+            </p>
+            <div class="footer__socials">
+              <a href="https://x.com/siemensuknews" rel="noopener noreferrer" target="_blank">              <img src="./assets/icons/icon-twitter.svg" />
+</a>
+              <a href="https://www.linkedin.com/company/siemens" rel="noopener noreferrer" target="_blank">              <img src="./assets/icons/icon-linkedin.svg" />
+</a>
+              <a href="https://www.facebook.com/SiemensUKNews" rel="noopener noreferrer" target="_blank">              <img src="./assets/icons/icon-facebook.svg" />
+</a>
+              <a href="https://www.youtube.com/user/Siemens" rel="noopener noreferrer" target="_blank">              <img src="./assets/icons/icon-youtube.svg" />
+</a>
+              <a href="https://www.instagram.com/siemens_uk/" rel="noopener noreferrer" target="_blank">              <img src="./assets/icons/icon-instagram.svg" />
+</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="./assets/script.js">
+    </script>
+    <!-- GDPR Popup HTML -->
+    <style>
+      #gdprPopup {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #001034;
+      color: white;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-    <script src="script.js"></script>
-</body>
+    #gdprPopup .gdpr-content {
+      max-width: 75%;
+    }
+
+    #gdprPopup button {
+      background-color: #0cc;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #gdprPopup button:hover {
+      background-color: #00ffb9;
+      color: #001034;
+    }
+
+    .gdpr-content a {
+      color: #0cc;
+      font-weight: bold;
+    }
+
+    .gdpr-content a:hover {
+      color: #00ffb9;
+    }
+    </style>
+    <div id="gdprPopup" style="display: none;">
+      <div class="gdpr-content">
+        This website uses Google Analytics 4 (GA4) to collect anonymous data to help us analyse traffic and improve user
+      experience.
+        <br />
+        For more information, please review our
+        <a href="https://www.siemens.com/global/en/general/cookie-notice.html" target="_blank">        cookie policy
+</a>
+        .
+      </div>
+      <div>
+        <button id="gdprAccept">
+          Accept
+        </button>
+        <button id="gdprDecline" class="decline">
+          Decline
+        </button>
+      </div>
+    </div>
+    <script>
+      // Simple GDPR Consent Script
+    const gdprPopup = document.getElementById(&#34;gdprPopup&#34;);
+    const gdprAccept = document.getElementById(&#34;gdprAccept&#34;);
+    const gdprDecline = document.getElementById(&#34;gdprDecline&#34;);
+
+    // Check if the user has already made a decision
+    const consent = localStorage.getItem(&#34;gdprConsent&#34;);
+
+    if (!consent) {
+      // If no decision has been made, show the popup
+      gdprPopup.style.display = &#34;flex&#34;;
+    } else if (consent === &#34;accepted&#34;) {
+      // If user accepted, load Google Analytics
+      loadGoogleAnalytics();
+      loadGoogleTagManager();
+    }
+
+    // Function to load Google Analytics
+    function loadGoogleAnalytics() {
+      const script = document.createElement(&#34;script&#34;);
+      script.src = &#34;https://www.googletagmanager.com/gtag/js?id=G-8FD6NTDWFC&#34;;  // Replace with your GA4 Measurement ID
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag(&#34;js&#34;, new Date());
+      gtag(&#34;config&#34;, &#34;G-8FD6NTDWFC&#34;);  // Replace with your GA4 Measurement ID
+    }
+
+    function loadGoogleTagManager() {
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+          &#39;gtm.start&#39;:
+
+            new Date().getTime(), event: &#39;gtm.js&#39;
+        }); var f = d.getElementsByTagName(s)[0],
+
+          j = d.createElement(s), dl = l != &#39;dataLayer&#39; ? &#39;&amp;l=&#39; + l : &#39;&#39;; j.async = true; j.src =
+
+            &#39;https://www.googletagmanager.com/gtm.js?id=&#39; + i + dl; f.parentNode.insertBefore(j, f);
+
+      })(window, document, &#39;script&#39;, &#39;dataLayer&#39;, &#39;GTM-NGJ82PVJ&#39;);
+    }
+
+    // Handle Accept Button Click
+    gdprAccept.addEventListener(&#34;click&#34;, function () {
+      // Set consent to &#34;accepted&#34; and save to localStorage
+      localStorage.setItem(&#34;gdprConsent&#34;, &#34;accepted&#34;);
+      loadGoogleAnalytics();
+      loadGoogleTagManager();
+      gdprPopup.style.display = &#34;none&#34;;
+    });
+
+    // Handle Decline Button Click
+    gdprDecline.addEventListener(&#34;click&#34;, function () {
+      // Set consent to &#34;declined&#34; and save to localStorage
+      localStorage.setItem(&#34;gdprConsent&#34;, &#34;declined&#34;);
+      gdprPopup.style.display = &#34;none&#34;; // Close the popup
+    });
+    </script>
+  </body>
 </html>
