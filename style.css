@@ -124,23 +124,6 @@ body {
     padding: 1.5rem;
 }
 
-/* 3D Viewer */
-.viewer-3d {
-    height: 280px;
-    background: #071a1a;
-    border-radius: 28px;
-    margin-bottom: 1rem;
-    position: relative;
-    overflow: hidden;
-    cursor: grab;
-    border: 2px solid #f4b942;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-.viewer-3d:active {
-    cursor: grabbing;
-}
-
 /* Buttons & Interactive */
 .btn-option {
     background: #2f4f4f;
@@ -276,6 +259,40 @@ footer {
     font-size: 0.9rem;
 }
 
+/* Open 3D Model specific styles */
+.open3d-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 2px solid #f4b942;
+    background: #071a1a;
+}
+
+.open3d-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.model-credit {
+    font-size: 0.7rem;
+    text-align: center;
+    margin-top: 8px;
+    color: #ffefc0;
+    opacity: 0.8;
+}
+
+.model-credit a {
+    color: #f4b942;
+    text-decoration: none;
+}
+
+.model-credit a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 780px) {
     body {
         padding: 1rem;
@@ -286,187 +303,7 @@ footer {
     .game-card {
         margin-bottom: 0;
     }
-}
-/* --- New Styles for Full-Screen Skeleton Game Modal --- */
-.launch-game-btn {
-    background: linear-gradient(135deg, #f4b942, #e09d32);
-    color: #1e2a2a;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 15px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    font-family: 'Cairo', sans-serif;
-}
-
-.launch-game-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-/* Full-Screen Modal */
-.game-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(10, 30, 30, 0.98);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(5px);
-    font-family: 'Cairo', sans-serif;
-}
-
-.modal-content {
-    background: #2c4a3e;
-    border-radius: 48px;
-    width: 90%;
-    max-width: 1300px;
-    height: 90%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 25px 50px -12px black;
-    border: 2px solid #f4b942;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: #1f3a32;
-    color: #ffefc0;
-    border-bottom: 1px solid #f4b942;
-}
-
-.modal-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.close-modal {
-    font-size: 2rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: #ffd966;
-    transition: transform 0.1s;
-}
-
-.close-modal:hover {
-    transform: scale(1.2);
-    color: #ffaa33;
-}
-
-.game-container {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 1.5rem;
-    gap: 1.5rem;
-    overflow-y: auto;
-}
-
-/* Drag & Drop Game Styles */
-.bones-palette {
-    flex: 1;
-    min-width: 200px;
-    background: #3a5a4e;
-    border-radius: 32px;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
-}
-
-.bone-card {
-    background: #f9e0a0;
-    color: #2c4a3e;
-    padding: 12px;
-    border-radius: 60px;
-    text-align: center;
-    font-weight: bold;
-    cursor: grab;
-    user-select: none;
-    transition: 0.1s;
-    border: 2px solid #c97e2a;
-    font-size: 1.1rem;
-}
-
-.bone-card:active {
-    cursor: grabbing;
-}
-
-.bone-card.dragging {
-    opacity: 0.5;
-}
-
-.skeleton-canvas {
-    flex: 2;
-    min-width: 300px;
-    background: #1e3a32;
-    border-radius: 32px;
-    position: relative;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" opacity="0.15"><path fill="none" stroke="%23f4b942" stroke-width="2" d="M200,100 L200,200 M150,150 L250,150 M180,200 L200,280 L220,200 M160,280 L200,350 L240,280 M120,400 L200,480 L280,400"/><circle cx="200" cy="80" r="25" stroke="%23f4b942" fill="none"/><rect x="160" y="200" width="80" height="40" stroke="%23f4b942" fill="none"/></svg>');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.drop-zone {
-    background: rgba(0,0,0,0.3);
-    margin: 8px;
-    padding: 8px;
-    border-radius: 20px;
-    transition: 0.1s;
-    text-align: center;
-    color: #ffefc0;
-}
-
-.drop-zone.active-drop {
-    background: #f4b94280;
-    border: 2px dashed #ffdd99;
-}
-
-.game-feedback {
-    margin-top: 15px;
-    text-align: center;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #ffd966;
-}
-
-.reset-game-btn {
-    background: #a55d1a;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 40px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-family: 'Cairo', sans-serif;
-}
-
-@media (max-width: 768px) {
-    .game-container {
-        flex-direction: column;
-    }
-    .bone-card {
-        font-size: 0.9rem;
-        padding: 8px;
+    .open3d-container {
+        height: 300px;
     }
 }
