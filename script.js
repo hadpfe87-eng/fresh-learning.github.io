@@ -1,7 +1,3 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
-
 // ==================== 1. MAZE GAME (5 Scientific Questions) ====================
 const mazeQuestions = [
     { text: "ما الوظيفة الأساسية للهيكل العظمي في جسم الإنسان؟", options: ["أ حماية الأعضاء الداخلية", "ب إنتاج الدم فقط", "ج مساعدة الجسم على الهضم"], correct: 0, feedback: "أحسنت! الهيكل العظمي يحمي الأعضاء مثل الدماغ والقلب." },
@@ -193,375 +189,63 @@ document.getElementById("resetChallengeBtn").addEventListener("click", () => {
 
 renderChallenge();
 
-// ==================== 4. EXPLORATION QUIZ (Removed - replaced by modal game) ====================
-// The old exploration quiz has been replaced by the new drag-and-drop game modal.
-// The 3D viewer still remains, but the interactive questions are now inside the modal.
-
-// ==================== 5. ADVANCED 3D SKELETON ====================
-const container = document.getElementById("advancedSkeletonViewer");
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x071a1a);
-scene.fog = new THREE.FogExp2(0x071a1a, 0.018);
-
-const camera = new THREE.PerspectiveCamera(42, container.clientWidth / container.clientHeight, 0.1, 1000);
-camera.position.set(2.2, 1.6, 3.8);
-camera.lookAt(0, 1.0, 0);
-
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(container.clientWidth, container.clientHeight);
-renderer.shadowMap.enabled = true;
-renderer.setPixelRatio(window.devicePixelRatio);
-container.appendChild(renderer.domElement);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.autoRotate = true;
-controls.autoRotateSpeed = 1.0;
-controls.enableZoom = true;
-controls.enablePan = true;
-controls.target.set(0, 1.1, 0);
-
-// Lighting
-const ambientLight = new THREE.AmbientLight(0x446666, 0.45);
-scene.add(ambientLight);
-const mainLight = new THREE.DirectionalLight(0xffeebb, 1.2);
-mainLight.position.set(2, 3, 2.5);
-mainLight.castShadow = true;
-scene.add(mainLight);
-const backLight = new THREE.PointLight(0xccaa77, 0.5);
-backLight.position.set(-1, 1.2, -2);
-scene.add(backLight);
-const fillLight = new THREE.PointLight(0x77aacc, 0.4);
-fillLight.position.set(1, 1.5, 1.8);
-scene.add(fillLight);
-
-// Build Advanced Skeleton
-const skeletonGroup = new THREE.Group();
-const boneMat = new THREE.MeshStandardMaterial({ color: 0xe8ddb0, roughness: 0.35, metalness: 0.08 });
-const jointMat = new THREE.MeshStandardMaterial({ color: 0xcfb87a, roughness: 0.4 });
-
-function addBoneDetailed(parent, p1, p2, radius) {
-    const start = new THREE.Vector3(p1.x, p1.y, p1.z);
-    const end = new THREE.Vector3(p2.x, p2.y, p2.z);
-    const dir = new THREE.Vector3().subVectors(end, start);
-    const len = dir.length();
-    const center = start.clone().add(end).multiplyScalar(0.5);
-    const cylinder = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, len, 12), boneMat);
-    cylinder.position.copy(center);
-    cylinder.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.clone().normalize());
-    parent.add(cylinder);
-    const cap1 = new THREE.Mesh(new THREE.SphereGeometry(radius * 1.2, 8, 8), jointMat);
-    cap1.position.copy(start);
-    const cap2 = new THREE.Mesh(new THREE.SphereGeometry(radius * 1.2, 8, 8), jointMat);
-    cap2.position.copy(end);
-    parent.add(cap1);
-    parent.add(cap2);
-}
-
-// Spine
-const spinePoints = [
-    [0, 1.92, 0], [0, 1.68, 0], [0, 1.44, 0], [0, 1.20, 0],
-    [0, 0.96, 0], [0, 0.72, 0], [0, 0.48, 0], [0, 0.24, 0]
+// ==================== 4. EXPLORATION QUESTIONS (with Open 3D Model) ====================
+const exploreQs = [
+    { text: "انظر إلى رأس الهيكل العظمي في النموذج ثلاثي الأبعاد. ما اسم العظم الذي يحمي الدماغ؟", options: ["أ الأضلاع", "ب الجمجمة", "ج العمود الفقري"], correct: 1, feedback: "الجمجمة تحيط بالدماغ وتحميه من الصدمات. يمكنك تدوير النموذج لرؤيتها من جميع الزوايا!" },
+    { text: "قم بتدوير النموذج وانظر إلى منطقة الصدر. ما اسم العظام التي تحمي القلب والرئتين؟", options: ["أ عظام الساق", "ب القفص الصدري", "ج عظام اليد"], correct: 1, feedback: "القفص الصدري يحمي القلب والرئتين بشكل ممتاز! استخدم زر الفأرة لتدوير النموذج." },
+    { text: "انظر إلى الظهر في النموذج. ما العظم الذي يدعم الجسم ويساعده على الحركة؟", options: ["أ العمود الفقري", "ب الجمجمة", "ج عظام القدم"], correct: 0, feedback: "العمود الفقري هو عمود الجسم الحقيقي! يتكون من العديد من الفقرات." },
+    { text: "انظر إلى الساق في النموذج. ما نوع عظم الفخذ؟", options: ["أ عظم طويل", "ب عظم مسطح", "ج عظم قصير"], correct: 0, feedback: "عظم الفخذ هو أطول عظم طويل في الجسم. يمكنك رؤيته بوضوح في النموذج." }
 ];
-for (let i = 0; i < spinePoints.length - 1; i++) {
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(...spinePoints[i]), new THREE.Vector3(...spinePoints[i + 1]), 0.095);
+
+let exploreIdx = 0, exploreAnswered = false, exploreComplete = false;
+
+function renderExploreQuestion() {
+    if (exploreComplete) return;
+    const q = exploreQs[exploreIdx];
+    document.getElementById("exploreQuestion").innerHTML = `<strong>🔍 ${q.text}</strong>`;
+    const optsDiv = document.getElementById("exploreOptions");
+    optsDiv.innerHTML = "";
+    q.options.forEach((opt, i) => {
+        const btn = document.createElement("button");
+        btn.className = "btn-option";
+        btn.innerText = opt;
+        btn.onclick = () => handleExploreAnswer(i);
+        optsDiv.appendChild(btn);
+    });
+    document.getElementById("exploreFeedback").innerHTML = "";
+    document.getElementById("exploreNextBtn").style.display = "none";
+    exploreAnswered = false;
 }
 
-// Skull
-const skullGroup = new THREE.Group();
-const cranium = new THREE.Mesh(new THREE.SphereGeometry(0.32, 36, 36), boneMat);
-cranium.position.y = 0.07;
-skullGroup.add(cranium);
-const jaw = new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.19, 0.18, 10), boneMat);
-jaw.position.set(0, -0.14, 0.12);
-skullGroup.add(jaw);
-skullGroup.position.set(0, 2.15, 0);
-skeletonGroup.add(skullGroup);
-
-// Rib Cage
-for (let i = 0; i < 8; i++) {
-    const yOff = 1.35 - i * 0.11;
-    const radiusArc = 0.58;
-    const rib = new THREE.Mesh(new THREE.TorusGeometry(radiusArc, 0.06, 12, 42, Math.PI), boneMat);
-    rib.rotation.x = 0.25;
-    rib.rotation.z = 0.1;
-    rib.position.set(0, yOff, 0.08);
-    skeletonGroup.add(rib);
-    const rib2 = new THREE.Mesh(new THREE.TorusGeometry(radiusArc, 0.06, 12, 42, Math.PI), boneMat);
-    rib2.rotation.x = -0.25;
-    rib2.rotation.z = 0.1;
-    rib2.position.set(0, yOff, 0.08);
-    skeletonGroup.add(rib2);
-}
-
-// Arms
-addBoneDetailed(skeletonGroup, new THREE.Vector3(-0.55, 1.82, 0), new THREE.Vector3(-0.88, 1.22, 0.08), 0.1);
-addBoneDetailed(skeletonGroup, new THREE.Vector3(-0.88, 1.22, 0.08), new THREE.Vector3(-0.88, 0.68, 0.04), 0.085);
-addBoneDetailed(skeletonGroup, new THREE.Vector3(0.55, 1.82, 0), new THREE.Vector3(0.88, 1.22, 0.08), 0.1);
-addBoneDetailed(skeletonGroup, new THREE.Vector3(0.88, 1.22, 0.08), new THREE.Vector3(0.88, 0.68, 0.04), 0.085);
-
-// Legs
-addBoneDetailed(skeletonGroup, new THREE.Vector3(-0.38, 0.70, 0), new THREE.Vector3(-0.42, 0.18, 0.05), 0.125);
-addBoneDetailed(skeletonGroup, new THREE.Vector3(-0.42, 0.18, 0.05), new THREE.Vector3(-0.42, -0.35, 0.02), 0.1);
-addBoneDetailed(skeletonGroup, new THREE.Vector3(0.38, 0.70, 0), new THREE.Vector3(0.42, 0.18, 0.05), 0.125);
-addBoneDetailed(skeletonGroup, new THREE.Vector3(0.42, 0.18, 0.05), new THREE.Vector3(0.42, -0.35, 0.02), 0.1);
-
-// Pelvis
-const pelvis = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.52, 0.28, 8), boneMat);
-pelvis.position.set(0, 0.78, -0.06);
-skeletonGroup.add(pelvis);
-
-scene.add(skeletonGroup);
-
-// Grid Helper
-const grid = new THREE.GridHelper(5, 20, 0x88aa99, 0x446666);
-grid.position.y = -0.7;
-scene.add(grid);
-
-// CSS2D Label
-const labelDiv = document.createElement('div');
-labelDiv.textContent = '🦴 الهيكل العظمي البشري 🦴';
-labelDiv.style.backgroundColor = 'rgba(0,0,0,0.6)';
-labelDiv.style.color = '#ffdd99';
-labelDiv.style.padding = '4px 12px';
-labelDiv.style.borderRadius = '40px';
-labelDiv.style.fontSize = '12px';
-labelDiv.style.fontWeight = 'bold';
-labelDiv.style.fontFamily = 'Cairo';
-const labelObj = new CSS2DObject(labelDiv);
-labelObj.position.set(0, 2.55, 0);
-scene.add(labelObj);
-
-const labelRenderer = new CSS2DRenderer();
-labelRenderer.setSize(container.clientWidth, container.clientHeight);
-labelRenderer.domElement.style.position = 'absolute';
-labelRenderer.domElement.style.top = '0px';
-labelRenderer.domElement.style.left = '0px';
-labelRenderer.domElement.style.pointerEvents = 'none';
-container.appendChild(labelRenderer.domElement);
-
-// Animation Loop
-function animate() {
-    requestAnimationFrame(animate);
-    controls.update();
-    renderer.render(scene, camera);
-    labelRenderer.render(scene, camera);
-}
-animate();
-
-// Handle Window Resize
-window.addEventListener('resize', () => {
-    const w = container.clientWidth;
-    const h = container.clientHeight;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
-    labelRenderer.setSize(w, h);
-});
-
-// ==================== 6. NEW: FULL-SCREEN DRAG-AND-DROP SKELETON GAME ====================
-
-// Create the Modal HTML dynamically and append to body
-const modal = document.createElement('div');
-modal.className = 'game-modal';
-modal.id = 'skeletonGameModal';
-modal.innerHTML = `
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2><i class="fas fa-bone"></i> لعبة تركيب الهيكل العظمي</h2>
-            <button class="close-modal">&times;</button>
-        </div>
-        <div class="game-container">
-            <div class="bones-palette" id="bonesPalette">
-                <div class="bone-card" draggable="true" data-bone="skull">🦴 الجمجمة (Skull)</div>
-                <div class="bone-card" draggable="true" data-bone="ribs">🦴 الأضلاع (Ribs)</div>
-                <div class="bone-card" draggable="true" data-bone="spine">🦴 العمود الفقري (Spine)</div>
-                <div class="bone-card" draggable="true" data-bone="femur">🦴 عظم الفخذ (Femur)</div>
-                <div class="bone-card" draggable="true" data-bone="humerus">🦴 عظم العضد (Humerus)</div>
-            </div>
-            <div class="skeleton-canvas" id="skeletonCanvas">
-                <div class="drop-zone" data-expected="skull" style="position: absolute; top: 10%; left: 40%; width: 20%; height: 15%;">الجمجمة</div>
-                <div class="drop-zone" data-expected="ribs" style="position: absolute; top: 30%; left: 35%; width: 30%; height: 15%;">القفص الصدري</div>
-                <div class="drop-zone" data-expected="spine" style="position: absolute; top: 45%; left: 45%; width: 10%; height: 25%;">العمود الفقري</div>
-                <div class="drop-zone" data-expected="femur" style="position: absolute; bottom: 20%; left: 35%; width: 15%; height: 12%;">عظم الفخذ</div>
-                <div class="drop-zone" data-expected="femur" style="position: absolute; bottom: 20%; right: 35%; width: 15%; height: 12%;">عظم الفخذ</div>
-                <div class="drop-zone" data-expected="humerus" style="position: absolute; top: 45%; left: 15%; width: 12%; height: 10%;">عظم العضد</div>
-                <div class="drop-zone" data-expected="humerus" style="position: absolute; top: 45%; right: 15%; width: 12%; height: 10%;">عظم العضد</div>
-                <div id="gameFeedback" class="game-feedback"></div>
-                <button id="resetGameBtn" class="reset-game-btn">🔄 إعادة اللعبة</button>
-            </div>
-        </div>
-    </div>
-`;
-document.body.appendChild(modal);
-
-// Game State
-let placedBones = {
-    skull: false,
-    ribs: false,
-    spine: false,
-    femur: false,
-    humerus: false
-};
-let femurPlacedCount = 0;
-let humerusPlacedCount = 0;
-
-// Helper to update UI and check win
-function updateGameStatus() {
-    const feedbackDiv = document.getElementById('gameFeedback');
-    const allPlaced = placedBones.skull && placedBones.ribs && placedBones.spine && 
-                      (femurPlacedCount >= 2) && (humerusPlacedCount >= 2);
-    
-    if (allPlaced) {
-        feedbackDiv.innerHTML = '<div class="success-message" style="background:#2b8c6e;">🎉 أحسنت! لقد أكملت بناء الهيكل العظمي بنجاح! 🎉</div>';
-    } else {
-        feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ استمر! ضع كل العظام في أماكنها الصحيحة ✨</span>';
-    }
-}
-
-// Drag and Drop Event Listeners
-const bones = document.querySelectorAll('.bone-card');
-const dropZones = document.querySelectorAll('.drop-zone');
-
-// Drag Start
-bones.forEach(bone => {
-    bone.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('text/plain', bone.getAttribute('data-bone'));
-        e.dataTransfer.effectAllowed = 'copy';
-        bone.classList.add('dragging');
-    });
-    bone.addEventListener('dragend', (e) => {
-        bone.classList.remove('dragging');
-    });
-});
-
-// Drag Over (allow drop)
-dropZones.forEach(zone => {
-    zone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'copy';
-        zone.classList.add('active-drop');
-    });
-    zone.addEventListener('dragleave', () => {
-        zone.classList.remove('active-drop');
-    });
-    
-    // Drop Event
-    zone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        zone.classList.remove('active-drop');
-        const boneType = e.dataTransfer.getData('text/plain');
-        const expectedType = zone.getAttribute('data-expected');
-        
-        // Special handling for multiple femurs/humerus
-        let isValid = false;
-        if (boneType === expectedType) {
-            if (boneType === 'femur' && femurPlacedCount < 2) {
-                isValid = true;
-                femurPlacedCount++;
-                if (femurPlacedCount === 2) placedBones.femur = true;
-            } else if (boneType === 'humerus' && humerusPlacedCount < 2) {
-                isValid = true;
-                humerusPlacedCount++;
-                if (humerusPlacedCount === 2) placedBones.humerus = true;
-            } else if (boneType !== 'femur' && boneType !== 'humerus' && !placedBones[boneType]) {
-                isValid = true;
-                placedBones[boneType] = true;
-            } else {
-                isValid = false;
-            }
-        }
-        
-        if (isValid) {
-            // Mark zone as filled
-            zone.style.background = '#3c8868';
-            zone.style.border = '2px solid #ffde9c';
-            zone.style.opacity = '0.7';
-            zone.style.textDecoration = 'line-through';
-            zone.innerText = `✓ ${zone.innerText}`;
-            // Remove drop event listeners to prevent re-dropping
-            zone.removeEventListener('dragover', () => {});
-            
-            // Remove the bone from palette (or disable it)
-            const draggedBoneElem = Array.from(bones).find(b => b.getAttribute('data-bone') === boneType);
-            if (draggedBoneElem && !zone.hasAttribute('data-multiple')) {
-                draggedBoneElem.style.display = 'none';
-            }
-            
-            updateGameStatus();
+function handleExploreAnswer(selected) {
+    if (exploreComplete || exploreAnswered) return;
+    const q = exploreQs[exploreIdx];
+    if (selected === q.correct) {
+        document.getElementById("exploreFeedback").innerHTML = `<div class="correct-feedback">🎉 ${q.feedback}</div>`;
+        exploreAnswered = true;
+        if (exploreIdx + 1 < exploreQs.length) {
+            document.getElementById("exploreNextBtn").style.display = "inline-block";
         } else {
-            // Wrong placement feedback
-            const feedbackDiv = document.getElementById('gameFeedback');
-            feedbackDiv.innerHTML = '<div class="wrong-feedback">❌ مكان خاطئ! حاول مرة أخرى.</div>';
-            setTimeout(() => {
-                if (!document.getElementById('gameFeedback').innerHTML.includes('أحسنت')) {
-                    feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ استمر! ضع كل العظام في أماكنها الصحيحة ✨</span>';
-                }
-            }, 1500);
+            document.getElementById("exploreNextBtn").style.display = "inline-block";
+            document.getElementById("exploreNextBtn").innerText = "🎁 إنهاء الاستكشاف";
         }
-    });
-});
-
-// Reset Game Functionality
-function resetGame() {
-    placedBones = { skull: false, ribs: false, spine: false, femur: false, humerus: false };
-    femurPlacedCount = 0;
-    humerusPlacedCount = 0;
-    
-    // Reset all drop zones
-    dropZones.forEach(zone => {
-        zone.style.background = '';
-        zone.style.border = '';
-        zone.style.opacity = '';
-        zone.style.textDecoration = '';
-        // Restore original text
-        const expected = zone.getAttribute('data-expected');
-        let originalText = '';
-        if (expected === 'skull') originalText = 'الجمجمة';
-        else if (expected === 'ribs') originalText = 'القفص الصدري';
-        else if (expected === 'spine') originalText = 'العمود الفقري';
-        else if (expected === 'femur') originalText = 'عظم الفخذ';
-        else if (expected === 'humerus') originalText = 'عظم العضد';
-        zone.innerText = originalText;
-        // Re-enable drop listeners (re-attach dragover)
-        zone.addEventListener('dragover', (e) => e.preventDefault());
-    });
-    
-    // Show all bone cards again
-    const allBoneCards = document.querySelectorAll('.bone-card');
-    allBoneCards.forEach(bone => {
-        bone.style.display = 'flex';
-    });
-    
-    const feedbackDiv = document.getElementById('gameFeedback');
-    feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ اللعبة أعيدت! حاول مرة أخرى ✨</span>';
-    setTimeout(() => {
-        feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ استمر! ضع كل العظام في أماكنها الصحيحة ✨</span>';
-    }, 1500);
+    } else {
+        document.getElementById("exploreFeedback").innerHTML = `<div class="wrong-feedback">❌ حاول مجددًا، راقب النموذج ثلاثي الأبعاد جيدًا واستخدم خاصية التدوير!</div>`;
+    }
 }
 
-document.getElementById('resetGameBtn').addEventListener('click', resetGame);
-
-// Modal Open/Close Logic
-const openBtn = document.getElementById('openSkeletonGameBtn');
-const closeBtn = document.querySelector('.close-modal');
-
-if (openBtn) {
-    openBtn.addEventListener('click', () => {
-        modal.style.display = 'flex';
-        resetGame();
-    });
-}
-
-if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-}
-
-// Close modal if clicking outside content
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
+document.getElementById("exploreNextBtn").addEventListener("click", () => {
+    if (!exploreAnswered) return;
+    if (exploreIdx + 1 < exploreQs.length) {
+        exploreIdx++;
+        renderExploreQuestion();
+    } else {
+        exploreComplete = true;
+        document.getElementById("exploreFinalMsg").innerHTML = `<div class="success-message">🎉 أحسنت! لقد تمكنت من استكشاف الهيكل العظمي والتعرف على العظام ووظائفها باستخدام النموذج ثلاثي الأبعاد. 🎉</div>`;
+        document.getElementById("exploreNextBtn").style.display = "none";
+        document.getElementById("exploreOptions").innerHTML = "";
+        document.getElementById("exploreQuestion").innerHTML = "✨ إتقان علم العظام! ✨";
     }
 });
+
+renderExploreQuestion();
