@@ -1,101 +1,86 @@
-:root {
-    --bg: #0a0f1e;
-    --card: #161e35;
-    --accent: #4cc9f0;
-    --success: #06d6a0;
-    --text: #ffffff;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
     font-family: 'Cairo', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    height: 100vh;
-    overflow: hidden;
+    background-color: #001034; /* Dark Siemens Blue */
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
+.game-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
 }
 
-.overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
-    z-index: 1000; display: flex; align-items: center; justify-content: center;
-    backdrop-filter: blur(8px);
-}
-
-.modal {
-    background: var(--card); padding: 40px; border-radius: 30px;
-    text-align: center; border: 2px solid var(--accent);
-    box-shadow: 0 0 40px rgba(76, 201, 240, 0.3);
-}
-
-button {
-    background: var(--accent); border: none; padding: 15px 40px;
-    border-radius: 50px; font-size: 1.2rem; font-weight: bold;
-    cursor: pointer; margin-top: 20px; transition: 0.3s;
-}
-
-button:hover { transform: scale(1.05); background: #fff; }
-
-.app-wrapper {
-    width: 100%; max-width: 1000px; display: flex; flex-direction: column; padding: 20px;
-}
-
-header {
-    display: flex; align-items: center; gap: 20px; margin-bottom: 20px;
-}
-
-.stat-badge {
-    background: var(--card); padding: 10px 20px; border-radius: 15px; font-weight: bold;
-}
-
-.progress-container {
-    flex: 1; height: 15px; background: #2d3748; border-radius: 10px; overflow: hidden;
-}
-
-.progress-fill {
-    width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent), var(--success));
-    transition: width 0.5s ease;
-}
-
-.game-area {
-    display: grid; grid-template-columns: 1fr 280px; gap: 20px; flex: 1; min-height: 0;
-}
-
-.skeleton-canvas {
-    background: var(--card); border-radius: 30px; position: relative;
-    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-    border: 2px solid #2d3748;
-}
-
-.drop-zone {
-    position: absolute; border: 2px dashed rgba(255,255,255,0.1);
-    border-radius: 15px; display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,0.3); font-size: 0.8rem;
-}
-
-.drop-zone.hovered { background: rgba(76, 201, 240, 0.2); border-color: var(--accent); }
-.drop-zone.filled { background: var(--success); border: none; opacity: 1; }
-
-.inventory {
-    background: rgba(255,255,255,0.05); border-radius: 25px; padding: 15px;
-    display: flex; flex-direction: column; gap: 10px; overflow-y: auto;
+#inventory {
+    width: 200px;
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #0cc;
 }
 
 .bone-item {
-    background: #fff; color: #1a202c; padding: 12px; border-radius: 15px;
-    cursor: grab; font-weight: bold; text-align: center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s;
+    background: #0cc;
+    color: #001034;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: move;
+    font-weight: bold;
+    z-index: 100;
 }
 
-.bone-item:active { cursor: grabbing; }
-
-.fact-popup {
-    position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-    background: var(--success); padding: 20px 40px; border-radius: 20px;
-    z-index: 500; animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+#canvas {
+    width: 400px;
+    height: 600px;
+    position: relative;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid #333;
+    border-radius: 20px;
 }
 
-@keyframes popUp { from { bottom: -100px; } to { bottom: 40px; } }
+/* Positioning Drop Zones over the body */
+.target {
+    position: absolute;
+    border: 2px dashed rgba(0, 204, 204, 0.4);
+    border-radius: 50%;
+}
+
+#target-skull { top: 20px; left: 160px; width: 80px; height: 80px; }
+#target-ribs  { top: 110px; left: 140px; width: 120px; height: 130px; }
+#target-spine { top: 110px; left: 185px; width: 30px; height: 250px; }
+#target-pelvis { top: 250px; left: 150px; width: 100px; height: 70px; }
+#target-humerus { top: 130px; left: 100px; width: 40px; height: 100px; }
+#target-femur { top: 330px; left: 150px; width: 50px; height: 150px; }
+
+.target.highlight {
+    background: rgba(0, 255, 185, 0.3);
+    border-color: #00ffb9;
+}
+
+.target.correct {
+    background: #00ffb9;
+    border: none;
+}
+
+/* Modal Styling */
+#info-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #001034;
+    padding: 30px;
+    border: 3px solid #0cc;
+    border-radius: 20px;
+    max-width: 400px;
+}
 
 .hidden { display: none !important; }
+.close-btn { float: left; cursor: pointer; font-size: 24px; color: #0cc; }
