@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>لعبة جسم الإنسان | تعلم عن الهيكل العظمي بالعربية</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>اكتشف عظام جسمك | لعبة الهيكل العظمي التفاعلية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -16,52 +14,70 @@
         }
 
         body {
-            font-family: 'Cairo', 'Arial', sans-serif;
+            font-family: 'Cairo', sans-serif;
             background: linear-gradient(135deg, #0a2f2f 0%, #1a4a4a 100%);
             min-height: 100vh;
+            color: #fef5e6;
         }
 
         .game-wrapper {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        .game-header {
+        .header {
             text-align: center;
             margin-bottom: 2rem;
         }
 
-        .game-header h1 {
-            color: #ffdd99;
+        .header h1 {
             font-size: 2.5rem;
-            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffdd99, #ffb347);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
         }
 
-        .game-header p {
-            color: #ffefc0;
+        .header p {
             font-size: 1.1rem;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
+            color: #ffefc0;
+        }
+
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            border: 1px solid #f4b942;
         }
 
         .game-container {
             background: #1e3a32;
-            border-radius: 24px;
+            border-radius: 32px;
             padding: 1rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             border: 2px solid #f4b942;
+            margin-bottom: 1.5rem;
         }
 
+        /* Responsive iframe wrapper (16:9) */
         .game-iframe-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
             height: 0;
             overflow: hidden;
-            border-radius: 16px;
+            border-radius: 24px;
         }
 
         .game-iframe-wrapper iframe {
@@ -71,6 +87,7 @@
             width: 100%;
             height: 100%;
             border: none;
+            background: #fff;
         }
 
         .game-buttons {
@@ -80,43 +97,7 @@
             margin-top: 1rem;
         }
 
-        .game-buttons button {
-            background: #f4b942;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #1e2a2a;
-            transition: transform 0.2s;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .game-buttons button:hover {
-            transform: scale(1.05);
-            background: #ffcc66;
-        }
-
-        .game-tags {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .game-tag {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 6px 18px;
-            border-radius: 50px;
-            color: #ffefc0;
-            font-size: 0.9rem;
-            border: 1px solid #f4b942;
-        }
-
-        .fullscreen-btn,
-        .minimise-btn {
+        .fullscreen-btn, .minimise-btn {
             background: #f4b942;
             border: none;
             width: 44px;
@@ -129,8 +110,7 @@
             transition: transform 0.2s;
         }
 
-        .fullscreen-btn:hover,
-        .minimise-btn:hover {
+        .fullscreen-btn:hover, .minimise-btn:hover {
             transform: scale(1.1);
         }
 
@@ -138,29 +118,58 @@
             display: none;
         }
 
+        .game-tags {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .game-tag {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 18px;
+            border-radius: 50px;
+            color: #ffefc0;
+            font-size: 0.9rem;
+            border: 1px solid #f4b942;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
         @media (max-width: 768px) {
             .game-wrapper {
                 padding: 1rem;
             }
-            .game-header h1 {
+            .header h1 {
                 font-size: 1.8rem;
-            }
-            .game-header p {
-                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="game-wrapper">
-        <div class="game-header">
-            <h1>🧠 لعبة جسم الإنسان</h1>
-            <p>انطلق في رحلة ممتعة داخل جسمك! استكشف أجهزة الجسم المختلفة، من العظام إلى الأعضاء، وتعرف على كيفية عملها معًا في هذه المحاكاة التفاعلية.</p>
+        <div class="header">
+            <h1><i class="fas fa-skull"></i> اكتشف عظام جسمك</h1>
+            <p>اضغط على أي عظمة في الصورة لتعرف اسمها ووظيفتها بالعربية</p>
+            <div class="badge-row">
+                <span class="badge"><i class="fas fa-child"></i> للأعمار 9-10 سنوات</span>
+                <span class="badge"><i class="fas fa-cube"></i> نقاط تفاعلية</span>
+                <span class="badge"><i class="fas fa-language"></i> بالعربية</span>
+                <span class="badge"><i class="fas fa-download"></i> بدون اتصال بالإنترنت</span>
+            </div>
         </div>
 
         <div class="game-container">
             <div id="game-iframe-wrapper" class="game-iframe-wrapper">
-                <iframe id="game-iframe" src="skeleton-hotspots.html" width="100%" height="200" style="border:none;" allow="fullscreen"></iframe>
+                <!-- Your exported Lumi hotspots game -->
+                <iframe id="game-iframe" src="skeleton-hotspots.html" allow="fullscreen"></iframe>
             </div>
             <div class="game-buttons">
                 <button id="fullscreen-btn" class="fullscreen-btn" title="شاشة كاملة">
@@ -181,22 +190,21 @@
 
         <div class="game-tags">
             <span class="game-tag">🔬 علوم، أحياء</span>
-            <span class="game-tag">👧 7-11 سنوات</span>
-            <span class="game-tag">🎮 لعبة تفاعلية</span>
-            <span class="game-tag">🦴 تعلم عن العظام</span>
+            <span class="game-tag">🦴 الهيكل العظمي</span>
+            <span class="game-tag">🎮 تعلم باللعب</span>
+            <span class="game-tag">📍 نقاط ساخنة تفاعلية</span>
         </div>
 
-        <div class="game-header" style="margin-top: 2rem;">
-            <p>من خلال المحاكاة التفاعلية، وسحب العناصر وإفلاتها، والأسئلة التفاعلية، ستستكشف أجهزة الجسم المختلفة وتعمق فهمك لعلم الأحياء. اكتشف كيف يعمل جسمك بطريقة ممتعة ولا تُنسى!</p>
-        </div>
+        <footer>
+            <i class="fas fa-heart"></i> تعلم ممتع - اكتشف أسرار عظام جسمك بالعربية
+        </footer>
     </div>
 
     <script>
-        // Fullscreen functionality
+        // Fullscreen functionality for the iframe wrapper
         const gameContainer = document.getElementById('game-iframe-wrapper');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
         const minimiseBtn = document.getElementById('minimise-btn');
-        const iframe = document.getElementById('game-iframe');
 
         function enterFullscreen() {
             if (gameContainer.requestFullscreen) {
