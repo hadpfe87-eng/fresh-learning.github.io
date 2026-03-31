@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>مختبر العظام | تعلم علم التشريح بطريقة تفاعلية ثلاثية الأبعاد</title>
-    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Three.js Core -->
     <script type="importmap">
         {
             "imports": {
@@ -16,702 +15,104 @@
             }
         }
     </script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Cairo', 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #0a2f2f 0%, #1a4a4a 50%, #0e3a3a 100%);
-            min-height: 100vh;
-            padding: 1.5rem;
-            color: #fef5e6;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #2a5a5a; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: #f4b942; border-radius: 10px; }
-
-        .app-container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        /* Header Hero Section */
-        .hero {
-            text-align: center;
-            margin-bottom: 2rem;
-            background: rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(12px);
-            border-radius: 60px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 215, 120, 0.4);
-        }
-        .hero h1 {
-            font-size: 2.8rem;
-            background: linear-gradient(135deg, #ffdd99, #ffb347);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: #ffefc0;
-            margin-top: 8px;
-        }
-        .badge-row {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-        .badge {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            padding: 6px 20px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: 1px solid #f4b942;
-        }
-
-        /* Games Grid */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 1.8rem;
-            margin-bottom: 2rem;
-        }
-
-        /* Cards */
-        .game-card {
-            background: rgba(30, 45, 45, 0.85);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            box-shadow: 0 25px 40px -15px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.3s;
-            border: 1px solid rgba(255, 200, 100, 0.3);
-        }
-        .game-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 30px 45px -12px black;
-            border-color: #f4b942;
-        }
-        .card-header {
-            background: linear-gradient(135deg, #c97e2a, #a55d1a);
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .card-header i {
-            font-size: 1.8rem;
-            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
-        }
-        .card-header h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-        .card-content {
-            padding: 1.5rem;
-        }
-
-        /* 3D Viewer */
-        .viewer-3d {
-            height: 280px;
-            background: #071a1a;
-            border-radius: 28px;
-            margin-bottom: 1rem;
-            position: relative;
-            overflow: hidden;
-            cursor: grab;
-            border: 2px solid #f4b942;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
-        }
-        .viewer-3d:active { cursor: grabbing; }
-
-        /* Buttons & Interactive */
-        .btn-option {
-            background: #2f4f4f;
-            border: none;
-            padding: 12px 16px;
-            margin: 6px 0;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            text-align: right;
-            font-family: 'Cairo', monospace;
-            color: #fff2df;
-            border-right: 4px solid #f4b942;
-        }
-        .btn-option:hover {
-            background: #3e6b6b;
-            transform: translateX(-5px);
-        }
-        .correct-feedback {
-            background: #2e7d5e;
-            color: #fff0c0;
-            padding: 10px 16px;
-            border-radius: 32px;
-            font-weight: 600;
-            margin: 12px 0;
-            border-right: 5px solid #f4d03f;
-        }
-        .wrong-feedback {
-            background: #8b3c3c;
-            color: #ffe0d0;
-            padding: 10px 16px;
-            border-radius: 32px;
-            font-weight: 600;
-        }
-        .next-btn, .reset-puzzle, .reset-challenge {
-            background: #f4b942;
-            border: none;
-            font-weight: bold;
-            padding: 10px 24px;
-            border-radius: 40px;
-            margin-top: 12px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1rem;
-            color: #1e2a2a;
-            transition: 0.1s;
-        }
-        .next-btn:hover, .reset-puzzle:hover, .reset-challenge:hover {
-            background: #ffcc66;
-            transform: scale(0.97);
-        }
-        .success-message {
-            background: #2b8c6e;
-            color: #fffbee;
-            padding: 14px;
-            border-radius: 40px;
-            text-align: center;
-            font-weight: bold;
-            margin-top: 12px;
-        }
-        .drag-bone {
-            background: #3e5a4a;
-            border-radius: 48px;
-            padding: 12px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            font-weight: bold;
-            border: 2px dashed #f4b942;
-            transition: 0.1s;
-            text-align: center;
-        }
-        .drag-bone:active { cursor: grabbing; }
-        .slot-area {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .slot {
-            background: #2c4646;
-            border-radius: 60px;
-            padding: 10px 16px;
-            border: 1px solid #f4b942;
-            font-weight: 500;
-        }
-        .slot.correct-placed {
-            background: #3c8868;
-            border-color: #ffde9c;
-            text-decoration: line-through;
-            opacity: 0.8;
-        }
-        .score-badge {
-            background: #f4b942;
-            color: #1e2f2f;
-            padding: 4px 14px;
-            border-radius: 50px;
-            font-weight: bold;
-        }
-        .flex-between {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        footer {
-            text-align: center;
-            margin-top: 2rem;
-            font-weight: 500;
-            opacity: 0.8;
-            font-size: 0.9rem;
-        }
-        @media (max-width: 780px) {
-            body { padding: 1rem; }
-            .hero h1 { font-size: 1.8rem; }
-            .game-card { margin-bottom: 0; }
-        }
-        .loading-text {
-            text-align: center;
-            padding: 20px;
-            color: #ffd966;
-        }
-    </style>
 </head>
 <body>
-<div class="app-container">
-    <div class="hero">
-        <h1><i class="fas fa-skull"></i> مختبر العظام المتقدم</h1>
-        <p>استكشف الهيكل العظمي البشري بتقنية ثلاثية الأبعاد وتعلم عبر ألعاب تفاعلية ممتعة</p>
-        <div class="badge-row">
-            <span class="badge"><i class="fas fa-child"></i> أعمار 9-10 سنوات</span>
-            <span class="badge"><i class="fas fa-cube"></i> نموذج ثلاثي الأبعاد واقعي</span>
-            <span class="badge"><i class="fas fa-gamepad"></i> 4 ألعاب علمية</span>
-            <span class="badge"><i class="fas fa-language"></i> بالعربية</span>
+    <div class="app-container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1><i class="fas fa-skull"></i> مختبر العظام المتقدم</h1>
+            <p>استكشف الهيكل العظمي البشري بتقنية ثلاثية الأبعاد وتعلم عبر ألعاب تفاعلية ممتعة</p>
+            <div class="badge-row">
+                <span class="badge"><i class="fas fa-child"></i> أعمار 9-10 سنوات</span>
+                <span class="badge"><i class="fas fa-cube"></i> نموذج ثلاثي الأبعاد واقعي</span>
+                <span class="badge"><i class="fas fa-gamepad"></i> 4 ألعاب علمية</span>
+                <span class="badge"><i class="fas fa-language"></i> بالعربية</span>
+            </div>
         </div>
+
+        <!-- Games Grid -->
+        <div class="games-grid">
+            <!-- Game 1: Maze Game -->
+            <div class="game-card">
+                <div class="card-header">
+                    <i class="fas fa-dungeon"></i>
+                    <h2>🧠 المتاهة العلمية</h2>
+                </div>
+                <div class="card-content">
+                    <div id="mazeGameArea">
+                        <p><i class="fas fa-map-signs"></i> <strong>مرحبًا في متاهة الهيكل العظمي!</strong> أجب عن الأسئلة لتفتح الطريق.</p>
+                        <div id="mazeQuestion"></div>
+                        <div id="mazeOptions"></div>
+                        <div id="mazeFeedback"></div>
+                        <button id="mazeNextBtn" class="next-btn" style="display:none;">🚪 السؤال التالي ➡️</button>
+                        <div id="mazeFinalMsg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game 2: Puzzle Game -->
+            <div class="game-card">
+                <div class="card-header">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <h2>🧩 تركيب الهيكل العظمي</h2>
+                </div>
+                <div class="card-content">
+                    <div id="puzzleArea">
+                        <p><i class="fas fa-hand-peace"></i> اضغط على العظم وضعه في المكان الصحيح:</p>
+                        <div id="bonesList" class="drag-container"></div>
+                        <div class="slot-area" id="slotsContainer"></div>
+                        <button id="resetPuzzleBtn" class="reset-puzzle">🔄 إعادة التركيب</button>
+                        <div id="puzzleSuccessMsg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game 3: Speed Challenge -->
+            <div class="game-card">
+                <div class="card-header">
+                    <i class="fas fa-bolt"></i>
+                    <h2>⚡ التحدي السريع</h2>
+                </div>
+                <div class="card-content">
+                    <div id="challengeArea">
+                        <div class="flex-between">
+                            <span><i class="fas fa-stopwatch"></i> أسئلة سريعة</span>
+                            <span id="challengeScore" class="score-badge">⭐ 0/3</span>
+                        </div>
+                        <div id="challengeQText" style="margin: 15px 0; font-weight:700;"></div>
+                        <div id="challengeOptionsDiv"></div>
+                        <div id="challengeFeedback"></div>
+                        <button id="resetChallengeBtn" class="reset-challenge">🔄 إعادة التحدي</button>
+                        <div id="challengeFinalMsg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game 4: 3D Exploration -->
+            <div class="game-card">
+                <div class="card-header">
+                    <i class="fas fa-dragon"></i>
+                    <h2>🦴 استكشاف ثلاثي الأبعاد متقدم</h2>
+                </div>
+                <div class="card-content">
+                    <div id="advancedSkeletonViewer" class="viewer-3d"></div>
+                    <div id="exploreQuiz">
+                        <p><i class="fas fa-sync-alt"></i> در النموذج ثلاثي الأبعاد وأجب عن الأسئلة:</p>
+                        <div id="exploreQuestion"></div>
+                        <div id="exploreOptions"></div>
+                        <div id="exploreFeedback"></div>
+                        <button id="exploreNextBtn" class="next-btn" style="display:none;">➡️ السؤال التالي</button>
+                        <div id="exploreFinalMsg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            ✨ يمكنك تدوير النموذج ثلاثي الأبعاد بالماوس أو اللمس — هيكل عظمي متقدم بتفاصيل دقيقة ✨
+        </footer>
     </div>
 
-    <div class="games-grid">
-        <!-- لعبة المتاهة العلمية -->
-        <div class="game-card">
-            <div class="card-header"><i class="fas fa-dungeon"></i><h2>🧠 المتاهة العلمية</h2></div>
-            <div class="card-content">
-                <div id="mazeGameArea">
-                    <p><i class="fas fa-map-signs"></i> <strong>مرحبًا في متاهة الهيكل العظمي!</strong> أجب عن الأسئلة لتفتح الطريق.</p>
-                    <div id="mazeQuestion"></div>
-                    <div id="mazeOptions"></div>
-                    <div id="mazeFeedback"></div>
-                    <button id="mazeNextBtn" class="next-btn" style="display:none;">🚪 السؤال التالي ➡️</button>
-                    <div id="mazeFinalMsg"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- لعبة تركيب الهيكل العظمي -->
-        <div class="game-card">
-            <div class="card-header"><i class="fas fa-puzzle-piece"></i><h2>🧩 تركيب الهيكل العظمي</h2></div>
-            <div class="card-content">
-                <div id="puzzleArea">
-                    <p><i class="fas fa-hand-peace"></i> اضغط على العظم وضعه في المكان الصحيح:</p>
-                    <div id="bonesList" class="drag-container"></div>
-                    <div class="slot-area" id="slotsContainer"></div>
-                    <button id="resetPuzzleBtn" class="reset-puzzle">🔄 إعادة التركيب</button>
-                    <div id="puzzleSuccessMsg"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- لعبة التحدي السريع -->
-        <div class="game-card">
-            <div class="card-header"><i class="fas fa-bolt"></i><h2>⚡ التحدي السريع</h2></div>
-            <div class="card-content">
-                <div id="challengeArea">
-                    <div class="flex-between"><span><i class="fas fa-stopwatch"></i> أسئلة سريعة</span><span id="challengeScore" class="score-badge">⭐ 0/3</span></div>
-                    <div id="challengeQText" style="margin: 15px 0; font-weight:700;"></div>
-                    <div id="challengeOptionsDiv"></div>
-                    <div id="challengeFeedback"></div>
-                    <button id="resetChallengeBtn" class="reset-challenge">🔄 إعادة التحدي</button>
-                    <div id="challengeFinalMsg"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- لعبة الاستكشاف ثلاثي الأبعاد المتقدم -->
-        <div class="game-card">
-            <div class="card-header"><i class="fas fa-dragon"></i><h2>🦴 استكشاف ثلاثي الأبعاد متقدم</h2></div>
-            <div class="card-content">
-                <div id="advancedSkeletonViewer" class="viewer-3d"></div>
-                <div id="exploreQuiz">
-                    <p><i class="fas fa-sync-alt"></i> در النموذج ثلاثي الأبعاد وأجب عن الأسئلة:</p>
-                    <div id="exploreQuestion"></div>
-                    <div id="exploreOptions"></div>
-                    <div id="exploreFeedback"></div>
-                    <button id="exploreNextBtn" class="next-btn" style="display:none;">➡️ السؤال التالي</button>
-                    <div id="exploreFinalMsg"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer>✨ يمكنك تدوير النموذج ثلاثي الأبعاد بالماوس أو اللمس — هيكل عظمي متقدم بتفاصيل دقيقة ✨</footer>
-</div>
-
-<script type="module">
-    import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-    import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
-
-    // ---------- 1. MAZE GAME (5 أسئلة علمية) ----------
-    const mazeQuestions = [
-        { text: "ما الوظيفة الأساسية للهيكل العظمي في جسم الإنسان؟", options: ["أ حماية الأعضاء الداخلية", "ب إنتاج الدم فقط", "ج مساعدة الجسم على الهضم"], correct: 0, feedback: "أحسنت! الهيكل العظمي يحمي الأعضاء مثل الدماغ والقلب." },
-        { text: "أي من هذه العظام يحمي الدماغ؟", options: ["أ الأضلاع", "ب الجمجمة", "ج عظم الفخذ"], correct: 1, feedback: "إجابة صحيحة! الجمجمة تحيط بالدماغ وتحميه من الصدمات." },
-        { text: "إلى أي نوع من العظام ينتمي عظم الفخذ؟", options: ["أ عظم طويل", "ب عظم مسطح", "ج عظم قصير"], correct: 0, feedback: "ممتاز! عظم الفخذ من أطول عظام جسم الإنسان." },
-        { text: "ما وظيفة القفص الصدري؟", options: ["أ حماية القلب والرئتين", "ب حماية المعدة", "ج حماية الدماغ"], correct: 0, feedback: "صحيح! القفص الصدري يحمي القلب والرئتين." },
-        { text: "أي العظام التالية تساعد الجسم على الحركة؟", options: ["أ العظام الطويلة", "ب العظام المسطحة", "ج الأسنان"], correct: 0, feedback: "رائع! العظام الطويلة مثل الفخذ تساعد على الحركة." }
-    ];
-    let mazeIdx = 0, mazeAnswered = false;
-    function renderMaze() {
-        const q = mazeQuestions[mazeIdx];
-        document.getElementById("mazeQuestion").innerHTML = `<strong>❓ ${q.text}</strong>`;
-        const optsDiv = document.getElementById("mazeOptions");
-        optsDiv.innerHTML = "";
-        q.options.forEach((opt, i) => {
-            const btn = document.createElement("button");
-            btn.className = "btn-option";
-            btn.innerText = opt;
-            btn.onclick = () => handleMazeAnswer(i);
-            optsDiv.appendChild(btn);
-        });
-        document.getElementById("mazeFeedback").innerHTML = "";
-        document.getElementById("mazeNextBtn").style.display = "none";
-        mazeAnswered = false;
-    }
-    function handleMazeAnswer(selected) {
-        if(mazeAnswered) return;
-        const q = mazeQuestions[mazeIdx];
-        const fbDiv = document.getElementById("mazeFeedback");
-        if(selected === q.correct) {
-            fbDiv.innerHTML = `<div class="correct-feedback"><i class="fas fa-star"></i> ${q.feedback}</div>`;
-            mazeAnswered = true;
-            if(mazeIdx+1 < mazeQuestions.length) document.getElementById("mazeNextBtn").style.display = "inline-block";
-            else { document.getElementById("mazeNextBtn").style.display = "inline-block"; document.getElementById("mazeNextBtn").innerText = "🏆 إنهاء المتاهة 🏆"; }
-        } else {
-            fbDiv.innerHTML = `<div class="wrong-feedback"><i class="fas fa-times-circle"></i> إجابة خاطئة، حاول مجددًا!</div>`;
-        }
-    }
-    document.getElementById("mazeNextBtn").addEventListener("click", () => {
-        if(!mazeAnswered) return;
-        if(mazeIdx+1 < mazeQuestions.length) { mazeIdx++; renderMaze(); }
-        else {
-            document.getElementById("mazeFinalMsg").innerHTML = `<div class="success-message">🎉 رائع! لقد تمكنت من الخروج من متاهة الهيكل العظمي لأنك عرفت أنواع العظام ووظائفها. 🎉</div>`;
-            document.getElementById("mazeNextBtn").style.display = "none";
-            document.getElementById("mazeOptions").innerHTML = "";
-            document.getElementById("mazeQuestion").innerHTML = "<strong>✨ أكملت المتاهة بنجاح ✨</strong>";
-        }
-    });
-    renderMaze();
-
-    // ---------- 2. PUZZLE GAME (تركيب العظام) ----------
-    const puzzleData = [
-        { name: "🦴 الجمجمة (Skull)", target: "الرأس", placed: false, id: 0 },
-        { name: "🦴 الأضلاع (Ribs)", target: "الصدر", placed: false, id: 1 },
-        { name: "🦴 العمود الفقري (Spine)", target: "الظهر", placed: false, id: 2 },
-        { name: "🦴 عظم الفخذ (Femur)", target: "الساق", placed: false, id: 3 }
-    ];
-    let puzzleCompleted = false;
-    function renderPuzzle() {
-        const bonesDiv = document.getElementById("bonesList");
-        bonesDiv.innerHTML = "";
-        puzzleData.forEach(bone => {
-            if(!bone.placed) {
-                const dragEl = document.createElement("div");
-                dragEl.className = "drag-bone";
-                dragEl.innerHTML = `<i class="fas fa-hand-pointer"></i> ${bone.name}`;
-                dragEl.onclick = () => tryPlaceBone(bone.id);
-                bonesDiv.appendChild(dragEl);
-            }
-        });
-        const slotsDiv = document.getElementById("slotsContainer");
-        slotsDiv.innerHTML = "";
-        const targets = ["الرأس", "الصدر", "الظهر", "الساق"];
-        targets.forEach(target => {
-            const placedBone = puzzleData.find(b => b.target === target && b.placed);
-            const slotDiv = document.createElement("div");
-            slotDiv.className = "slot";
-            if(placedBone) slotDiv.classList.add("correct-placed");
-            slotDiv.innerHTML = `<i class="fas fa-map-pin"></i> ${target} : ${placedBone ? placedBone.name : "⬜ فارغ"}`;
-            slotsDiv.appendChild(slotDiv);
-        });
-        const allPlaced = puzzleData.every(b => b.placed);
-        if(allPlaced && !puzzleCompleted) {
-            puzzleCompleted = true;
-            document.getElementById("puzzleSuccessMsg").innerHTML = `<div class="success-message">🎉 أحسنت! لقد تمكنت من إعادة بناء الهيكل العظمي بالكامل. 🎉</div>`;
-        } else if(!allPlaced) document.getElementById("puzzleSuccessMsg").innerHTML = "";
-    }
-    function tryPlaceBone(id) {
-        if(puzzleCompleted) return;
-        const bone = puzzleData.find(b => b.id === id);
-        if(!bone || bone.placed) return;
-        let expected = "";
-        if(bone.id === 0) expected = "الرأس";
-        if(bone.id === 1) expected = "الصدر";
-        if(bone.id === 2) expected = "الظهر";
-        if(bone.id === 3) expected = "الساق";
-        if(bone.target === expected) {
-            bone.placed = true;
-            renderPuzzle();
-        } else {
-            alert(`❌ المكان الخطأ! العظم ${bone.name} يجب أن يوضع في ${bone.target}.`);
-        }
-    }
-    document.getElementById("resetPuzzleBtn").addEventListener("click", () => {
-        puzzleData.forEach(b => { b.placed = false; });
-        puzzleCompleted = false;
-        renderPuzzle();
-    });
-    renderPuzzle();
-
-    // ---------- 3. CHALLENGE GAME ----------
-    const challengeQs = [
-        { text: "كم نوعًا رئيسيًا من العظام درسنا؟", options: ["أ نوعان", "ب ثلاثة أنواع", "ج أربعة أنواع"], correct: 1, feedback: "صحيح! ثلاثة أنواع: طويلة، مسطحة، قصيرة." },
-        { text: "أي من هذه العظام مسطح؟", options: ["أ الجمجمة", "ب عظم الفخذ", "ج عظام الرسغ"], correct: 0, feedback: "الجمجمة هي عظم مسطح! ممتاز." },
-        { text: "ما وظيفة العمود الفقري؟", options: ["أ حماية الدماغ", "ب دعم الجسم ومساعدته على الحركة", "ج حماية القلب فقط"], correct: 1, feedback: "العمود الفقري يدعم الجسم ويساعد على الحركة." }
-    ];
-    let challengeIndex = 0, challengeScore = 0, challengeAnsweredFlag = false, challengeFinished = false;
-    function renderChallenge() {
-        if(challengeFinished) return;
-        const q = challengeQs[challengeIndex];
-        document.getElementById("challengeQText").innerHTML = `<strong>${q.text}</strong>`;
-        const optsDiv = document.getElementById("challengeOptionsDiv");
-        optsDiv.innerHTML = "";
-        q.options.forEach((opt,i) => {
-            const btn = document.createElement("button");
-            btn.className = "btn-option";
-            btn.innerText = opt;
-            btn.onclick = () => handleChallengeAnswer(i);
-            optsDiv.appendChild(btn);
-        });
-        document.getElementById("challengeFeedback").innerHTML = "";
-        challengeAnsweredFlag = false;
-        document.getElementById("challengeScore").innerHTML = `⭐ ${challengeScore}/${challengeQs.length}`;
-    }
-    function handleChallengeAnswer(selected) {
-        if(challengeFinished || challengeAnsweredFlag) return;
-        const q = challengeQs[challengeIndex];
-        if(selected === q.correct) {
-            challengeScore++;
-            document.getElementById("challengeFeedback").innerHTML = `<div class="correct-feedback">✅ ${q.feedback}</div>`;
-            challengeAnsweredFlag = true;
-            if(challengeIndex+1 < challengeQs.length) { challengeIndex++; renderChallenge(); }
-            else {
-                challengeFinished = true;
-                document.getElementById("challengeFinalMsg").innerHTML = `<div class="success-message">🏆 أحسنت! التحدي السريع بنتيجة ${challengeScore}/${challengeQs.length} 🏆</div>`;
-                document.getElementById("challengeOptionsDiv").innerHTML = "";
-                document.getElementById("challengeQText").innerHTML = "🎉 نهاية التحدي السريع! 🎉";
-            }
-        } else {
-            document.getElementById("challengeFeedback").innerHTML = `<div class="wrong-feedback">❌ إجابة خاطئة! حاول مرة أخرى.</div>`;
-        }
-    }
-    document.getElementById("resetChallengeBtn").addEventListener("click", () => {
-        challengeIndex = 0; challengeScore = 0; challengeFinished = false; challengeAnsweredFlag = false;
-        renderChallenge();
-        document.getElementById("challengeFinalMsg").innerHTML = "";
-    });
-    renderChallenge();
-
-    // ---------- 4. EXPLORATION QUIZ (أسئلة الاستكشاف) ----------
-    const exploreQs = [
-        { text: "انظر إلى رأس الهيكل العظمي. ما اسم العظم الذي يحمي الدماغ؟", options: ["أ الأضلاع", "ب الجمجمة", "ج العمود الفقري"], correct: 1, feedback: "الجمجمة تحيط بالدماغ وتحميه من الصدمات." },
-        { text: "قم بتدوير النموذج وانظر إلى منطقة الصدر. ما اسم العظام التي تحمي القلب والرئتين؟", options: ["أ عظام الساق", "ب القفص الصدري", "ج عظام اليد"], correct: 1, feedback: "القفص الصدري يحمي القلب والرئتين بشكل ممتاز!" },
-        { text: "انظر إلى الظهر. ما العظم الذي يدعم الجسم ويساعده على الحركة؟", options: ["أ العمود الفقري", "ب الجمجمة", "ج عظام القدم"], correct: 0, feedback: "العمود الفقري هو عمود الجسم الحقيقي!" },
-        { text: "انظر إلى الساق. ما نوع عظم الفخذ؟", options: ["أ عظم طويل", "ب عظم مسطح", "ج عظم قصير"], correct: 0, feedback: "عظم الفخذ هو أطول عظم طويل في الجسم." }
-    ];
-    let exploreIdx = 0, exploreAnswered = false, exploreComplete = false;
-    function renderExploreQuestion() {
-        if(exploreComplete) return;
-        const q = exploreQs[exploreIdx];
-        document.getElementById("exploreQuestion").innerHTML = `<strong>🔍 ${q.text}</strong>`;
-        const optsDiv = document.getElementById("exploreOptions");
-        optsDiv.innerHTML = "";
-        q.options.forEach((opt,i) => {
-            const btn = document.createElement("button");
-            btn.className = "btn-option";
-            btn.innerText = opt;
-            btn.onclick = () => handleExploreAnswer(i);
-            optsDiv.appendChild(btn);
-        });
-        document.getElementById("exploreFeedback").innerHTML = "";
-        document.getElementById("exploreNextBtn").style.display = "none";
-        exploreAnswered = false;
-    }
-    function handleExploreAnswer(selected) {
-        if(exploreComplete || exploreAnswered) return;
-        const q = exploreQs[exploreIdx];
-        if(selected === q.correct) {
-            document.getElementById("exploreFeedback").innerHTML = `<div class="correct-feedback">🎉 ${q.feedback}</div>`;
-            exploreAnswered = true;
-            if(exploreIdx+1 < exploreQs.length) document.getElementById("exploreNextBtn").style.display = "inline-block";
-            else { document.getElementById("exploreNextBtn").style.display = "inline-block"; document.getElementById("exploreNextBtn").innerText = "🎁 إنهاء الاستكشاف"; }
-        } else {
-            document.getElementById("exploreFeedback").innerHTML = `<div class="wrong-feedback">❌ حاول مجددًا، راقب النموذج ثلاثي الأبعاد جيدًا!</div>`;
-        }
-    }
-    document.getElementById("exploreNextBtn").addEventListener("click", () => {
-        if(!exploreAnswered) return;
-        if(exploreIdx+1 < exploreQs.length) { exploreIdx++; renderExploreQuestion(); }
-        else {
-            exploreComplete = true;
-            document.getElementById("exploreFinalMsg").innerHTML = `<div class="success-message">🎉 أحسنت! استكشاف رائع للهيكل العظمي المتقدم 🎉</div>`;
-            document.getElementById("exploreNextBtn").style.display = "none";
-            document.getElementById("exploreOptions").innerHTML = "";
-            document.getElementById("exploreQuestion").innerHTML = "✨ إتقان علم العظام! ✨";
-        }
-    });
-    renderExploreQuestion();
-
-    // ---------- ADVANCED SKELETON 3D (مشهد ثلاثي الأبعاد متطور) ----------
-    const container = document.getElementById("advancedSkeletonViewer");
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x071a1a);
-    scene.fog = new THREE.FogExp2(0x071a1a, 0.018);
-    
-    const camera = new THREE.PerspectiveCamera(42, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.set(2.2, 1.6, 3.8);
-    camera.lookAt(0, 1.0, 0);
-    
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.shadowMap.enabled = true;
-    renderer.setPixelRatio(window.devicePixelRatio);
-    container.appendChild(renderer.domElement);
-    
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.0;
-    controls.enableZoom = true;
-    controls.enablePan = true;
-    controls.target.set(0, 1.1, 0);
-    
-    // إضاءة واقعية
-    const ambientLight = new THREE.AmbientLight(0x446666, 0.45);
-    scene.add(ambientLight);
-    const mainLight = new THREE.DirectionalLight(0xffeebb, 1.2);
-    mainLight.position.set(2, 3, 2.5);
-    mainLight.castShadow = true;
-    scene.add(mainLight);
-    const backLight = new THREE.PointLight(0xccaa77, 0.5);
-    backLight.position.set(-1, 1.2, -2);
-    scene.add(backLight);
-    const fillLight = new THREE.PointLight(0x77aacc, 0.4);
-    fillLight.position.set(1, 1.5, 1.8);
-    scene.add(fillLight);
-    
-    // بناء هيكل عظمي متقدم باستخدام أشكال هندسية مفصلة
-    const skeletonGroup = new THREE.Group();
-    const boneMat = new THREE.MeshStandardMaterial({ color: 0xe8ddb0, roughness: 0.35, metalness: 0.08 });
-    const jointMat = new THREE.MeshStandardMaterial({ color: 0xcfb87a, roughness: 0.4 });
-    
-    function addBoneDetailed(parent, p1, p2, radius) {
-        const start = new THREE.Vector3(p1.x, p1.y, p1.z);
-        const end = new THREE.Vector3(p2.x, p2.y, p2.z);
-        const dir = new THREE.Vector3().subVectors(end, start);
-        const len = dir.length();
-        const center = start.clone().add(end).multiplyScalar(0.5);
-        const cylinder = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, len, 12), boneMat);
-        cylinder.position.copy(center);
-        cylinder.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.clone().normalize());
-        parent.add(cylinder);
-        const cap1 = new THREE.Mesh(new THREE.SphereGeometry(radius*1.2, 8,8), jointMat);
-        cap1.position.copy(start);
-        const cap2 = new THREE.Mesh(new THREE.SphereGeometry(radius*1.2, 8,8), jointMat);
-        cap2.position.copy(end);
-        parent.add(cap1);
-        parent.add(cap2);
-    }
-    
-    // العمود الفقري التفصيلي
-    const spinePoints = [
-        [0, 1.92, 0], [0, 1.68, 0], [0, 1.44, 0], [0, 1.20, 0], [0, 0.96, 0], [0, 0.72, 0], [0, 0.48, 0], [0, 0.24, 0]
-    ];
-    for(let i=0; i<spinePoints.length-1; i++) {
-        addBoneDetailed(skeletonGroup, new THREE.Vector3(...spinePoints[i]), new THREE.Vector3(...spinePoints[i+1]), 0.095);
-    }
-    
-    // الجمجمة المتقنة
-    const skullGroup = new THREE.Group();
-    const cranium = new THREE.Mesh(new THREE.SphereGeometry(0.32, 36,36), boneMat);
-    cranium.position.y = 0.07;
-    skullGroup.add(cranium);
-    const jaw = new THREE.Mesh(new THREE.CylinderGeometry(0.21, 0.19, 0.18, 10), boneMat);
-    jaw.position.set(0, -0.14, 0.12);
-    skullGroup.add(jaw);
-    skullGroup.position.set(0, 2.15, 0);
-    skeletonGroup.add(skullGroup);
-    
-    // القفص الصدري المتطور
-    for(let i=0; i<8; i++) {
-        const yOff = 1.35 - i*0.11;
-        const radiusArc = 0.58;
-        const rib = new THREE.Mesh(new THREE.TorusGeometry(radiusArc, 0.06, 12, 42, Math.PI), boneMat);
-        rib.rotation.x = 0.25;
-        rib.rotation.z = 0.1;
-        rib.position.set(0, yOff, 0.08);
-        skeletonGroup.add(rib);
-        const rib2 = new THREE.Mesh(new THREE.TorusGeometry(radiusArc, 0.06, 12, 42, Math.PI), boneMat);
-        rib2.rotation.x = -0.25;
-        rib2.rotation.z = 0.1;
-        rib2.position.set(0, yOff, 0.08);
-        skeletonGroup.add(rib2);
-    }
-    
-    // الأطراف العلوية
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(-0.55, 1.82, 0), new THREE.Vector3(-0.88, 1.22, 0.08), 0.1);
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(-0.88, 1.22, 0.08), new THREE.Vector3(-0.88, 0.68, 0.04), 0.085);
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(0.55, 1.82, 0), new THREE.Vector3(0.88, 1.22, 0.08), 0.1);
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(0.88, 1.22, 0.08), new THREE.Vector3(0.88, 0.68, 0.04), 0.085);
-    
-    // الأطراف السفلية
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(-0.38, 0.70, 0), new THREE.Vector3(-0.42, 0.18, 0.05), 0.125);
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(-0.42, 0.18, 0.05), new THREE.Vector3(-0.42, -0.35, 0.02), 0.1);
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(0.38, 0.70, 0), new THREE.Vector3(0.42, 0.18, 0.05), 0.125);
-    addBoneDetailed(skeletonGroup, new THREE.Vector3(0.42, 0.18, 0.05), new THREE.Vector3(0.42, -0.35, 0.02), 0.1);
-    
-    // الحوض
-    const pelvis = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.52, 0.28, 8), boneMat);
-    pelvis.position.set(0, 0.78, -0.06);
-    skeletonGroup.add(pelvis);
-    
-    scene.add(skeletonGroup);
-    
-    // أرضية مساعدة
-    const grid = new THREE.GridHelper(5, 20, 0x88aa99, 0x446666);
-    grid.position.y = -0.7;
-    scene.add(grid);
-    
-    // نص ثلاثي الأبعاد (CSS2D)
-    const labelDiv = document.createElement('div');
-    labelDiv.textContent = '🦴 الهيكل العظمي البشري 🦴';
-    labelDiv.style.backgroundColor = 'rgba(0,0,0,0.6)';
-    labelDiv.style.color = '#ffdd99';
-    labelDiv.style.padding = '4px 12px';
-    labelDiv.style.borderRadius = '40px';
-    labelDiv.style.fontSize = '12px';
-    labelDiv.style.fontWeight = 'bold';
-    labelDiv.style.fontFamily = 'Cairo';
-    const labelObj = new CSS2DObject(labelDiv);
-    labelObj.position.set(0, 2.55, 0);
-    scene.add(labelObj);
-    
-    const labelRenderer = new CSS2DRenderer();
-    labelRenderer.setSize(container.clientWidth, container.clientHeight);
-    labelRenderer.domElement.style.position = 'absolute';
-    labelRenderer.domElement.style.top = '0px';
-    labelRenderer.domElement.style.left = '0px';
-    labelRenderer.domElement.style.pointerEvents = 'none';
-    container.appendChild(labelRenderer.domElement);
-    
-    function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-        labelRenderer.render(scene, camera);
-    }
-    animate();
-    
-    window.addEventListener('resize', () => {
-        const w = container.clientWidth, h = container.clientHeight;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
-        labelRenderer.setSize(w, h);
-    });
-</script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
