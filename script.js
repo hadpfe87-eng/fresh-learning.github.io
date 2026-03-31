@@ -1,4 +1,4 @@
-// ==================== 1. MAZE GAME (5 Scientific Questions) ====================
+// ==================== 1. MAZE GAME ====================
 const mazeQuestions = [
     { text: "ما الوظيفة الأساسية للهيكل العظمي في جسم الإنسان؟", options: ["أ حماية الأعضاء الداخلية", "ب إنتاج الدم فقط", "ج مساعدة الجسم على الهضم"], correct: 0, feedback: "أحسنت! الهيكل العظمي يحمي الأعضاء مثل الدماغ والقلب." },
     { text: "أي من هذه العظام يحمي الدماغ؟", options: ["أ الأضلاع", "ب الجمجمة", "ج عظم الفخذ"], correct: 1, feedback: "إجابة صحيحة! الجمجمة تحيط بالدماغ وتحميه من الصدمات." },
@@ -50,7 +50,7 @@ document.getElementById("mazeNextBtn").addEventListener("click", () => {
         mazeIdx++;
         renderMaze();
     } else {
-        document.getElementById("mazeFinalMsg").innerHTML = `<div class="success-message">🎉 رائع! لقد تمكنت من الخروج من متاهة الهيكل العظمي لأنك عرفت أنواع العظام ووظائفها. 🎉</div>`;
+        document.getElementById("mazeFinalMsg").innerHTML = `<div class="success-message">🎉 رائع! لقد تمكنت من الخروج من متاهة الهيكل العظمي! 🎉</div>`;
         document.getElementById("mazeNextBtn").style.display = "none";
         document.getElementById("mazeOptions").innerHTML = "";
         document.getElementById("mazeQuestion").innerHTML = "<strong>✨ أكملت المتاهة بنجاح ✨</strong>";
@@ -59,12 +59,12 @@ document.getElementById("mazeNextBtn").addEventListener("click", () => {
 
 renderMaze();
 
-// ==================== 2. PUZZLE GAME (Bone Assembly) ====================
+// ==================== 2. PUZZLE GAME ====================
 const puzzleData = [
-    { name: "🦴 الجمجمة (Skull)", target: "الرأس", placed: false, id: 0 },
-    { name: "🦴 الأضلاع (Ribs)", target: "الصدر", placed: false, id: 1 },
-    { name: "🦴 العمود الفقري (Spine)", target: "الظهر", placed: false, id: 2 },
-    { name: "🦴 عظم الفخذ (Femur)", target: "الساق", placed: false, id: 3 }
+    { name: "🦴 الجمجمة", target: "الرأس", placed: false, id: 0 },
+    { name: "🦴 الأضلاع", target: "الصدر", placed: false, id: 1 },
+    { name: "🦴 العمود الفقري", target: "الظهر", placed: false, id: 2 },
+    { name: "🦴 عظم الفخذ", target: "الساق", placed: false, id: 3 }
 ];
 
 let puzzleCompleted = false;
@@ -97,9 +97,7 @@ function renderPuzzle() {
     const allPlaced = puzzleData.every(b => b.placed);
     if (allPlaced && !puzzleCompleted) {
         puzzleCompleted = true;
-        document.getElementById("puzzleSuccessMsg").innerHTML = `<div class="success-message">🎉 أحسنت! لقد تمكنت من إعادة بناء الهيكل العظمي بالكامل. 🎉</div>`;
-    } else if (!allPlaced) {
-        document.getElementById("puzzleSuccessMsg").innerHTML = "";
+        document.getElementById("puzzleSuccessMsg").innerHTML = `<div class="success-message">🎉 أحسنت! لقد تمكنت من إعادة بناء الهيكل العظمي بالكامل! 🎉</div>`;
     }
 }
 
@@ -130,7 +128,7 @@ document.getElementById("resetPuzzleBtn").addEventListener("click", () => {
 
 renderPuzzle();
 
-// ==================== 3. SPEED CHALLENGE GAME ====================
+// ==================== 3. SPEED CHALLENGE ====================
 const challengeQs = [
     { text: "كم نوعًا رئيسيًا من العظام درسنا؟", options: ["أ نوعان", "ب ثلاثة أنواع", "ج أربعة أنواع"], correct: 1, feedback: "صحيح! ثلاثة أنواع: طويلة، مسطحة، قصيرة." },
     { text: "أي من هذه العظام مسطح؟", options: ["أ الجمجمة", "ب عظم الفخذ", "ج عظام الرسغ"], correct: 0, feedback: "الجمجمة هي عظم مسطح! ممتاز." },
@@ -189,63 +187,176 @@ document.getElementById("resetChallengeBtn").addEventListener("click", () => {
 
 renderChallenge();
 
-// ==================== 4. EXPLORATION QUESTIONS (with Open 3D Model) ====================
-const exploreQs = [
-    { text: "انظر إلى رأس الهيكل العظمي في النموذج ثلاثي الأبعاد. ما اسم العظم الذي يحمي الدماغ؟", options: ["أ الأضلاع", "ب الجمجمة", "ج العمود الفقري"], correct: 1, feedback: "الجمجمة تحيط بالدماغ وتحميه من الصدمات. يمكنك تدوير النموذج لرؤيتها من جميع الزوايا!" },
-    { text: "قم بتدوير النموذج وانظر إلى منطقة الصدر. ما اسم العظام التي تحمي القلب والرئتين؟", options: ["أ عظام الساق", "ب القفص الصدري", "ج عظام اليد"], correct: 1, feedback: "القفص الصدري يحمي القلب والرئتين بشكل ممتاز! استخدم زر الفأرة لتدوير النموذج." },
-    { text: "انظر إلى الظهر في النموذج. ما العظم الذي يدعم الجسم ويساعده على الحركة؟", options: ["أ العمود الفقري", "ب الجمجمة", "ج عظام القدم"], correct: 0, feedback: "العمود الفقري هو عمود الجسم الحقيقي! يتكون من العديد من الفقرات." },
-    { text: "انظر إلى الساق في النموذج. ما نوع عظم الفخذ؟", options: ["أ عظم طويل", "ب عظم مسطح", "ج عظم قصير"], correct: 0, feedback: "عظم الفخذ هو أطول عظم طويل في الجسم. يمكنك رؤيته بوضوح في النموذج." }
-];
+// ==================== 4. DRAG & DROP SKELETON GAME ====================
+// Track placed bones (with multiple counts for left/right)
+let placedCounts = {
+    skull: false,
+    ribs: false,
+    spine: false,
+    pelvis: false,
+    femur: 0,
+    humerus: 0
+};
 
-let exploreIdx = 0, exploreAnswered = false, exploreComplete = false;
+const totalBones = {
+    skull: 1,
+    ribs: 1,
+    spine: 1,
+    pelvis: 1,
+    femur: 2,
+    humerus: 2
+};
 
-function renderExploreQuestion() {
-    if (exploreComplete) return;
-    const q = exploreQs[exploreIdx];
-    document.getElementById("exploreQuestion").innerHTML = `<strong>🔍 ${q.text}</strong>`;
-    const optsDiv = document.getElementById("exploreOptions");
-    optsDiv.innerHTML = "";
-    q.options.forEach((opt, i) => {
-        const btn = document.createElement("button");
-        btn.className = "btn-option";
-        btn.innerText = opt;
-        btn.onclick = () => handleExploreAnswer(i);
-        optsDiv.appendChild(btn);
+function updateGameProgress() {
+    let completed = 0;
+    let total = 0;
+    
+    for (let bone in totalBones) {
+        total += totalBones[bone];
+        if (bone === 'femur') completed += placedCounts.femur;
+        else if (bone === 'humerus') completed += placedCounts.humerus;
+        else completed += placedCounts[bone] ? 1 : 0;
+    }
+    
+    const percentage = (completed / total) * 100;
+    document.getElementById('gameProgressBar').style.width = `${percentage}%`;
+    
+    const feedbackDiv = document.getElementById('gameFeedbackMessage');
+    if (completed === total) {
+        feedbackDiv.innerHTML = '<div class="success-message">🎉 أحسنت! لقد أكملت بناء الهيكل العظمي بنجاح! 🎉</div>';
+    } else {
+        feedbackDiv.innerHTML = `<span style="color:#ffd966;">✨ تقدمك: ${completed} من ${total} عظمة تم تركيبها بشكل صحيح ✨</span>`;
+    }
+}
+
+// Setup drag and drop
+const draggableBones = document.querySelectorAll('.bone-card-drag');
+const dropZones = document.querySelectorAll('.drop-zone-game');
+
+draggableBones.forEach(bone => {
+    bone.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', bone.getAttribute('data-bone'));
+        e.dataTransfer.effectAllowed = 'copy';
+        bone.classList.add('dragging');
     });
-    document.getElementById("exploreFeedback").innerHTML = "";
-    document.getElementById("exploreNextBtn").style.display = "none";
-    exploreAnswered = false;
-}
-
-function handleExploreAnswer(selected) {
-    if (exploreComplete || exploreAnswered) return;
-    const q = exploreQs[exploreIdx];
-    if (selected === q.correct) {
-        document.getElementById("exploreFeedback").innerHTML = `<div class="correct-feedback">🎉 ${q.feedback}</div>`;
-        exploreAnswered = true;
-        if (exploreIdx + 1 < exploreQs.length) {
-            document.getElementById("exploreNextBtn").style.display = "inline-block";
-        } else {
-            document.getElementById("exploreNextBtn").style.display = "inline-block";
-            document.getElementById("exploreNextBtn").innerText = "🎁 إنهاء الاستكشاف";
-        }
-    } else {
-        document.getElementById("exploreFeedback").innerHTML = `<div class="wrong-feedback">❌ حاول مجددًا، راقب النموذج ثلاثي الأبعاد جيدًا واستخدم خاصية التدوير!</div>`;
-    }
-}
-
-document.getElementById("exploreNextBtn").addEventListener("click", () => {
-    if (!exploreAnswered) return;
-    if (exploreIdx + 1 < exploreQs.length) {
-        exploreIdx++;
-        renderExploreQuestion();
-    } else {
-        exploreComplete = true;
-        document.getElementById("exploreFinalMsg").innerHTML = `<div class="success-message">🎉 أحسنت! لقد تمكنت من استكشاف الهيكل العظمي والتعرف على العظام ووظائفها باستخدام النموذج ثلاثي الأبعاد. 🎉</div>`;
-        document.getElementById("exploreNextBtn").style.display = "none";
-        document.getElementById("exploreOptions").innerHTML = "";
-        document.getElementById("exploreQuestion").innerHTML = "✨ إتقان علم العظام! ✨";
-    }
+    
+    bone.addEventListener('dragend', () => {
+        bone.classList.remove('dragging');
+    });
 });
 
-renderExploreQuestion();
+dropZones.forEach(zone => {
+    zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+        zone.classList.add('active-drop');
+    });
+    
+    zone.addEventListener('dragleave', () => {
+        zone.classList.remove('active-drop');
+    });
+    
+    zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('active-drop');
+        
+        // Don't allow dropping if already filled
+        if (zone.classList.contains('filled')) {
+            const feedbackDiv = document.getElementById('gameFeedbackMessage');
+            feedbackDiv.innerHTML = '<div class="wrong-feedback">⚠️ هذا المكان ممتلئ بالفعل!</div>';
+            setTimeout(() => updateGameProgress(), 1500);
+            return;
+        }
+        
+        const boneType = e.dataTransfer.getData('text/plain');
+        const expectedType = zone.getAttribute('data-expected');
+        
+        let isValid = false;
+        
+        if (boneType === expectedType) {
+            if (boneType === 'femur' && placedCounts.femur < 2) {
+                isValid = true;
+                placedCounts.femur++;
+            } else if (boneType === 'humerus' && placedCounts.humerus < 2) {
+                isValid = true;
+                placedCounts.humerus++;
+            } else if (boneType !== 'femur' && boneType !== 'humerus' && !placedCounts[boneType]) {
+                isValid = true;
+                placedCounts[boneType] = true;
+            } else {
+                isValid = false;
+            }
+        }
+        
+        if (isValid) {
+            zone.classList.add('filled');
+            zone.style.background = '#3c8868';
+            zone.style.border = '2px solid #ffde9c';
+            
+            // Remove the bone from palette
+            const draggedBone = Array.from(draggableBones).find(b => b.getAttribute('data-bone') === boneType);
+            if (draggedBone && (boneType === 'skull' || boneType === 'ribs' || boneType === 'spine' || boneType === 'pelvis')) {
+                draggedBone.style.display = 'none';
+            }
+            
+            updateGameProgress();
+            
+            // Check if game is complete
+            let completed = 0;
+            let total = 0;
+            for (let b in totalBones) {
+                total += totalBones[b];
+                if (b === 'femur') completed += placedCounts.femur;
+                else if (b === 'humerus') completed += placedCounts.humerus;
+                else completed += placedCounts[b] ? 1 : 0;
+            }
+            
+            if (completed === total) {
+                const feedbackDiv = document.getElementById('gameFeedbackMessage');
+                feedbackDiv.innerHTML = '<div class="success-message">🎉 مبروك! لقد أكملت بناء الهيكل العظمي بنجاح! 🎉</div>';
+            }
+        } else {
+            const feedbackDiv = document.getElementById('gameFeedbackMessage');
+            feedbackDiv.innerHTML = '<div class="wrong-feedback">❌ مكان خاطئ! حاول وضع العظم في المكان الصحيح.</div>';
+            setTimeout(() => updateGameProgress(), 1500);
+        }
+    });
+});
+
+// Reset Game Function
+function resetDragDropGame() {
+    placedCounts = {
+        skull: false,
+        ribs: false,
+        spine: false,
+        pelvis: false,
+        femur: 0,
+        humerus: 0
+    };
+    
+    // Reset all drop zones
+    dropZones.forEach(zone => {
+        zone.classList.remove('filled');
+        zone.style.background = '';
+        zone.style.border = '';
+    });
+    
+    // Show all bone cards again
+    draggableBones.forEach(bone => {
+        bone.style.display = 'inline-flex';
+    });
+    
+    updateGameProgress();
+    
+    const feedbackDiv = document.getElementById('gameFeedbackMessage');
+    feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ تم إعادة اللعبة! اسحب العظام إلى أماكنها الصحيحة ✨</span>';
+    setTimeout(() => updateGameProgress(), 2000);
+}
+
+const resetBtn = document.getElementById('resetDragDropGame');
+if (resetBtn) {
+    resetBtn.addEventListener('click', resetDragDropGame);
+}
+
+// Initialize progress
+updateGameProgress();
