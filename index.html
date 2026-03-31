@@ -3,64 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>مختبر العظام | تعلم علم التشريح بطريقة تفاعلية ثلاثية الأبعاد</title>
+    <title>مختبر العظام | تعلم علم التشريح بطريقة تفاعلية</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Additional styles for the iframe embed */
-        .open3d-embed {
-            width: 100%;
-            height: 400px;
-            border: none;
-            border-radius: 28px;
-            background: #071a1a;
-            margin-bottom: 1rem;
-        }
-        
-        .open3d-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            border-radius: 28px;
-            overflow: hidden;
-            border: 2px solid #f4b942;
-        }
-        
-        .open3d-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .model-credit {
-            font-size: 0.7rem;
-            text-align: center;
-            margin-top: 8px;
-            color: #ffefc0;
-            opacity: 0.7;
-        }
-        
-        .model-credit a {
-            color: #f4b942;
-            text-decoration: none;
-        }
-        
-        .model-credit a:hover {
-            text-decoration: underline;
-        }
-    </style>
 </head>
 <body>
     <div class="app-container">
         <!-- Hero Section -->
         <div class="hero">
-            <h1><i class="fas fa-skull"></i> مختبر العظام المتقدم</h1>
-            <p>استكشف الهيكل العظمي البشري بتقنية ثلاثية الأبعاد وتعلم عبر ألعاب تفاعلية ممتعة</p>
+            <h1><i class="fas fa-skull"></i> مختبر العظام</h1>
+            <p>تعلم علم التشريح بطريقة تفاعلية وممتعة من خلال الألعاب</p>
             <div class="badge-row">
                 <span class="badge"><i class="fas fa-child"></i> أعمار 9-10 سنوات</span>
-                <span class="badge"><i class="fas fa-cube"></i> نموذج ثلاثي الأبعاد واقعي</span>
-                <span class="badge"><i class="fas fa-gamepad"></i> 4 ألعاب علمية</span>
+                <span class="badge"><i class="fas fa-gamepad"></i> ألعاب تفاعلية</span>
                 <span class="badge"><i class="fas fa-language"></i> بالعربية</span>
             </div>
         </div>
@@ -123,41 +79,94 @@
                 </div>
             </div>
 
-            <!-- Game 4: Open 3D Model Exploration -->
+            <!-- Game 4: Drag & Drop Skeleton Builder -->
             <div class="game-card">
                 <div class="card-header">
                     <i class="fas fa-dragon"></i>
-                    <h2>🦴 استكشاف ثلاثي الأبعاد متقدم</h2>
+                    <h2>🦴 بناء الهيكل العظمي</h2>
                 </div>
                 <div class="card-content">
-                    <!-- Open 3D Model Embed - Professional University Anatomy Model -->
-                    <div class="open3d-container">
-                        <iframe 
-                            src="https://anatomytool.org/content/open-3d-model-human-anatomy-skeleton" 
-                            title="Open 3D Model - Human Skeleton"
-                            allow="fullscreen; autoplay; xr-spatial-tracking"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="model-credit">
-                        <i class="fas fa-university"></i> نموذج ثلاثي الأبعاد من 
-                        <a href="https://anatomytool.org" target="_blank">Anatomytool.org</a> 
-                        - جامعة ليدن | نموذج تشريحي علمي مفتوح المصدر
-                    </div>
-                    <div id="exploreQuiz" style="margin-top: 15px;">
-                        <p><i class="fas fa-sync-alt"></i> در النموذج ثلاثي الأبعاد واكتشف العظام المختلفة:</p>
-                        <div id="exploreQuestion"></div>
-                        <div id="exploreOptions"></div>
-                        <div id="exploreFeedback"></div>
-                        <button id="exploreNextBtn" class="next-btn" style="display:none;">➡️ السؤال التالي</button>
-                        <div id="exploreFinalMsg"></div>
+                    <div id="skeletonGameContainer">
+                        <p><i class="fas fa-hand-pointer"></i> <strong>اسحب العظام وضعها في المكان الصحيح على الجسم!</strong></p>
+                        
+                        <!-- Game Area -->
+                        <div id="dragDropGameArea">
+                            <!-- Bones Palette -->
+                            <div class="bones-palette" id="gameBonesPalette">
+                                <div class="bone-card-drag" draggable="true" data-bone="skull" data-name="الجمجمة">
+                                    <i class="fas fa-bone"></i> الجمجمة
+                                </div>
+                                <div class="bone-card-drag" draggable="true" data-bone="ribs" data-name="القفص الصدري">
+                                    <i class="fas fa-bone"></i> القفص الصدري
+                                </div>
+                                <div class="bone-card-drag" draggable="true" data-bone="spine" data-name="العمود الفقري">
+                                    <i class="fas fa-bone"></i> العمود الفقري
+                                </div>
+                                <div class="bone-card-drag" draggable="true" data-bone="femur" data-name="عظم الفخذ">
+                                    <i class="fas fa-bone"></i> عظم الفخذ
+                                </div>
+                                <div class="bone-card-drag" draggable="true" data-bone="humerus" data-name="عظم العضد">
+                                    <i class="fas fa-bone"></i> عظم العضد
+                                </div>
+                                <div class="bone-card-drag" draggable="true" data-bone="pelvis" data-name="الحوض">
+                                    <i class="fas fa-bone"></i> الحوض
+                                </div>
+                            </div>
+                            
+                            <!-- Human Body Outline with Drop Zones -->
+                            <div class="body-outline" id="bodyOutline">
+                                <svg viewBox="0 0 400 500" class="body-svg">
+                                    <!-- Human Body Outline -->
+                                    <path d="M200,30 L200,80 M170,80 L230,80 M180,80 L200,150 L220,150 L200,80 M170,150 L230,150 M150,150 L150,250 L250,250 L250,150 M180,250 L200,400 L220,400 L200,250 M150,400 L180,480 L220,480 L250,400" stroke="#f4b942" stroke-width="3" fill="none" stroke-linecap="round"/>
+                                    <!-- Head -->
+                                    <circle cx="200" cy="55" r="28" stroke="#f4b942" stroke-width="3" fill="none"/>
+                                    <!-- Shoulders -->
+                                    <line x1="150" y1="85" x2="250" y2="85" stroke="#f4b942" stroke-width="2"/>
+                                </svg>
+                                
+                                <!-- Drop Zones (positioned absolutely over SVG) -->
+                                <div class="drop-zone-game" data-expected="skull" style="top: 5%; left: 40%; width: 20%; height: 12%;">
+                                    <span>الجمجمة</span>
+                                </div>
+                                <div class="drop-zone-game" data-expected="ribs" style="top: 22%; left: 35%; width: 30%; height: 12%;">
+                                    <span>القفص الصدري</span>
+                                </div>
+                                <div class="drop-zone-game" data-expected="spine" style="top: 35%; left: 45%; width: 10%; height: 25%;">
+                                    <span>العمود الفقري</span>
+                                </div>
+                                <div class="drop-zone-game" data-expected="humerus" style="top: 32%; left: 12%; width: 12%; height: 10%;">
+                                    <span>عظم العضد</span>
+                                </div>
+                                <div class="drop-zone-game" data-expected="humerus" style="top: 32%; right: 12%; width: 12%; height: 10%;">
+                                    <span>عظم العضد</span>
+                                </div>
+                                <div class="drop-zone-game" data-expected="pelvis" style="top: 55%; left: 40%; width: 20%; height: 10%;">
+                                    <span>الحوض</span>
+                                </div>
+                                <div class="drop-zone-game" data-expected="femur" style="top: 72%; left: 25%; width: 12%; height: 12%;">
+                                    <span>عظم الفخذ</span>
+                                </div>
+                                <div class="drop-zone-game" data-expected="femur" style="top: 72%; right: 25%; width: 12%; height: 12%;">
+                                    <span>عظم الفخذ</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Game Status -->
+                        <div id="dragDropGameStatus" class="game-status">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="gameProgressBar" style="width: 0%"></div>
+                            </div>
+                            <div id="gameFeedbackMessage" class="game-feedback-message"></div>
+                            <button id="resetDragDropGame" class="reset-game-btn">🔄 إعادة اللعبة</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <footer>
-            ✨ يمكنك تدوير النموذج ثلاثي الأبعاد بالماوس أو اللمس — نموذج تشريحي علمي من جامعة ليدن ✨
+            ✨ اسحب العظام وضعها في الأماكن الصحيحة على الجسم — تعلم أسماء العظام ومواقعها ✨
         </footer>
     </div>
 
