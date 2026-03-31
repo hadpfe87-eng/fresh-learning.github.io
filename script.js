@@ -193,66 +193,9 @@ document.getElementById("resetChallengeBtn").addEventListener("click", () => {
 
 renderChallenge();
 
-// ==================== 4. EXPLORATION QUIZ ====================
-const exploreQs = [
-    { text: "انظر إلى رأس الهيكل العظمي. ما اسم العظم الذي يحمي الدماغ؟", options: ["أ الأضلاع", "ب الجمجمة", "ج العمود الفقري"], correct: 1, feedback: "الجمجمة تحيط بالدماغ وتحميه من الصدمات." },
-    { text: "قم بتدوير النموذج وانظر إلى منطقة الصدر. ما اسم العظام التي تحمي القلب والرئتين؟", options: ["أ عظام الساق", "ب القفص الصدري", "ج عظام اليد"], correct: 1, feedback: "القفص الصدري يحمي القلب والرئتين بشكل ممتاز!" },
-    { text: "انظر إلى الظهر. ما العظم الذي يدعم الجسم ويساعده على الحركة؟", options: ["أ العمود الفقري", "ب الجمجمة", "ج عظام القدم"], correct: 0, feedback: "العمود الفقري هو عمود الجسم الحقيقي!" },
-    { text: "انظر إلى الساق. ما نوع عظم الفخذ؟", options: ["أ عظم طويل", "ب عظم مسطح", "ج عظم قصير"], correct: 0, feedback: "عظم الفخذ هو أطول عظم طويل في الجسم." }
-];
-
-let exploreIdx = 0, exploreAnswered = false, exploreComplete = false;
-
-function renderExploreQuestion() {
-    if (exploreComplete) return;
-    const q = exploreQs[exploreIdx];
-    document.getElementById("exploreQuestion").innerHTML = `<strong>🔍 ${q.text}</strong>`;
-    const optsDiv = document.getElementById("exploreOptions");
-    optsDiv.innerHTML = "";
-    q.options.forEach((opt, i) => {
-        const btn = document.createElement("button");
-        btn.className = "btn-option";
-        btn.innerText = opt;
-        btn.onclick = () => handleExploreAnswer(i);
-        optsDiv.appendChild(btn);
-    });
-    document.getElementById("exploreFeedback").innerHTML = "";
-    document.getElementById("exploreNextBtn").style.display = "none";
-    exploreAnswered = false;
-}
-
-function handleExploreAnswer(selected) {
-    if (exploreComplete || exploreAnswered) return;
-    const q = exploreQs[exploreIdx];
-    if (selected === q.correct) {
-        document.getElementById("exploreFeedback").innerHTML = `<div class="correct-feedback">🎉 ${q.feedback}</div>`;
-        exploreAnswered = true;
-        if (exploreIdx + 1 < exploreQs.length) {
-            document.getElementById("exploreNextBtn").style.display = "inline-block";
-        } else {
-            document.getElementById("exploreNextBtn").style.display = "inline-block";
-            document.getElementById("exploreNextBtn").innerText = "🎁 إنهاء الاستكشاف";
-        }
-    } else {
-        document.getElementById("exploreFeedback").innerHTML = `<div class="wrong-feedback">❌ حاول مجددًا، راقب النموذج ثلاثي الأبعاد جيدًا!</div>`;
-    }
-}
-
-document.getElementById("exploreNextBtn").addEventListener("click", () => {
-    if (!exploreAnswered) return;
-    if (exploreIdx + 1 < exploreQs.length) {
-        exploreIdx++;
-        renderExploreQuestion();
-    } else {
-        exploreComplete = true;
-        document.getElementById("exploreFinalMsg").innerHTML = `<div class="success-message">🎉 أحسنت! استكشاف رائع للهيكل العظمي المتقدم 🎉</div>`;
-        document.getElementById("exploreNextBtn").style.display = "none";
-        document.getElementById("exploreOptions").innerHTML = "";
-        document.getElementById("exploreQuestion").innerHTML = "✨ إتقان علم العظام! ✨";
-    }
-});
-
-renderExploreQuestion();
+// ==================== 4. EXPLORATION QUIZ (Removed - replaced by modal game) ====================
+// The old exploration quiz has been replaced by the new drag-and-drop game modal.
+// The 3D viewer still remains, but the interactive questions are now inside the modal.
 
 // ==================== 5. ADVANCED 3D SKELETON ====================
 const container = document.getElementById("advancedSkeletonViewer");
@@ -414,4 +357,211 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
     labelRenderer.setSize(w, h);
+});
+
+// ==================== 6. NEW: FULL-SCREEN DRAG-AND-DROP SKELETON GAME ====================
+
+// Create the Modal HTML dynamically and append to body
+const modal = document.createElement('div');
+modal.className = 'game-modal';
+modal.id = 'skeletonGameModal';
+modal.innerHTML = `
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-bone"></i> لعبة تركيب الهيكل العظمي</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="game-container">
+            <div class="bones-palette" id="bonesPalette">
+                <div class="bone-card" draggable="true" data-bone="skull">🦴 الجمجمة (Skull)</div>
+                <div class="bone-card" draggable="true" data-bone="ribs">🦴 الأضلاع (Ribs)</div>
+                <div class="bone-card" draggable="true" data-bone="spine">🦴 العمود الفقري (Spine)</div>
+                <div class="bone-card" draggable="true" data-bone="femur">🦴 عظم الفخذ (Femur)</div>
+                <div class="bone-card" draggable="true" data-bone="humerus">🦴 عظم العضد (Humerus)</div>
+            </div>
+            <div class="skeleton-canvas" id="skeletonCanvas">
+                <div class="drop-zone" data-expected="skull" style="position: absolute; top: 10%; left: 40%; width: 20%; height: 15%;">الجمجمة</div>
+                <div class="drop-zone" data-expected="ribs" style="position: absolute; top: 30%; left: 35%; width: 30%; height: 15%;">القفص الصدري</div>
+                <div class="drop-zone" data-expected="spine" style="position: absolute; top: 45%; left: 45%; width: 10%; height: 25%;">العمود الفقري</div>
+                <div class="drop-zone" data-expected="femur" style="position: absolute; bottom: 20%; left: 35%; width: 15%; height: 12%;">عظم الفخذ</div>
+                <div class="drop-zone" data-expected="femur" style="position: absolute; bottom: 20%; right: 35%; width: 15%; height: 12%;">عظم الفخذ</div>
+                <div class="drop-zone" data-expected="humerus" style="position: absolute; top: 45%; left: 15%; width: 12%; height: 10%;">عظم العضد</div>
+                <div class="drop-zone" data-expected="humerus" style="position: absolute; top: 45%; right: 15%; width: 12%; height: 10%;">عظم العضد</div>
+                <div id="gameFeedback" class="game-feedback"></div>
+                <button id="resetGameBtn" class="reset-game-btn">🔄 إعادة اللعبة</button>
+            </div>
+        </div>
+    </div>
+`;
+document.body.appendChild(modal);
+
+// Game State
+let placedBones = {
+    skull: false,
+    ribs: false,
+    spine: false,
+    femur: false,
+    humerus: false
+};
+let femurPlacedCount = 0;
+let humerusPlacedCount = 0;
+
+// Helper to update UI and check win
+function updateGameStatus() {
+    const feedbackDiv = document.getElementById('gameFeedback');
+    const allPlaced = placedBones.skull && placedBones.ribs && placedBones.spine && 
+                      (femurPlacedCount >= 2) && (humerusPlacedCount >= 2);
+    
+    if (allPlaced) {
+        feedbackDiv.innerHTML = '<div class="success-message" style="background:#2b8c6e;">🎉 أحسنت! لقد أكملت بناء الهيكل العظمي بنجاح! 🎉</div>';
+    } else {
+        feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ استمر! ضع كل العظام في أماكنها الصحيحة ✨</span>';
+    }
+}
+
+// Drag and Drop Event Listeners
+const bones = document.querySelectorAll('.bone-card');
+const dropZones = document.querySelectorAll('.drop-zone');
+
+// Drag Start
+bones.forEach(bone => {
+    bone.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', bone.getAttribute('data-bone'));
+        e.dataTransfer.effectAllowed = 'copy';
+        bone.classList.add('dragging');
+    });
+    bone.addEventListener('dragend', (e) => {
+        bone.classList.remove('dragging');
+    });
+});
+
+// Drag Over (allow drop)
+dropZones.forEach(zone => {
+    zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'copy';
+        zone.classList.add('active-drop');
+    });
+    zone.addEventListener('dragleave', () => {
+        zone.classList.remove('active-drop');
+    });
+    
+    // Drop Event
+    zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('active-drop');
+        const boneType = e.dataTransfer.getData('text/plain');
+        const expectedType = zone.getAttribute('data-expected');
+        
+        // Special handling for multiple femurs/humerus
+        let isValid = false;
+        if (boneType === expectedType) {
+            if (boneType === 'femur' && femurPlacedCount < 2) {
+                isValid = true;
+                femurPlacedCount++;
+                if (femurPlacedCount === 2) placedBones.femur = true;
+            } else if (boneType === 'humerus' && humerusPlacedCount < 2) {
+                isValid = true;
+                humerusPlacedCount++;
+                if (humerusPlacedCount === 2) placedBones.humerus = true;
+            } else if (boneType !== 'femur' && boneType !== 'humerus' && !placedBones[boneType]) {
+                isValid = true;
+                placedBones[boneType] = true;
+            } else {
+                isValid = false;
+            }
+        }
+        
+        if (isValid) {
+            // Mark zone as filled
+            zone.style.background = '#3c8868';
+            zone.style.border = '2px solid #ffde9c';
+            zone.style.opacity = '0.7';
+            zone.style.textDecoration = 'line-through';
+            zone.innerText = `✓ ${zone.innerText}`;
+            // Remove drop event listeners to prevent re-dropping
+            zone.removeEventListener('dragover', () => {});
+            
+            // Remove the bone from palette (or disable it)
+            const draggedBoneElem = Array.from(bones).find(b => b.getAttribute('data-bone') === boneType);
+            if (draggedBoneElem && !zone.hasAttribute('data-multiple')) {
+                draggedBoneElem.style.display = 'none';
+            }
+            
+            updateGameStatus();
+        } else {
+            // Wrong placement feedback
+            const feedbackDiv = document.getElementById('gameFeedback');
+            feedbackDiv.innerHTML = '<div class="wrong-feedback">❌ مكان خاطئ! حاول مرة أخرى.</div>';
+            setTimeout(() => {
+                if (!document.getElementById('gameFeedback').innerHTML.includes('أحسنت')) {
+                    feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ استمر! ضع كل العظام في أماكنها الصحيحة ✨</span>';
+                }
+            }, 1500);
+        }
+    });
+});
+
+// Reset Game Functionality
+function resetGame() {
+    placedBones = { skull: false, ribs: false, spine: false, femur: false, humerus: false };
+    femurPlacedCount = 0;
+    humerusPlacedCount = 0;
+    
+    // Reset all drop zones
+    dropZones.forEach(zone => {
+        zone.style.background = '';
+        zone.style.border = '';
+        zone.style.opacity = '';
+        zone.style.textDecoration = '';
+        // Restore original text
+        const expected = zone.getAttribute('data-expected');
+        let originalText = '';
+        if (expected === 'skull') originalText = 'الجمجمة';
+        else if (expected === 'ribs') originalText = 'القفص الصدري';
+        else if (expected === 'spine') originalText = 'العمود الفقري';
+        else if (expected === 'femur') originalText = 'عظم الفخذ';
+        else if (expected === 'humerus') originalText = 'عظم العضد';
+        zone.innerText = originalText;
+        // Re-enable drop listeners (re-attach dragover)
+        zone.addEventListener('dragover', (e) => e.preventDefault());
+    });
+    
+    // Show all bone cards again
+    const allBoneCards = document.querySelectorAll('.bone-card');
+    allBoneCards.forEach(bone => {
+        bone.style.display = 'flex';
+    });
+    
+    const feedbackDiv = document.getElementById('gameFeedback');
+    feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ اللعبة أعيدت! حاول مرة أخرى ✨</span>';
+    setTimeout(() => {
+        feedbackDiv.innerHTML = '<span style="color:#ffd966;">✨ استمر! ضع كل العظام في أماكنها الصحيحة ✨</span>';
+    }, 1500);
+}
+
+document.getElementById('resetGameBtn').addEventListener('click', resetGame);
+
+// Modal Open/Close Logic
+const openBtn = document.getElementById('openSkeletonGameBtn');
+const closeBtn = document.querySelector('.close-modal');
+
+if (openBtn) {
+    openBtn.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        resetGame();
+    });
+}
+
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+}
+
+// Close modal if clicking outside content
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+    }
 });
