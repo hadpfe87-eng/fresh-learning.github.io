@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Human Body Game | Learn About the Skeleton</title>
+    <title>لعبة جسم الإنسان | تعلم عن الهيكل العظمي</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,7 +16,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Cairo', 'Arial', sans-serif;
             background: linear-gradient(135deg, #0a2f2f 0%, #1a4a4a 100%);
             min-height: 100vh;
         }
@@ -42,6 +43,7 @@
             font-size: 1.1rem;
             max-width: 800px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
         .game-container {
@@ -88,6 +90,7 @@
             font-weight: bold;
             color: #1e2a2a;
             transition: transform 0.2s;
+            font-family: 'Cairo', sans-serif;
         }
 
         .game-buttons button:hover {
@@ -142,19 +145,22 @@
             .game-header h1 {
                 font-size: 1.8rem;
             }
+            .game-header p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="game-wrapper">
         <div class="game-header">
-            <h1>🧠 The Human Body Game</h1>
-            <p>Dive into the exciting world inside you! Explore different systems of your body, from bones to organs, and see how they all work together in this interactive simulation.</p>
+            <h1>🧠 لعبة جسم الإنسان</h1>
+            <p>انطلق في رحلة ممتعة داخل جسمك! استكشف أجهزة الجسم المختلفة، من العظام إلى الأعضاء، وتعرف على كيفية عملها معًا في هذه المحاكاة التفاعلية.</p>
         </div>
 
         <div class="game-container">
             <div id="game-iframe-wrapper" class="game-iframe-wrapper">
-                <iframe id="game-iframe" src="https://thehumanbodygame.co.uk/game" title="The Human Body Game" allow="fullscreen"></iframe>
+                <iframe id="game-iframe" src="https://thehumanbodygame.co.uk/game" title="لعبة جسم الإنسان" allow="fullscreen"></iframe>
             </div>
             <div class="game-buttons">
                 <button id="fullscreen-btn" class="fullscreen-btn">
@@ -174,14 +180,14 @@
         </div>
 
         <div class="game-tags">
-            <span class="game-tag">🔬 Science, Biology</span>
-            <span class="game-tag">👧 7-11 Years</span>
-            <span class="game-tag">🎮 Interactive Game</span>
-            <span class="game-tag">🦴 Learn About Bones</span>
+            <span class="game-tag">🔬 علوم، أحياء</span>
+            <span class="game-tag">👧 7-11 سنوات</span>
+            <span class="game-tag">🎮 لعبة تفاعلية</span>
+            <span class="game-tag">🦴 تعلم عن العظام</span>
         </div>
 
         <div class="game-header" style="margin-top: 2rem;">
-            <p>Through interactive simulations, drag-and-drop gameplay, and quiz-based learning, you'll explore various bodily systems and deepen your understanding of biology. Discover how your body works in a fun and memorable way!</p>
+            <p>من خلال المحاكاة التفاعلية، وسحب العناصر وإفلاتها، والأسئلة التفاعلية، ستستكشف أجهزة الجسم المختلفة وتعمق فهمك لعلم الأحياء. اكتشف كيف يعمل جسمك بطريقة ممتعة ولا تُنسى!</p>
         </div>
     </div>
 
