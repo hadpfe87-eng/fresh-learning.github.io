@@ -145,14 +145,14 @@ window.addEventListener('resize', () => {
 
 // ==================== BUTTON FUNCTIONALITY ====================
 
-// Button 1: Open Hotspots Game (opens in new tab, sets session flag)
+// Button 1: Open Hotspots Game (opens wrapper page with themed interface)
 const hotspotsBtn = document.getElementById('openHotspotsGameBtn');
 if (hotspotsBtn) {
     hotspotsBtn.addEventListener('click', () => {
-        // Set flag in sessionStorage to show back button when returning
+        // Set flag to show back button when returning
         sessionStorage.setItem('cameFromHotspots', 'true');
-        // Open hotspots game in new tab
-        window.open('skeleton-hotspots.html', '_blank');
+        // Open the themed wrapper page
+        window.open('new-wrapper.html', '_blank');
     });
 }
 
