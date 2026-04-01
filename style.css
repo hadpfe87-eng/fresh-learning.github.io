@@ -35,6 +35,9 @@ body {
 .header p {
     font-size: 1.1rem;
     color: #ffefc0;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .badge-row {
@@ -417,6 +420,8 @@ body {
     padding: 10px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 40px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .quiz-score {
@@ -436,6 +441,7 @@ body {
     gap: 1rem;
     justify-content: center;
     margin-top: 1rem;
+    flex-wrap: wrap;
 }
 
 .quiz-btn {
@@ -503,36 +509,309 @@ footer {
     border-top: 1px solid rgba(244, 185, 66, 0.2);
 }
 
-/* Responsive Design */
-@media (max-width: 1000px) {
-    .two-columns {
-        grid-template-columns: 1fr;
-    }
-    .column-right {
-        max-width: 500px;
-        margin: 0 auto;
-        width: 100%;
-    }
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
     .app-container {
-        padding: 1rem;
+        padding: 1.5rem;
     }
-    .header h1 {
-        font-size: 1.8rem;
+    
+    .two-columns {
+        grid-template-columns: 1fr 320px;
+        gap: 1.2rem;
     }
+    
     .viewer-3d {
-        height: 350px;
+        height: 450px;
+    }
+    
+    .header h1 {
+        font-size: 2.2rem;
     }
 }
 
-@media (max-width: 600px) {
+/* Mobile Landscape & Small Tablet (600px - 768px) */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 1rem;
+    }
+    
+    .two-columns {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .column-right {
+        max-width: 100%;
+        order: 2;
+    }
+    
+    .column-left {
+        order: 1;
+    }
+    
+    .viewer-3d {
+        height: 400px;
+    }
+    
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .header p {
+        font-size: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .badge {
+        padding: 4px 14px;
+        font-size: 0.75rem;
+    }
+    
+    .viewer-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .viewer-header i {
+        font-size: 1.2rem;
+    }
+    
+    .game-card-header h3 {
+        font-size: 1rem;
+    }
+    
     .modal-large {
         width: 95%;
     }
+    
+    .modal-header h2 {
+        font-size: 1.1rem;
+    }
+    
     .quiz-question {
         font-size: 1rem;
     }
+    
+    .quiz-option-btn {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Mobile Portrait (480px and below) */
+@media (max-width: 480px) {
+    .app-container {
+        padding: 0.75rem;
+    }
+    
+    .header {
+        margin-bottom: 1rem;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .header p {
+        font-size: 0.9rem;
+    }
+    
+    .badge-row {
+        gap: 0.5rem;
+    }
+    
+    .badge {
+        padding: 3px 10px;
+        font-size: 0.7rem;
+    }
+    
+    .viewer-3d {
+        height: 300px;
+    }
+    
+    .viewer-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .viewer-header h2 {
+        font-size: 1rem;
+    }
+    
+    .viewer-content {
+        padding: 1rem;
+    }
+    
+    .viewer-instructions {
+        font-size: 0.7rem;
+    }
+    
+    .loading-overlay {
+        padding: 12px 20px;
+        white-space: normal;
+        text-align: center;
+    }
+    
+    .loading-overlay i {
+        font-size: 1.5rem;
+    }
+    
+    .loading-overlay p {
+        font-size: 0.8rem;
+    }
+    
+    .game-card-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .game-card-content {
+        padding: 1rem;
+    }
+    
+    .game-card-content p {
+        font-size: 0.8rem;
+    }
+    
+    .game-features, .quiz-stats {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+    
+    .btn-game {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .info-box {
+        padding: 0.8rem;
+        gap: 8px;
+    }
+    
+    .info-box i {
+        font-size: 1.2rem;
+    }
+    
+    .info-box p {
+        font-size: 0.75rem;
+    }
+    
     .back-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
         width: 100%;
         justify-content: center;
+    }
+    
+    .modal-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .modal-header h2 {
+        font-size: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .quiz-stats-bar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .quiz-question {
+        font-size: 0.9rem;
+    }
+    
+    .quiz-option-btn {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .quiz-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .quiz-result h3 {
+        font-size: 1.3rem;
+    }
+    
+    .quiz-result p {
+        font-size: 1rem;
+    }
+    
+    .quiz-result .score-highlight {
+        font-size: 2rem;
+    }
+    
+    footer {
+        font-size: 0.7rem;
+        margin-top: 1rem;
+    }
+}
+
+/* Very Small Devices (360px and below) */
+@media (max-width: 360px) {
+    .viewer-3d {
+        height: 250px;
+    }
+    
+    .header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .badge {
+        padding: 2px 8px;
+        font-size: 0.65rem;
+    }
+    
+    .quiz-option-btn {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+    }
+    
+    .btn-game {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn-game, .quiz-option-btn, .back-btn, .close-modal {
+        min-height: 44px;
+    }
+    
+    .viewer-3d {
+        cursor: grab;
+    }
+    
+    .btn-game:active, .quiz-option-btn:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Landscape Mode on Mobile */
+@media (max-width: 900px) and (orientation: landscape) {
+    .viewer-3d {
+        height: 280px;
+    }
+    
+    .two-columns {
+        gap: 1rem;
+    }
+    
+    .header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .header p {
+        font-size: 0.85rem;
+    }
+    
+    .badge-row {
+        margin-top: 0.5rem;
     }
 }
