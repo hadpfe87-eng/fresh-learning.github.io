@@ -21,7 +21,7 @@
         <!-- Header Section -->
         <div class="header">
             <h1><i class="fas fa-skull"></i> مختبر العظام</h1>
-            <p>استكشف الهيكل العظمي البشري بتقنية ثلاثية الأبعاد وتعلم أسماء العظام</p>
+            <p>استكشف الهيكل العظمي البشري بتقنية ثلاثية الأبعاد وتعلم أسماء العظام من خلال الألعاب التفاعلية</p>
             <div class="badge-row">
                 <span class="badge"><i class="fas fa-child"></i> للأعمار 9-10 سنوات</span>
                 <span class="badge"><i class="fas fa-cube"></i> نموذج ثلاثي الأبعاد</span>
@@ -30,38 +30,67 @@
             </div>
         </div>
 
-        <!-- 3D Skeleton Viewer Area -->
-        <div class="viewer-card">
-            <div class="viewer-header">
-                <i class="fas fa-cube"></i>
-                <h2>🦴 الهيكل العظمي ثلاثي الأبعاد</h2>
-            </div>
-            <div class="viewer-content">
-                <div id="skeleton3d-container" class="viewer-3d">
-                    <div id="loading-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10; background: rgba(10, 31, 31, 0.9); padding: 20px 30px; border-radius: 60px; backdrop-filter: blur(5px); border: 1px solid #f4b942; pointer-events: none; white-space: nowrap;">
-                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #f4b942;"></i>
-                        <p style="margin-top: 10px; color: #ffefc0;">جاري تحميل النموذج ثلاثي الأبعاد...</p>
+        <!-- Two Column Layout -->
+        <div class="two-columns">
+            <!-- Left Column: 3D Skeleton Viewer -->
+            <div class="column-left">
+                <div class="viewer-card">
+                    <div class="viewer-header">
+                        <i class="fas fa-cube"></i>
+                        <h2>🦴 الهيكل العظمي ثلاثي الأبعاد</h2>
+                    </div>
+                    <div class="viewer-content">
+                        <div id="skeleton3d-container" class="viewer-3d">
+                            <div id="loading-overlay" class="loading-overlay">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>جاري تحميل النموذج ثلاثي الأبعاد...</p>
+                            </div>
+                        </div>
+                        <div class="viewer-instructions">
+                            <i class="fas fa-mouse-pointer"></i> اسحب بالفأرة لتدوير النموذج | 
+                            <i class="fas fa-search-plus"></i> استخدم الزر الأيمن للتكبير والتصغير
+                        </div>
                     </div>
                 </div>
-                <div class="viewer-instructions">
-                    <i class="fas fa-mouse-pointer"></i> اسحب بالفأرة لتدوير النموذج | 
-                    <i class="fas fa-search-plus"></i> استخدم الزر الأيمن للتكبير والتصغير
+            </div>
+
+            <!-- Right Column: Games Section -->
+            <div class="column-right">
+                <!-- Hotspots Game Card -->
+                <div class="game-card">
+                    <div class="game-card-header">
+                        <i class="fas fa-map-pin"></i>
+                        <h3>لعبة استكشاف العظام</h3>
+                    </div>
+                    <div class="game-card-content">
+                        <p><i class="fas fa-info-circle"></i> لعبة تفاعلية لاكتشاف أسماء العظام ومواقعها على الجسم البشري.</p>
+                        <button id="openHotspotsGameBtn" class="btn-game">
+                            <i class="fas fa-play"></i> ابدأ اللعبة
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Game Card -->
+                <div class="game-card">
+                    <div class="game-card-header">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>اختبار المعرفة السريع</h3>
+                    </div>
+                    <div class="game-card-content">
+                        <p><i class="fas fa-star"></i> اختبر معلوماتك عن العظام من خلال 8 أسئلة تفاعلية.</p>
+                        <p class="quiz-stats"><i class="fas fa-trophy"></i> 8 أسئلة | احصل على 8/8 للحصول على لقب "خبير العظام"</p>
+                        <button id="openQuizGameBtn" class="btn-game btn-quiz">
+                            <i class="fas fa-play"></i> ابدأ الاختبار
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>نصيحة: استخدم النموذج ثلاثي الأبعاد على اليسار للمساعدة في الإجابة على أسئلة الاختبار!</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Buttons Section -->
-        <div class="buttons-section">
-            <button id="openHotspotsGameBtn" class="btn btn-primary">
-                <i class="fas fa-map-pin"></i> لعبة استكشاف العظام
-            </button>
-            <button id="openQuizGameBtn" class="btn btn-secondary">
-                <i class="fas fa-question-circle"></i> لعبة الاختبار (قريباً)
-            </button>
-        </div>
-
-        <div class="info-text">
-            <i class="fas fa-info-circle"></i> انقر على زر "لعبة استكشاف العظام" لتجربة لعبة تفاعلية إضافية
         </div>
 
         <footer>
@@ -69,6 +98,22 @@
         </footer>
     </div>
 
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="modal hidden">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2><i class="fas fa-question-circle"></i> اختبار المعرفة السريع</h2>
+                <button class="close-modal" id="closeQuizModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="quizContainer">
+                    <!-- Quiz will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module" src="script.js"></script>
+    <script src="quiz.js"></script>
 </body>
 </html>
