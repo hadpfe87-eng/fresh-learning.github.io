@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <!-- Three.js for 3D Skeleton -->
     <script type="importmap">
         {
             "imports": {
@@ -39,7 +38,11 @@
             </div>
             <div class="viewer-content">
                 <div id="skeleton3d-container" class="viewer-3d">
-                    <!-- 3D Skeleton will be loaded here by Three.js -->
+                    <!-- 3D Skeleton will be loaded here -->
+                    <div id="loading-overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: #f4b942;"></i>
+                        <p style="margin-top: 10px; color: #ffefc0;">جاري تحميل النموذج ثلاثي الأبعاد...</p>
+                    </div>
                 </div>
                 <div class="viewer-instructions">
                     <i class="fas fa-mouse-pointer"></i> اسحب بالفأرة لتدوير النموذج | 
