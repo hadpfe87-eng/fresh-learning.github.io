@@ -18,6 +18,14 @@
 </head>
 <body>
     <div class="app-container">
+        <!-- Back Button (shows only when coming back from hotspots game) -->
+        <div id="backButtonContainer" class="back-button-container hidden">
+            <button id="backToMainBtn" class="back-btn">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى الصفحة الرئيسية
+            </button>
+        </div>
+
         <!-- Header Section -->
         <div class="header">
             <h1><i class="fas fa-skull"></i> مختبر العظام</h1>
@@ -64,6 +72,7 @@
                     </div>
                     <div class="game-card-content">
                         <p><i class="fas fa-info-circle"></i> لعبة تفاعلية لاكتشاف أسماء العظام ومواقعها على الجسم البشري.</p>
+                        <p class="game-features"><i class="fas fa-hand-pointer"></i> اضغط على العظام لمعرفة أسمائها</p>
                         <button id="openHotspotsGameBtn" class="btn-game">
                             <i class="fas fa-play"></i> ابدأ اللعبة
                         </button>
@@ -115,5 +124,25 @@
 
     <script type="module" src="script.js"></script>
     <script src="quiz.js"></script>
+    <script>
+        // Check if we came back from the hotspots game (using sessionStorage)
+        document.addEventListener('DOMContentLoaded', () => {
+            const backButtonContainer = document.getElementById('backButtonContainer');
+            const cameFromHotspots = sessionStorage.getItem('cameFromHotspots');
+            
+            if (cameFromHotspots === 'true') {
+                backButtonContainer.classList.remove('hidden');
+                sessionStorage.removeItem('cameFromHotspots'); // Clear after showing
+            }
+            
+            // Back button functionality
+            const backBtn = document.getElementById('backToMainBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>
