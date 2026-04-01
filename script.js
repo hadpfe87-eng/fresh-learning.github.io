@@ -1,8 +1,8 @@
+// ==================== 3D SKELETON VIEWER WITH GLB FILE ====================
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-// ==================== 3D SKELETON VIEWER WITH GLB FILE ====================
 const container = document.getElementById("skeleton3d-container");
 const loadingOverlay = document.getElementById("loading-overlay");
 
@@ -59,7 +59,7 @@ const bottomLight = new THREE.PointLight(0xaa8866, 0.4);
 bottomLight.position.set(0, -0.5, 0);
 scene.add(bottomLight);
 
-// Ground reference (subtle)
+// Ground reference
 const gridHelper = new THREE.GridHelper(4, 16, 0x88aa99, 0x446666);
 gridHelper.position.y = -0.9;
 gridHelper.material.transparent = true;
@@ -76,23 +76,19 @@ loader.load(
     (gltf) => {
         skeletonModel = gltf.scene;
         
-        // Calculate bounding box to center the model
         const box = new THREE.Box3().setFromObject(skeletonModel);
         const center = box.getCenter(new THREE.Vector3());
         const size = box.getSize(new THREE.Vector3());
         
-        // Center the model
         skeletonModel.position.x = -center.x;
         skeletonModel.position.z = -center.z;
         skeletonModel.position.y = -center.y + 0.2;
         
-        // Scale the model
         const maxDimension = Math.max(size.x, size.y, size.z);
         const targetSize = 1.8;
         const scale = targetSize / maxDimension;
         skeletonModel.scale.set(scale, scale, scale);
         
-        // Enable shadows
         skeletonModel.traverse((node) => {
             if (node.isMesh) {
                 node.castShadow = true;
@@ -132,7 +128,6 @@ loader.load(
     }
 );
 
-// Animation Loop
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
@@ -140,7 +135,6 @@ function animate() {
 }
 animate();
 
-// Handle Window Resize
 window.addEventListener('resize', () => {
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -149,15 +143,20 @@ window.addEventListener('resize', () => {
     renderer.setSize(width, height);
 });
 
-// Button: Open Hotspots Game
+// ==================== BUTTON FUNCTIONALITY ====================
+
+// Button 1: Open Hotspots Game (opens in new tab, sets session flag)
 const hotspotsBtn = document.getElementById('openHotspotsGameBtn');
 if (hotspotsBtn) {
     hotspotsBtn.addEventListener('click', () => {
+        // Set flag in sessionStorage to show back button when returning
+        sessionStorage.setItem('cameFromHotspots', 'true');
+        // Open hotspots game in new tab
         window.open('skeleton-hotspots.html', '_blank');
     });
 }
 
-// Button: Open Quiz Modal
+// Button 2: Open Quiz Modal
 const quizBtn = document.getElementById('openQuizGameBtn');
 const quizModal = document.getElementById('quizModal');
 const closeQuizModal = document.getElementById('closeQuizModal');
