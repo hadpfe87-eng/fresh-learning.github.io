@@ -121,6 +121,24 @@
             border-radius: 20px;
         }
 
+        /* Fullscreen styles for iframe */
+        .game-iframe-wrapper:-webkit-full-screen {
+            width: 100%;
+            height: 100%;
+            padding-bottom: 0;
+        }
+        
+        .game-iframe-wrapper:fullscreen {
+            width: 100%;
+            height: 100%;
+            padding-bottom: 0;
+        }
+        
+        .game-iframe-wrapper:-webkit-full-screen iframe,
+        .game-iframe-wrapper:fullscreen iframe {
+            height: 100%;
+        }
+
         /* Game Buttons */
         .game-buttons {
             display: flex;
@@ -200,6 +218,16 @@
             border-top: 1px solid rgba(244, 185, 66, 0.2);
         }
 
+        /* Fullscreen Message for Mobile */
+        .fullscreen-tip {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.7rem;
+            color: #ffefc0;
+            opacity: 0.6;
+            display: none;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .game-wrapper {
@@ -226,6 +254,9 @@
             .game-tag {
                 padding: 4px 12px;
                 font-size: 0.75rem;
+            }
+            .fullscreen-tip {
+                display: block;
             }
         }
 
@@ -280,7 +311,7 @@
         <!-- Game Container -->
         <div class="game-container">
             <div id="game-iframe-wrapper" class="game-iframe-wrapper">
-                <iframe id="game-iframe" src="skeleton-hotspots.html" allow="fullscreen"></iframe>
+                <iframe id="game-iframe" src="skeleton-hotspots.html" allow="fullscreen" allowfullscreen></iframe>
             </div>
             <div class="game-buttons">
                 <button id="fullscreen-btn" class="fullscreen-btn" title="شاشة كاملة">
@@ -296,6 +327,9 @@
                         <polyline points="16 21 16 16 21 16"></polyline>
                     </svg>
                 </button>
+            </div>
+            <div class="fullscreen-tip">
+                <i class="fas fa-expand-alt"></i> اضغط على زر التكبير لتجربة شاشة كاملة
             </div>
         </div>
 
@@ -324,19 +358,24 @@
     </div>
 
     <script>
-        // Fullscreen functionality
-        const gameContainer = document.getElementById('game-iframe-wrapper');
+        // Fullscreen functionality - Fixed for mobile
+        const gameIframeWrapper = document.getElementById('game-iframe-wrapper');
+        const gameIframe = document.getElementById('game-iframe');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
         const minimiseBtn = document.getElementById('minimise-btn');
 
         function enterFullscreen() {
-            if (gameContainer.requestFullscreen) {
-                gameContainer.requestFullscreen();
-            } else if (gameContainer.webkitRequestFullscreen) {
-                gameContainer.webkitRequestFullscreen();
-            } else if (gameContainer.msRequestFullscreen) {
-                gameContainer.msRequestFullscreen();
+            // Try to make the wrapper fullscreen (works better on mobile)
+            const elem = gameIframeWrapper;
+            
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
             }
+            
             fullscreenBtn.classList.add('hidden');
             minimiseBtn.classList.remove('hidden');
         }
@@ -356,8 +395,30 @@
         fullscreenBtn.addEventListener('click', enterFullscreen);
         minimiseBtn.addEventListener('click', exitFullscreen);
 
+        // Listen for fullscreen change events
         document.addEventListener('fullscreenchange', () => {
             if (!document.fullscreenElement) {
+                fullscreenBtn.classList.remove('hidden');
+                minimiseBtn.classList.add('hidden');
+            }
+        });
+        
+        document.addEventListener('webkitfullscreenchange', () => {
+            if (!document.webkitFullscreenElement) {
+                fullscreenBtn.classList.remove('hidden');
+                minimiseBtn.classList.add('hidden');
+            }
+        });
+        
+        document.addEventListener('mozfullscreenchange', () => {
+            if (!document.mozFullScreenElement) {
+                fullscreenBtn.classList.remove('hidden');
+                minimiseBtn.classList.add('hidden');
+            }
+        });
+        
+        document.addEventListener('MSFullscreenChange', () => {
+            if (!document.msFullscreenElement) {
                 fullscreenBtn.classList.remove('hidden');
                 minimiseBtn.classList.add('hidden');
             }
