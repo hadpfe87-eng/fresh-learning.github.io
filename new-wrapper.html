@@ -330,14 +330,23 @@
                 <span class="badge"><i class="fas fa-child"></i> للأعمار 9-10 سنوات</span>
                 <span class="badge"><i class="fas fa-map-marker-alt"></i> نقاط تفاعلية</span>
                 <span class="badge"><i class="fas fa-language"></i> بالعربية</span>
-                <span class="badge"><i class="fas fa-download"></i> بدون اتصال</span>
+                <span class="badge"><i class="fas fa-cloud"></i> عبر الإنترنت</span>
             </div>
         </div>
 
-        <!-- Game Container -->
+        <!-- Game Container with Lumi Cloud Embed -->
         <div class="game-container">
             <div id="game-iframe-wrapper" class="game-iframe-wrapper">
-                <iframe id="game-iframe" src="skeleton-hotspots.html" allow="fullscreen" allowfullscreen></iframe>
+                <iframe 
+                    id="game-iframe" 
+                    src="https://app.lumi.education/api/v1/run/T5R3Vw/embed" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    allowfullscreen="allowfullscreen" 
+                    allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
+                    title="لعبة استكشاف العظام">
+                </iframe>
             </div>
             <div class="game-buttons">
                 <button id="fullscreen-btn" class="fullscreen-btn" title="شاشة كاملة">
