@@ -156,28 +156,13 @@ if (hotspotsBtn) {
     });
 }
 
-// Button 2: Open Map Game Modal (NEW)
+// Button 2: Open Map Game (opens in new tab like hotspots game)
 const mapGameBtn = document.getElementById('openMapGameBtn');
-const mapGameModal = document.getElementById('mapGameModal');
-const closeMapModal = document.getElementById('closeMapModal');
-
 if (mapGameBtn) {
     mapGameBtn.addEventListener('click', () => {
-        if (mapGameModal) {
-            mapGameModal.classList.remove('hidden');
-        }
+        // Set flag to show back button when returning
+        sessionStorage.setItem('cameFromMapGame', 'true');
+        // Open the map wrapper page in new tab
+        window.open('map-wrapper.html', '_blank');
     });
 }
-
-if (closeMapModal) {
-    closeMapModal.addEventListener('click', () => {
-        mapGameModal.classList.add('hidden');
-    });
-}
-
-// Close modal when clicking outside content
-window.addEventListener('click', (e) => {
-    if (e.target === mapGameModal) {
-        mapGameModal.classList.add('hidden');
-    }
-});
