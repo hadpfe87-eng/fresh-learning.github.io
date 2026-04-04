@@ -815,3 +815,54 @@ footer {
         margin-top: 0.5rem;
     }
 }
+/* ==================== MAP GAME MODAL STYLES ==================== */
+
+.map-game-container {
+    position: relative;
+    width: 100%;
+    background: #0a1f1f;
+    border-radius: 0 0 28px 28px;
+    overflow: hidden;
+}
+
+.map-game-container iframe {
+    display: block;
+    width: 100%;
+    height: 600px;
+    border: none;
+}
+
+.btn-map {
+    background: linear-gradient(135deg, #8B5A2B, #6B3E1A);
+    color: #ffefc0;
+}
+
+.btn-map:hover {
+    background: linear-gradient(135deg, #A06B3E, #7B4A2A);
+}
+
+/* Responsive adjustments for map modal */
+@media (max-width: 768px) {
+    .map-game-container iframe {
+        height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .map-game-container iframe {
+        height: 400px;
+    }
+}
+
+@media (max-width: 360px) {
+    .map-game-container iframe {
+        height: 350px;
+    }
+}
+
+/* Landscape mode */
+@media (max-width: 900px) and (orientation: landscape) {
+    .map-game-container iframe {
+        height: 380px;
+    }
+}
