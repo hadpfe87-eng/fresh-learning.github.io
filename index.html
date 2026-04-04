@@ -19,7 +19,7 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Back Button (shows only when coming back from hotspots game) -->
+        <!-- Back Button (shows only when coming back from hotspots game or map game) -->
         <div id="backButtonContainer" class="back-button-container hidden">
             <button id="backToMainBtn" class="back-btn">
                 <i class="fas fa-arrow-right"></i>
@@ -110,40 +110,18 @@
         </footer>
     </div>
 
-    <!-- Map Game Modal -->
-    <div id="mapGameModal" class="modal hidden">
-        <div class="modal-content modal-large">
-            <div class="modal-header">
-                <h2><i class="fas fa-dungeon"></i> متاهة العظام</h2>
-                <button class="close-modal" id="closeMapModal">&times;</button>
-            </div>
-            <div class="modal-body" style="padding: 0;">
-                <div class="map-game-container">
-                    <iframe 
-                        id="mapGameIframe" 
-                        src="https://app.lumi.education/api/v1/run/x1LFRC/embed" 
-                        width="100%" 
-                        height="600" 
-                        frameborder="0" 
-                        allowfullscreen="allowfullscreen" 
-                        allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
-                        title="متاهة العظام">
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script type="module" src="script.js"></script>
     <script>
-        // Check if we came back from the hotspots game (using sessionStorage)
+        // Check if we came back from hotspots game or map game
         document.addEventListener('DOMContentLoaded', () => {
             const backButtonContainer = document.getElementById('backButtonContainer');
             const cameFromHotspots = sessionStorage.getItem('cameFromHotspots');
+            const cameFromMapGame = sessionStorage.getItem('cameFromMapGame');
             
-            if (cameFromHotspots === 'true') {
+            if (cameFromHotspots === 'true' || cameFromMapGame === 'true') {
                 backButtonContainer.classList.remove('hidden');
                 sessionStorage.removeItem('cameFromHotspots');
+                sessionStorage.removeItem('cameFromMapGame');
             }
             
             // Back button functionality
