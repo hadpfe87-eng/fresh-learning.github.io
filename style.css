@@ -866,3 +866,72 @@ footer {
         height: 380px;
     }
 }
+
+/* ==================== MAP GAME CARD WITH IMAGE BACKGROUND ==================== */
+
+.map-game-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.map-game-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('image1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.25;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+}
+
+.map-game-card:hover::before {
+    opacity: 0.35;
+}
+
+.map-game-content {
+    position: relative;
+    z-index: 1;
+    background: rgba(30, 45, 45, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 28px;
+    margin: 0;
+    padding: 1.2rem;
+}
+
+.map-game-text p {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.map-game-text .game-features {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+/* Alternative: If you prefer the image as a decorative element on the side instead of background */
+.map-game-card.image-right .map-game-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .map-game-card::before {
+        opacity: 0.2;
+    }
+    
+    .map-game-content {
+        backdrop-filter: blur(12px);
+    }
+}
+
+@media (max-width: 480px) {
+    .map-game-content {
+        backdrop-filter: blur(16px);
+    }
+}
