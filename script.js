@@ -156,27 +156,28 @@ if (hotspotsBtn) {
     });
 }
 
-// Button 2: Open Quiz Modal
-const quizBtn = document.getElementById('openQuizGameBtn');
-const quizModal = document.getElementById('quizModal');
-const closeQuizModal = document.getElementById('closeQuizModal');
+// Button 2: Open Map Game Modal (NEW)
+const mapGameBtn = document.getElementById('openMapGameBtn');
+const mapGameModal = document.getElementById('mapGameModal');
+const closeMapModal = document.getElementById('closeMapModal');
 
-if (quizBtn) {
-    quizBtn.addEventListener('click', () => {
-        if (quizModal) {
-            quizModal.classList.remove('hidden');
+if (mapGameBtn) {
+    mapGameBtn.addEventListener('click', () => {
+        if (mapGameModal) {
+            mapGameModal.classList.remove('hidden');
         }
     });
 }
 
-if (closeQuizModal) {
-    closeQuizModal.addEventListener('click', () => {
-        quizModal.classList.add('hidden');
+if (closeMapModal) {
+    closeMapModal.addEventListener('click', () => {
+        mapGameModal.classList.add('hidden');
     });
 }
 
+// Close modal when clicking outside content
 window.addEventListener('click', (e) => {
-    if (e.target === quizModal) {
-        quizModal.classList.add('hidden');
+    if (e.target === mapGameModal) {
+        mapGameModal.classList.add('hidden');
     }
 });
