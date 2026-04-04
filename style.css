@@ -518,11 +518,12 @@ footer {
     border-top: 1px solid rgba(244, 185, 66, 0.2);
 }
 
-/* ==================== MAP GAME CARD WITH IMAGE BACKGROUND ==================== */
+/* ==================== MAP GAME CARD WITH FULL IMAGE ==================== */
 
 .map-game-card {
     position: relative;
     overflow: hidden;
+    min-height: 220px;
 }
 
 .map-game-card::before {
@@ -533,17 +534,16 @@ footer {
     right: 0;
     bottom: 0;
     background-image: url('image1.jpg');
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-color: #1e3a32;
-    opacity: 0.3;
+    opacity: 0.35;
     z-index: 0;
     transition: opacity 0.3s ease;
 }
 
 .map-game-card:hover::before {
-    opacity: 0.4;
+    opacity: 0.5;
 }
 
 .map-game-content {
