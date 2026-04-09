@@ -340,8 +340,8 @@ body {
 .welcome-modal-content {
     max-width: 95%;
     width: 760px;
-    max-height: 95vh;
-    min-height: 520px;
+    max-height: 98vh;
+    min-height: 560px;
     background: rgba(10, 31, 31, 0.95);
     border-radius: 36px;
     border: 2px solid rgba(244, 185, 66, 0.6);
@@ -355,12 +355,15 @@ body {
     gap: 1.5rem;
     align-items: center;
     padding: 1.5rem;
+    max-height: calc(98vh - 140px);
+    overflow-y: auto;
 }
 
 .welcome-image-wrapper {
     position: relative;
     width: 100%;
-    min-height: 380px;
+    min-height: 320px;
+    max-height: 60vh;
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
@@ -411,13 +414,16 @@ body {
 @media (max-width: 840px) {
     .welcome-modal-content {
         width: 95%;
+        min-height: 520px;
     }
     .welcome-modal-body {
         grid-template-columns: 1fr;
         padding: 1rem;
+        max-height: calc(98vh - 140px);
     }
     .welcome-image-wrapper {
         min-height: 260px;
+        max-height: 45vh;
     }
     .welcome-copy h3 {
         font-size: 1.5rem;
