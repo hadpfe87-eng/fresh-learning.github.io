@@ -1,0 +1,991 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #0a2f2f 0%, #1a4a4a 100%);
+    min-height: 100vh;
+    color: #fef5e6;
+}
+
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Header Section */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #ffdd99, #ffb347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    font-size: 1.1rem;
+    color: #ffefc0;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 18px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    border: 1px solid #f4b942;
+}
+
+/* Two Column Layout */
+.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Left Column - 3D Viewer */
+.column-left {
+    min-width: 0;
+}
+
+.viewer-card {
+    background: rgba(30, 45, 45, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 32px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 200, 100, 0.3);
+}
+
+.viewer-header {
+    background: linear-gradient(135deg, #c97e2a, #a55d1a);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.viewer-header i {
+    font-size: 1.5rem;
+}
+
+.viewer-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.viewer-content {
+    padding: 1.5rem;
+    position: relative;
+}
+
+.viewer-3d {
+    width: 100%;
+    height: 500px;
+    background: #0a1f1f;
+    border-radius: 24px;
+    border: 2px solid #f4b942;
+    cursor: grab;
+    overflow: hidden;
+    position: relative;
+}
+
+.viewer-3d:active {
+    cursor: grabbing;
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    background: rgba(10, 31, 31, 0.95);
+    padding: 20px 30px;
+    border-radius: 60px;
+    backdrop-filter: blur(5px);
+    border: 1px solid #f4b942;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.loading-overlay i {
+    font-size: 2rem;
+    color: #f4b942;
+}
+
+.loading-overlay p {
+    margin-top: 10px;
+    color: #ffefc0;
+}
+
+.viewer-instructions {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #ffefc0;
+    opacity: 0.8;
+}
+
+/* Right Column - Games Section */
+.column-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.game-card {
+    background: rgba(30, 45, 45, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 200, 100, 0.3);
+    transition: transform 0.2s;
+}
+
+.game-card:hover {
+    transform: translateY(-4px);
+}
+
+.game-card-header {
+    background: linear-gradient(135deg, #2c5a4a, #1e3a32);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(244, 185, 66, 0.3);
+}
+
+.game-card-header i {
+    font-size: 1.3rem;
+    color: #f4b942;
+}
+
+.game-card-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.game-card-content {
+    padding: 1.2rem;
+}
+
+.game-card-content p {
+    font-size: 0.9rem;
+    color: #ffefc0;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.game-features {
+    background: rgba(244, 185, 66, 0.15);
+    padding: 8px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.quiz-stats {
+    background: rgba(244, 185, 66, 0.2);
+    padding: 8px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.btn-game {
+    width: 100%;
+    padding: 12px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    transition: all 0.2s;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #f4b942, #e09d32);
+    color: #1e2a2a;
+}
+
+.btn-game:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-quiz {
+    background: linear-gradient(135deg, #2c7a5e, #1e5a46);
+    color: #ffefc0;
+}
+
+.btn-map {
+    background: linear-gradient(135deg, #8B5A2B, #6B3E1A);
+    color: #ffefc0;
+}
+
+.btn-map:hover {
+    background: linear-gradient(135deg, #A06B3E, #7B4A2A);
+}
+
+.info-box {
+    background: rgba(244, 185, 66, 0.15);
+    border-radius: 20px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid rgba(244, 185, 66, 0.4);
+}
+
+.info-box i {
+    font-size: 1.5rem;
+    color: #f4b942;
+}
+
+.info-box p {
+    font-size: 0.85rem;
+    color: #ffefc0;
+    line-height: 1.4;
+}
+
+/* Back Button Styles */
+.back-button-container {
+    margin-bottom: 1.5rem;
+}
+
+.back-btn {
+    background: rgba(30, 45, 45, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid #f4b942;
+    padding: 12px 24px;
+    border-radius: 60px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffefc0;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+}
+
+.back-btn:hover {
+    background: #f4b942;
+    color: #1e2a2a;
+    transform: translateX(-5px);
+}
+
+.back-btn i {
+    font-size: 1.1rem;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: #1e3a32;
+    border-radius: 32px;
+    max-width: 90%;
+    width: 600px;
+    max-height: 85vh;
+    overflow: hidden;
+    border: 2px solid #f4b942;
+}
+
+.modal-large {
+    width: 700px;
+}
+
+.welcome-modal {
+    animation: fadeInModal 0.5s ease forwards;
+}
+
+.welcome-modal-content {
+    max-width: 95%;
+    width: 760px;
+    max-height: 90vh;
+    background: rgba(10, 31, 31, 0.95);
+    border-radius: 36px;
+    border: 2px solid rgba(244, 185, 66, 0.6);
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+}
+
+.welcome-modal-body {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.welcome-image-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 380px;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    animation: floatImage 6s ease-in-out infinite;
+}
+
+.welcome-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.welcome-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+}
+
+.welcome-copy h3 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.welcome-copy p {
+    margin-bottom: 1.8rem;
+    color: #ffefc0;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+.welcome-btn {
+    width: 100%;
+    padding: 16px 22px;
+    font-size: 1rem;
+    border-radius: 60px;
+    letter-spacing: 0.04em;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.welcome-btn:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 12px 30px rgba(244, 185, 66, 0.25);
+}
+
+@media (max-width: 840px) {
+    .welcome-modal-content {
+        width: 95%;
+    }
+    .welcome-modal-body {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    .welcome-image-wrapper {
+        min-height: 260px;
+    }
+    .welcome-copy h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@keyframes fadeInModal {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes floatImage {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #c97e2a, #a55d1a);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.close-modal:hover {
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 1.5rem;
+    max-height: calc(85vh - 70px);
+    overflow-y: auto;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Quiz Styles */
+.quiz-question {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.quiz-option-btn {
+    background: #2f4f4f;
+    border: none;
+    padding: 14px 18px;
+    border-radius: 60px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: right;
+    font-family: 'Cairo', sans-serif;
+    color: #fff2df;
+    border-right: 4px solid #f4b942;
+    transition: all 0.2s;
+}
+
+.quiz-option-btn:hover {
+    background: #3e6b6b;
+    transform: translateX(-5px);
+}
+
+.quiz-feedback {
+    padding: 12px;
+    border-radius: 40px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.quiz-feedback.correct {
+    background: #2b8c6e;
+}
+
+.quiz-feedback.wrong {
+    background: #8b3c3c;
+}
+
+.quiz-stats-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 40px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.quiz-score {
+    background: #f4b942;
+    color: #1e2a2a;
+    padding: 5px 15px;
+    border-radius: 40px;
+    font-weight: bold;
+}
+
+.quiz-question-counter {
+    color: #ffefc0;
+}
+
+.quiz-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.quiz-btn {
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    border: none;
+    transition: all 0.2s;
+}
+
+.quiz-btn-primary {
+    background: #f4b942;
+    color: #1e2a2a;
+}
+
+.quiz-btn-secondary {
+    background: #2c5a4a;
+    color: #ffefc0;
+}
+
+.quiz-btn-primary:hover, .quiz-btn-secondary:hover {
+    transform: scale(1.02);
+}
+
+.quiz-result {
+    text-align: center;
+    padding: 1rem;
+}
+
+.quiz-result h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.quiz-result p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.quiz-result .score-highlight {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #f4b942;
+}
+
+.help-tip {
+    background: rgba(244, 185, 66, 0.2);
+    padding: 8px 12px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    border-top: 1px solid rgba(244, 185, 66, 0.2);
+}
+
+/* ==================== MAP GAME CARD WITH FULL IMAGE ==================== */
+
+.map-game-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+}
+
+.map-game-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('image1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.35;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+}
+
+.map-game-card:hover::before {
+    opacity: 0.5;
+}
+
+.map-game-content {
+    position: relative;
+    z-index: 1;
+    background: rgba(30, 45, 45, 0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 28px;
+    margin: 0;
+    padding: 1.2rem;
+    min-height: 180px;
+}
+
+.map-game-text p {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.map-game-text .game-features {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+    .app-container {
+        padding: 1.5rem;
+    }
+    
+    .two-columns {
+        grid-template-columns: 1fr 320px;
+        gap: 1.2rem;
+    }
+    
+    .viewer-3d {
+        height: 450px;
+    }
+    
+    .header h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* Mobile Landscape & Small Tablet (600px - 768px) */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 1rem;
+    }
+    
+    .two-columns {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .column-right {
+        max-width: 100%;
+        order: 2;
+    }
+    
+    .column-left {
+        order: 1;
+    }
+    
+    .viewer-3d {
+        height: 400px;
+    }
+    
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .header p {
+        font-size: 1rem;
+        padding: 0 0.5rem;
+    }
+    
+    .badge {
+        padding: 4px 14px;
+        font-size: 0.75rem;
+    }
+    
+    .viewer-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .viewer-header i {
+        font-size: 1.2rem;
+    }
+    
+    .game-card-header h3 {
+        font-size: 1rem;
+    }
+    
+    .modal-large {
+        width: 95%;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .quiz-question {
+        font-size: 1rem;
+    }
+    
+    .quiz-option-btn {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+    
+    .map-game-content {
+        backdrop-filter: blur(12px);
+    }
+}
+
+/* Mobile Portrait (480px and below) */
+@media (max-width: 480px) {
+    .app-container {
+        padding: 0.75rem;
+    }
+    
+    .header {
+        margin-bottom: 1rem;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .header p {
+        font-size: 0.9rem;
+    }
+    
+    .badge-row {
+        gap: 0.5rem;
+    }
+    
+    .badge {
+        padding: 3px 10px;
+        font-size: 0.7rem;
+    }
+    
+    .viewer-3d {
+        height: 300px;
+    }
+    
+    .viewer-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .viewer-header h2 {
+        font-size: 1rem;
+    }
+    
+    .viewer-content {
+        padding: 1rem;
+    }
+    
+    .viewer-instructions {
+        font-size: 0.7rem;
+    }
+    
+    .loading-overlay {
+        padding: 12px 20px;
+        white-space: normal;
+        text-align: center;
+    }
+    
+    .loading-overlay i {
+        font-size: 1.5rem;
+    }
+    
+    .loading-overlay p {
+        font-size: 0.8rem;
+    }
+    
+    .game-card-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .game-card-content {
+        padding: 1rem;
+    }
+    
+    .game-card-content p {
+        font-size: 0.8rem;
+    }
+    
+    .game-features, .quiz-stats {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+    
+    .btn-game {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .info-box {
+        padding: 0.8rem;
+        gap: 8px;
+    }
+    
+    .info-box i {
+        font-size: 1.2rem;
+    }
+    
+    .info-box p {
+        font-size: 0.75rem;
+    }
+    
+    .back-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .modal-header h2 {
+        font-size: 1rem;
+    }
+    
+    .modal-body {
+        padding: 1rem;
+    }
+    
+    .quiz-stats-bar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .quiz-question {
+        font-size: 0.9rem;
+    }
+    
+    .quiz-option-btn {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .quiz-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .quiz-result h3 {
+        font-size: 1.3rem;
+    }
+    
+    .quiz-result p {
+        font-size: 1rem;
+    }
+    
+    .quiz-result .score-highlight {
+        font-size: 2rem;
+    }
+    
+    footer {
+        font-size: 0.7rem;
+        margin-top: 1rem;
+    }
+    
+    .map-game-content {
+        backdrop-filter: blur(16px);
+    }
+}
+
+/* Very Small Devices (360px and below) */
+@media (max-width: 360px) {
+    .viewer-3d {
+        height: 250px;
+    }
+    
+    .header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .badge {
+        padding: 2px 8px;
+        font-size: 0.65rem;
+    }
+    
+    .quiz-option-btn {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+    }
+    
+    .btn-game {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn-game, .quiz-option-btn, .back-btn, .close-modal {
+        min-height: 44px;
+    }
+    
+    .viewer-3d {
+        cursor: grab;
+    }
+    
+    .btn-game:active, .quiz-option-btn:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Landscape Mode on Mobile */
+@media (max-width: 900px) and (orientation: landscape) {
+    .viewer-3d {
+        height: 280px;
+    }
+    
+    .two-columns {
+        gap: 1rem;
+    }
+    
+    .header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .header p {
+        font-size: 0.85rem;
+    }
+    
+    .badge-row {
+        margin-top: 0.5rem;
+    }
+}
