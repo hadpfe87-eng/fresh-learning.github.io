@@ -369,8 +369,9 @@ body {
 .welcome-image-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
+    background-color: #000;
 }
 
 .welcome-image-overlay {

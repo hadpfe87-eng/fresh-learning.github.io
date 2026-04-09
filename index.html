@@ -172,8 +172,7 @@
 
             if (openAdventureBtn) {
                 openAdventureBtn.addEventListener('click', () => {
-                    sessionStorage.setItem('cameFromHotspots', 'true');
-                    window.location.href = 'new-wrapper.html';
+                    closeModal();
                 });
             }
 
