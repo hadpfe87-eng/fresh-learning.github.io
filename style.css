@@ -312,7 +312,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -334,7 +335,7 @@ body {
 }
 
 .welcome-modal {
-    animation: fadeInModal 0.5s ease forwards;
+    animation: popupEntrance 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .welcome-modal-content {
@@ -347,6 +348,7 @@ body {
     border: 2px solid rgba(244, 185, 66, 0.6);
     box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
     overflow: hidden;
+    transform-origin: center center;
 }
 
 .welcome-modal-body {
@@ -357,6 +359,8 @@ body {
     padding: 1.5rem;
     max-height: calc(98vh - 140px);
     overflow-y: auto;
+    opacity: 0;
+    animation: popupContentFade 0.35s ease 0.16s forwards;
 }
 
 .welcome-image-wrapper {
@@ -431,14 +435,29 @@ body {
     }
 }
 
-@keyframes fadeInModal {
+@keyframes popupEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(-24px) scale(0.92);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(8px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes popupContentFade {
     from {
         opacity: 0;
-        transform: scale(0.94);
+        transform: translateY(12px);
     }
     to {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0);
     }
 }
 
