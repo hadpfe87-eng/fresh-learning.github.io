@@ -77,6 +77,14 @@ function openPopup(partKey, marker) {
     if (currentMarker) {
         markers.forEach(m => m.classList.remove('active'));
         currentMarker.classList.add('active');
+
+        const markerRect = currentMarker.getBoundingClientRect();
+        const containerRect = document.querySelector('.skeleton-image-panel').getBoundingClientRect();
+        const side = markerRect.left < containerRect.left + containerRect.width / 2 ? 'slide-right' : 'slide-left';
+        popup.classList.remove('slide-left', 'slide-right');
+        popup.classList.add(side);
+        const top = Math.min(Math.max(markerRect.top + markerRect.height / 2, 80), window.innerHeight - 120);
+        popup.style.setProperty('--dialog-top', `${top}px`);
     }
 
     part.options.forEach(option => {
@@ -119,6 +127,8 @@ function closePopup() {
         currentMarker.classList.remove('active');
         currentMarker = null;
     }
+    popup.classList.remove('slide-left', 'slide-right');
+    popup.style.removeProperty('--dialog-top');
 }
 
 function resetQuiz() {

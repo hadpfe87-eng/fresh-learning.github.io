@@ -1109,12 +1109,48 @@ footer {
 }
 
 .small-modal {
-    background: rgba(0, 0, 0, 0.55);
+    background: transparent;
+    align-items: flex-start;
+    justify-content: flex-start;
+    pointer-events: none;
 }
 
 .small-modal .modal-content {
-    width: min(520px, 95%);
-    max-height: 92vh;
+    position: absolute;
+    top: var(--dialog-top, 50%);
+    transform: translateY(-50%);
+    width: min(460px, 92%);
+    max-height: 84vh;
+    pointer-events: auto;
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+}
+
+.small-modal.slide-right .modal-content {
+    right: 24px;
+    left: auto;
+    transform: translateY(-50%) translateX(12px);
+}
+
+.small-modal.slide-left .modal-content {
+    left: 24px;
+    right: auto;
+    transform: translateY(-50%) translateX(-12px);
+}
+
+.small-modal.slide-right .modal-content,
+.small-modal.slide-left .modal-content {
+    animation: slideDialogIn 0.3s ease;
+}
+
+@keyframes slideDialogIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
 }
 
 .quiz-modal-body {
