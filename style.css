@@ -1119,10 +1119,25 @@ footer {
     position: absolute;
     top: var(--dialog-top, 50%);
     transform: translateY(-50%);
-    width: min(460px, 92%);
+    width: min(420px, 92%);
     max-height: 84vh;
     pointer-events: auto;
-    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+    border-radius: 28px;
+    background: rgba(12, 24, 24, 0.96);
+    border: 1px solid rgba(244, 185, 66, 0.22);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.28);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.small-modal .modal-content::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 14px solid transparent;
+    top: 3.2rem;
+    opacity: 0.95;
 }
 
 .small-modal.slide-right .modal-content {
@@ -1131,26 +1146,60 @@ footer {
     transform: translateY(-50%) translateX(12px);
 }
 
+.small-modal.slide-right .modal-content::before {
+    right: 100%;
+    border-right-color: rgba(12, 24, 24, 0.96);
+}
+
 .small-modal.slide-left .modal-content {
     left: 24px;
     right: auto;
     transform: translateY(-50%) translateX(-12px);
 }
 
-.small-modal.slide-right .modal-content,
-.small-modal.slide-left .modal-content {
-    animation: slideDialogIn 0.3s ease;
+.small-modal.slide-left .modal-content::before {
+    left: 100%;
+    border-left-color: rgba(12, 24, 24, 0.96);
 }
 
-@keyframes slideDialogIn {
+.small-modal.slide-right .modal-content {
+    animation: slideDialogInRight 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.small-modal.slide-left .modal-content {
+    animation: slideDialogInLeft 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes slideDialogInRight {
     from {
         opacity: 0;
-        transform: translateY(-50%) translateX(22px);
+        transform: translateY(-50%) translateX(26px);
     }
     to {
         opacity: 1;
         transform: translateY(-50%) translateX(0);
     }
+}
+
+@keyframes slideDialogInLeft {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-26px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+.quiz-modal-body {
+    display: grid;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.quiz-feedback {
+    margin-top: 0.5rem;
 }
 
 .quiz-modal-body {

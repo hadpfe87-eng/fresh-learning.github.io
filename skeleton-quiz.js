@@ -83,7 +83,9 @@ function openPopup(partKey, marker) {
         const side = markerRect.left < containerRect.left + containerRect.width / 2 ? 'slide-right' : 'slide-left';
         popup.classList.remove('slide-left', 'slide-right');
         popup.classList.add(side);
-        const top = Math.min(Math.max(markerRect.top + markerRect.height / 2, 80), window.innerHeight - 120);
+
+        const markerCenter = markerRect.top + markerRect.height / 2;
+        const top = Math.min(Math.max(markerCenter, 140), window.innerHeight - 140);
         popup.style.setProperty('--dialog-top', `${top}px`);
     }
 
