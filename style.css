@@ -340,7 +340,8 @@ body {
 .welcome-modal-content {
     max-width: 95%;
     width: 760px;
-    max-height: 90vh;
+    max-height: 95vh;
+    min-height: 520px;
     background: rgba(10, 31, 31, 0.95);
     border-radius: 36px;
     border: 2px solid rgba(244, 185, 66, 0.6);
