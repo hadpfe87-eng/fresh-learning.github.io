@@ -353,7 +353,7 @@ body {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: 1.5rem;
-    align-items: center;
+    align-items: start;
     padding: 1.5rem;
     max-height: calc(98vh - 140px);
     overflow-y: auto;
@@ -363,7 +363,7 @@ body {
     position: relative;
     width: 100%;
     min-height: 320px;
-    max-height: 60vh;
+    max-height: 70vh;
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
@@ -372,7 +372,8 @@ body {
 
 .welcome-image-wrapper img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 100%;
     object-fit: contain;
     display: block;
     background-color: #000;
