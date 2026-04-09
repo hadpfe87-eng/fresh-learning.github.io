@@ -166,3 +166,11 @@ if (mapGameBtn) {
         window.open('map-wrapper.html', '_blank');
     });
 }
+
+// Button 3: Open Skeleton Quiz Page
+const skeletonQuizBtn = document.getElementById('openSkeletonQuizBtn');
+if (skeletonQuizBtn) {
+    skeletonQuizBtn.addEventListener('click', () => {
+        window.open('skeleton-quiz.html', '_blank');
+    });
+}

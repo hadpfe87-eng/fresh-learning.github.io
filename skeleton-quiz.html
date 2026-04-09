@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="theme-color" content="#0a2f2f">
+    <title>لعبة أجزاء الهيكل العظمي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>لعبة أجزاء الهيكل العظمي</h1>
+            <p>اضغط على علامة التعجب لكل جزء في الصورة لتجيب عن السؤال وتعرف معلومات إضافية.</p>
+        </div>
+
+        <div class="quiz-page-grid">
+            <div class="quiz-left">
+                <div class="skeleton-image-panel">
+                    <img src="image3.png" alt="Skeleton" class="skeleton-full-image" />
+                    <button class="skeleton-marker" data-part="skull" style="top:8%; left:48%;">!</button>
+                    <button class="skeleton-marker" data-part="ribs" style="top:30%; left:52%;">!</button>
+                    <button class="skeleton-marker" data-part="pelvis" style="top:48%; left:48%;">!</button>
+                    <button class="skeleton-marker" data-part="femur" style="top:67%; left:50%;">!</button>
+                    <button class="skeleton-marker" data-part="hand" style="top:45%; left:22%;">!</button>
+                </div>
+            </div>
+
+            <aside class="quiz-sidebar">
+                <div class="score-card">
+                    <h2>النتيجة</h2>
+                    <p><span id="quizScore">0</span> / <span id="quizTotal">0</span></p>
+                </div>
+                <div class="quiz-tip">
+                    <h3>تعليمات</h3>
+                    <p>اضغط على علامة التعجب في الصورة لبدء السؤال. بعد اختيار الإجابة ستظهر معلومات عن الجزء.</p>
+                    <p>كل إجابة صحيحة تزيد النتيجة.</p>
+                </div>
+                <button id="resetQuizBtn" class="btn-game btn-quiz"><i class="fas fa-undo"></i> إعادة تعيين النتيجة</button>
+                <button id="backHomeBtn" class="btn-game btn-map"><i class="fas fa-arrow-right"></i> العودة إلى الصفحة الرئيسية</button>
+            </aside>
+        </div>
+    </div>
+
+    <div id="skeletonPopup" class="modal small-modal hidden">
+        <div class="modal-content quiz-modal-content">
+            <div class="modal-header">
+                <h2 id="popupTitle"><i class="fas fa-question-circle"></i> سؤال</h2>
+                <button id="closeQuizPopup" class="close-modal" aria-label="إغلاق">&times;</button>
+            </div>
+            <div class="modal-body quiz-modal-body">
+                <p id="popupQuestion" class="quiz-question"></p>
+                <div id="optionsContainer" class="options-container"></div>
+                <div id="quizFeedback" class="quiz-feedback hidden"></div>
+                <button id="popupCloseBtn" class="btn-game hidden"><i class="fas fa-check"></i> إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="skeleton-quiz.js"></script>
+</body>
+</html>
