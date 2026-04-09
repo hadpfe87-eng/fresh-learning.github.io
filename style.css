@@ -1066,6 +1066,19 @@ footer {
     box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
 }
 
+.skeleton-marker.active {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 6px rgba(244, 185, 66, 0.45), 0 18px 34px rgba(0, 0, 0, 0.35);
+}
+
+.skeleton-marker.active::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(244, 185, 66, 0.35);
+}
+
 .quiz-sidebar {
     display: flex;
     flex-direction: column;
@@ -1093,6 +1106,10 @@ footer {
 
 .quiz-tip p {
     line-height: 1.7;
+}
+
+.small-modal {
+    background: rgba(0, 0, 0, 0.55);
 }
 
 .small-modal .modal-content {

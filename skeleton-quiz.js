@@ -49,7 +49,9 @@ const quizTotalEl = document.getElementById('quizTotal');
 const resetQuizBtn = document.getElementById('resetQuizBtn');
 const backHomeBtn = document.getElementById('backHomeBtn');
 
+const questionOrder = ['skull', 'ribs', 'pelvis', 'femur', 'hand'];
 let currentPartKey = null;
+let currentMarker = null;
 let score = 0;
 let totalAnswered = 0;
 let hasAnswered = false;
@@ -59,16 +61,23 @@ function updateScoreDisplay() {
     quizTotalEl.textContent = totalAnswered;
 }
 
-function openPopup(partKey) {
+function openPopup(partKey, marker) {
     const part = quizParts[partKey];
     if (!part) return;
     currentPartKey = partKey;
+    currentMarker = marker;
     hasAnswered = false;
-    popupTitle.textContent = `سؤال عن ${part.label}`;
+    const questionNumber = questionOrder.indexOf(partKey) + 1;
+    popupTitle.textContent = `السؤال رقم ${questionNumber}`;
     popupQuestion.textContent = part.question;
     optionsContainer.innerHTML = '';
     quizFeedback.classList.add('hidden');
     popupCloseBtn.classList.add('hidden');
+
+    if (currentMarker) {
+        markers.forEach(m => m.classList.remove('active'));
+        currentMarker.classList.add('active');
+    }
 
     part.options.forEach(option => {
         const btn = document.createElement('button');
@@ -106,6 +115,10 @@ function selectOption(option) {
 
 function closePopup() {
     popup.classList.add('hidden');
+    if (currentMarker) {
+        currentMarker.classList.remove('active');
+        currentMarker = null;
+    }
 }
 
 function resetQuiz() {
@@ -117,7 +130,7 @@ function resetQuiz() {
 markers.forEach(marker => {
     marker.addEventListener('click', () => {
         const partKey = marker.dataset.part;
-        openPopup(partKey);
+        openPopup(partKey, marker);
     });
 });
 
